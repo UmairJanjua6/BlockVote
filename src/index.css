@@ -20,10 +20,11 @@ body {
 .Navbar .logo {
     flex: 10%;
     display: flex;
-    width: 100px;
+    width: 150px;
 }
 
 .Navbar .logo img {
+    padding-left: 15px;
     height: 100%;
 }
 
@@ -164,14 +165,21 @@ h3 {
     color:rgb(240, 185, 11);
 }
 
-.candidateList {
-    display: flex;
-    justify-content: center;
-}
-
-.card {
-    margin-left: 10px;
+.box {
+    margin: 20px;
     text-align: center;
 }
+
+.grid {
+    min-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.userInstruction {
+    padding-left: 20px;
+}
+
 
 

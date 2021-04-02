@@ -8,56 +8,53 @@ import VladimirPutinImg from '../img/vladmir_putin.jpeg';
 import '../index.css';
 
 const UserCanVote = () => {
+    const cardInfo = [
+        {
+            image: `${ImranKhanImg}`, 
+            title: "Imran Khan", 
+            text: "Pakistan Peoples Party",
+            variant: "primary",
+        },
+        {
+            image: `${DonaldTrumpImg}`, 
+            title: "Donald Trump", 
+            text: "Republician",
+            variant: "secondary",
+        },
+        {
+            image: `${BrackObamaImg}`, 
+            title: "Brack Obama", 
+            text: "Democratic Party",
+            variant: "danger"
+        },
+        {
+            image: `${VladimirPutinImg}`, 
+            title: "Vladimir Putin", 
+            text: "Russia KGB",
+            variant: "warning",
+        },
+    ];
+
+    const renderCard = (card, index) => {
+        return (
+        <Card style={{ width: '18rem'}} key={index} className="box">
+                <Card.Img variant="top" src="holder.js/100px180" src={card.image} />
+                <Card.Body>
+                    <Card.Title>{card.title}</Card.Title>
+                    <Card.Text>{card.text}</Card.Text>
+                    <Button style={{width: '100px'}} variant={card.variant}>Vote</Button>
+             </Card.Body>
+            </Card>
+        );
+    }
     return (
         <div>
-            <div className="UCVNavbar">
+            <div className="userInstruction">
                 <h2>Election 2021</h2>
                 <p>Select a suitable candidate that you <b>prefer</b>.</p>
             </div>
-            <div className="candidateList">
-            <Card style={{ width: '15rem' }}>
-                <Card.Img variant="top" src={ImranKhanImg} />
-                <Card.Body>
-                    <Card.Title>Imran Khan</Card.Title>
-                    <Card.Text>
-                        Pakistan Tehreek Insaf
-                   </Card.Text>
-                  <Button variant="success">Vote</Button>
-             </Card.Body>
-            </Card>
-
-            <Card style={{ width: '15rem' }}>
-                <Card.Img variant="top" src={BrackObamaImg} />
-                <Card.Body>
-                    <Card.Title>Barack Obama</Card.Title>
-                    <Card.Text>
-                        Democratic Party
-                   </Card.Text>
-                  <Button variant="primary">Vote</Button>
-             </Card.Body>
-            </Card>
-
-            <Card style={{ width: '15rem' }}>
-                <Card.Img variant="top" src={DonaldTrumpImg} />
-                <Card.Body>
-                    <Card.Title>Donald Trump</Card.Title>
-                    <Card.Text>
-                        Republician
-                   </Card.Text>
-                  <Button variant="danger">Vote</Button>
-             </Card.Body>
-            </Card>
-
-            <Card style={{ width: '15rem' }}>
-                <Card.Img variant="top" src={VladimirPutinImg} />
-                <Card.Body>
-                    <Card.Title>Vladimir Putin</Card.Title>
-                    <Card.Text>
-                        GOAT
-                   </Card.Text>
-                  <Button variant="warning">Vote</Button>
-             </Card.Body>
-            </Card>
+            <div className="grid">
+                {cardInfo.map(renderCard)}
             </div>
         </div>
     );
