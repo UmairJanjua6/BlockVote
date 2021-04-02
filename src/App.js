@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, {useState} from 'react';
+import {Route, Switch} from 'react-router-dom';
+import CardContainer from './Components/CardContainer.js';
+import UserLogin from './Components/UserLogin.js';
+import AdminLogin from './Components/AdminLogin.js';
+import Navbar from './Components/Navbar.js';
+import './index.css';
+import User from './Components/User.js';
+// import {ElectionTimeContext} from './context/ElectionTimeContext.js';
 function App() {
+  const [canVote, setCanVote] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="container-fluid">
+      <Navbar/>
+
+      <Switch>
+        <Route exact path= '/' component={CardContainer} />
+        <Route path= '/userlogin' component={UserLogin} />
+        <Route path= '/adminlogin' component={AdminLogin} />
+        <Route path= '/user' component={User} />
+      </Switch>
+      </div>
   );
 }
 
