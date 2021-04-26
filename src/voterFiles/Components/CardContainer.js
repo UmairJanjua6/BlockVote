@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory} from 'react-router-dom';
-import '../index.css';
-import logo from'../img/Logo2.png';
-import '../../node_modules/bootstrap/dist/css/bootstrap-grid.min.css';
+import '../../index.css';
+import logo from'../img/BnW.png';
+import '../../../node_modules/bootstrap/dist/css/bootstrap-grid.min.css';
 import { Button } from 'react-bootstrap';
 
 const CardContainer = () => {

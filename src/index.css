@@ -26,6 +26,7 @@ body {
 .Navbar .logo img {
     padding-left: 15px;
     height: 100%;
+    border: none;
 }
 
 .Navbar .title {

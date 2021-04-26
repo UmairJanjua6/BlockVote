@@ -1,5 +1,5 @@
 import React from 'react';
-import '../index.css';
+import '../../index.css';
 import Headerlogo from '../img/Logo3.png';
 import { useWallet, UseWalletProvider } from 'use-wallet';
 

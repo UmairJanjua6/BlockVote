@@ -5,7 +5,7 @@ import ImranKhanImg from '../img/imran_khan.jpg';
 import BrackObamaImg from '../img/barack_obama.jpg';
 import DonaldTrumpImg from '../img/donald_trump.jpg';
 import VladimirPutinImg from '../img/vladmir_putin.jpeg';
-import '../index.css';
+import '../../index.css';
 
 const UserCanVote = () => {
     const cardInfo = [

@@ -1,26 +1,16 @@
-import React, {useState} from 'react';
-import {Route, Switch} from 'react-router-dom';
-import CardContainer from './Components/CardContainer.js';
-import UserLogin from './Components/UserLogin.js';
-import AdminLogin from './Components/AdminLogin.js';
-import Navbar from './Components/Navbar.js';
-import './index.css';
-import User from './Components/User.js';
-// import {ElectionTimeContext} from './context/ElectionTimeContext.js';
-function App() {
-  const [canVote, setCanVote] = useState(false);
-  return (
-    <div className="container-fluid">
-      <Navbar/>
+import React from 'react';
+import Voter from './voterFiles/voter.js';
+import Admin from './admin';
+import {GlobalProvider} from './voterFiles/context/GlobalState.js';
 
-      <Switch>
-        <Route exact path= '/' component={CardContainer} />
-        <Route path= '/userlogin' component={UserLogin} />
-        <Route path= '/adminlogin' component={AdminLogin} />
-        <Route path= '/user' component={User} />
-      </Switch>
-      </div>
-  );
+function App() {
+    return(
+        <GlobalProvider>
+            <Voter />
+            <Admin />
+        </GlobalProvider>
+    );
 }
 
 export default App;
+
