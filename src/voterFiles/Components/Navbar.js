@@ -3,17 +3,12 @@ import '../../index.css';
 import Headerlogo from '../img/Logo3.png';
 import Web3 from 'web3';
 const onClickConnect = async () => {
-  try {
-    if(window.ethereum) {
-      window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
-    }
-  } catch (error) {
-    console.error(error);
-  }
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const account = accounts[0];
+  console.log(account);
 };
 const Navbar = () => {
-
+  
   
 
     return (
