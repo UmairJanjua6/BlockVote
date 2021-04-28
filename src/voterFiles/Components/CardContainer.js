@@ -13,6 +13,7 @@ const CardContainer = () => {
       <Button className="btnUser" onClick= {() => {history.push("/userlogin")}} >User Login</Button>
       <br/>
       <Button className="btnAdmin" onClick= {() => {history.push("/adminlogin")}}>Admin Login</Button>
+      
     </div>
   )
 }

@@ -1,10 +1,21 @@
 import React from 'react';
 import '../../index.css';
 import Headerlogo from '../img/Logo3.png';
-import { useWallet, UseWalletProvider } from 'use-wallet';
-
+import Web3 from 'web3';
+const onClickConnect = async () => {
+  try {
+    if(window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 const Navbar = () => {
-    const wallet = useWallet();
+
+  
+
     return (
         <div className="Navbar">
           <div className="logo">
@@ -16,19 +27,10 @@ const Navbar = () => {
           </div>
 
           <div className="walletBtn" >
-          <button id="btn" onClick={() => wallet.connect()}>Connect Wallet</button>
-          </div>
+          <button id="btn" onClick={() => onClickConnect()}>Connect Wallet</button>
+           </div>
         </div>
     );
 }
-export default () => (
-    <UseWalletProvider
-      chainId={3}
-      connectors={{
-        // This is how connectors get configured
-        portis: { dAppId: 'my-dapp-id-123-xyz' },
-      }}
-    >
-      <Navbar />
-    </UseWalletProvider>
-  )
+
+export default Navbar;

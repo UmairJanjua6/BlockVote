@@ -8,7 +8,7 @@ import Navbar from './Components/Navbar.js';
 import '.././index.css';
 import User from './Components/User.js';
 import VoterRegister from './Components/VoterRegister.js';
-// import {ElectionTimeContext} from './context/ElectionTimeContext.js';
+import {ElectionTimeContext} from './context/ElectionTimeContext.js';
 function Voter() {
   const [canVote, setCanVote] = useState(false);
   return (

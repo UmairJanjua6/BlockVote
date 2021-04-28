@@ -1,7 +1,16 @@
 import { Avatar, Container , Grid , Link } from "@material-ui/core";
 import React, { Component } from "react";
 import { Form , Button , Col} from "react-bootstrap";
+import web3 from 'web3';
+
 export default class VoterRegister extends Component {
+
+  
+async loadBlockchainData() {
+  const Web3 = window.web3
+    const accounts = await Web3.eth.getAccounts()
+    console.log(accounts);
+  }
     render() {
         return (
           <div >
