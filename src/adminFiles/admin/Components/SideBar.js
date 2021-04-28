@@ -90,13 +90,17 @@ export default  function SideBar() {
                 <ListItemIcon><HomeIcon/></ListItemIcon>
                 <ListItemText primary="Overview"/>
               </ListItem>
+              <ListItem button onClick={event =>  window.location.href='AddCandidate'} >
+              <ListItemIcon><VisibilityIcon/></ListItemIcon>
+                <ListItemText primary="Add Candidate"/>
+              </ListItem>
               <ListItem button onClick={event =>  window.location.href='CandidateList'} >
               <ListItemIcon>< ListIcon/></ListItemIcon>
                 <ListItemText primary="Candidate List"/>
               </ListItem>
-              <ListItem button onClick={event =>  window.location.href='AddCandidate'} >
-              <ListItemIcon><VisibilityIcon/></ListItemIcon>
-                <ListItemText primary="Add Candidate"/>
+              <ListItem button onClick={event =>  window.location.href='approvevoter'} >
+              <ListItemIcon><NotificationsIcon /></ListItemIcon>
+                <ListItemText primary="Approve Voters"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='ElectionStatus'} >
               <ListItemIcon><AccountBalanceIcon/></ListItemIcon>
