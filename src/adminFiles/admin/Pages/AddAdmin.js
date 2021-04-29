@@ -19,7 +19,7 @@ return(
 
     <div>
     <CssBaseline/>
-      <Header> </Header>
+    
     <SideBar></SideBar>
     <Toolbar/>
     <div >

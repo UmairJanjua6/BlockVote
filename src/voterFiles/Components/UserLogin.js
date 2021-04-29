@@ -5,7 +5,7 @@ import { useHistory} from 'react-router-dom';
 const UserLogin = () => {
     let history = useHistory();
     return (
-        <div>
+        <div style={{marginTop:'90px'}}> 
             <Button className="btnVoterLogin" onClick= {() => {history.push("/registervoter")}} >Voter Register</Button>
         </div>
     );

@@ -21,6 +21,7 @@ body {
     flex: 10%;
     display: flex;
     width: 150px;
+    
 }
 
 .Navbar .logo img {
@@ -42,6 +43,7 @@ body {
 .Navbar .title h2 {
     color:rgb(240, 185, 11);
 }
+
 
 .Navbar .walletBtn {
     flex: 35%;

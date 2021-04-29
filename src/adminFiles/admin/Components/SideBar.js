@@ -19,6 +19,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from "react-router-dom";
+import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +62,7 @@ export default  function SideBar() {
     <CssBaseline />
     
       <Drawer
+      position="fixed"
         className={classes.drawer}
         variant="permanent"
         classes={{
@@ -70,7 +72,7 @@ export default  function SideBar() {
         
         <Toolbar />
         <div className={classes.drawerContainer}>
-        <List>
+        <List style={{paddingTop:'20px'}}>
               
                 <ListItem>
                   <ListItemIcon>
@@ -79,7 +81,7 @@ export default  function SideBar() {
                   <ListItemText
                     primary="Welcome Admin"
                   />
-                </ListItem>,
+                </ListItem>
              
             </List>
           <Divider />
@@ -107,7 +109,7 @@ export default  function SideBar() {
                 <ListItemText primary="Update status of Election"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='DisplayResult'} >
-              <ListItemIcon><NotificationsIcon/></ListItemIcon>
+              <ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
                 <ListItemText primary="Display Result"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='AddAdmin'} >

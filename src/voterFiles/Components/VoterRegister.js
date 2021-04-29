@@ -19,7 +19,6 @@ async loadBlockchainData() {
             
               <Form.Group>
                 <div style={{textAlign:'center', alignItems:"center" }}>
-                  
                   <h2 >Register</h2>
                 </div>
                 </Form.Group>

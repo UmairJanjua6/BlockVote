@@ -2,7 +2,7 @@ import React from 'react';
 
 const AdminLogin = () => {
     return (
-        <div>
+        <div style={{marginTop:'90px'}}>
             Admin Login
         </div>
     );
