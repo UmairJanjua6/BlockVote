@@ -1,6 +1,6 @@
 
 import Web3 from "web3";
-import {CONTRACT_ADDRESS,CONTRACT_ABI } from './contract';
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from './contract';
 import { setupWeb3, setupContract, addEthereumAccounts, } from "./actions";
 
 
@@ -19,6 +19,12 @@ export const loadBlockchain = async (dispatch) => {
             dispatch(setupContract(contract));
             const accounts = await web3.eth.getAccounts();
             dispatch(addEthereumAccounts(accounts));
+            let voteraddresses = await contract.methods.getVoterAddress().call();
+            let addressesLength = voteraddresses.addressesLength
+            for (let i = 0; i < addressesLength; i++) {
+                let getVoterDetails = await contract.methods.getVoterInfo(voteraddresses[i]).call();
+                console.log(getVoterDetails);
+            }
         }
 
     }
@@ -27,5 +33,28 @@ export const loadBlockchain = async (dispatch) => {
         if (error.code === 4001) {
 
         }
+    }
+}
+
+export const addVoter = async (_voterAddress, name, cnic, voteConstituency, contract, accounts) => {
+    try {
+        const receipt = await contract.methods.addVoter(_voterAddress, name, cnic, voteConstituency).send({ from: accounts[0] });
+        console.log(receipt)
+    }
+    catch (error) {
+        console.log(error)
+
+    }
+}
+
+
+export const deleteVoter = async (_voterAddress, contract, accounts) => {
+    try {
+        const receipt = await contract.methods.deleteVoter(_voterAddress).send({ from: accounts[0] });
+        console.log(receipt)
+    }
+    catch (error) {
+        console.log(error)
+
     }
 }

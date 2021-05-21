@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Navbar = () => {
   const [{ web3 }, dispatch] = useStore();
+  console.log(web3)
   const handleWeb3 = useCallback(async () => {
     loadBlockchain(dispatch);
+    console.log("web3")
   }, []);
   
   const classes = useStyles();
