@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useEffect, useCallback, useState } from "react";
 import '../../index.css';
 import Headerlogo from '../img/Logo3.png';
 import Web3 from 'web3';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-const onClickConnect = async () => {
-  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-  const account = accounts[0];
-  console.log(account);
-};
+import {loadBlockchain} from '../context/async';
+import { useStore } from "../context/GlobalState";
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Navbar = () => {
+  const [{ web3 }, dispatch] = useStore();
+  const handleWeb3 = useCallback(async () => {
+    loadBlockchain(dispatch);
+  }, []);
   
   const classes = useStyles();
 
@@ -38,7 +41,7 @@ const Navbar = () => {
           </div>
 
           <div className="walletBtn" >
-          <button id="btn" onClick={() => onClickConnect()}>Connect Wallet</button>
+          <button id="btn" onClick={handleWeb3}>Connect Wallet</button>
            </div>
         </div>
         </AppBar>
