@@ -715,35 +715,46 @@ contract Election is ERC1155("BlockVote Token"){
             bool isVoter;
         }
         
-        mapping(address => Voter) voterList;
+        mapping(address => Voter) internal voterList;
         address[] voterAddressArray;
         
         /**
      * Function to add voter information into 'Voter List'
      **/
         function addVoter(address _voterAddress, string memory _name, uint256 _cnic,uint256  _voteConstituency) public returns (bool) {
-            voterList[_voterAddress].voterName = _name;
-            voterList[_voterAddress].cnic = _cnic;
-            voterList[_voterAddress].voteConstituency = _voteConstituency;
-            return true;
+            require(_voterAddress != address(0), "invalid address");
+            bool check;
+            Voter[] memory voter = voterList[_voterAddress];
+            if(voter.length == 0) {
+            voterList[_voterAddress].push(Voter(_name, _cnic, _voteConstituency, false, true));
+            voterAddressArray.push(_voterAddress);
+            check = true;
+            }
+            else{
+                check = false;
+            }
+            return check;
+        }
+        
+        /**
+     * Function to get all voter addresses
+     **/
+        function getVoterAddress() public view returns(address[] memory) {
+          return voterAddressArray;
         }
         
         /**
      * Function to get Voter Information from 'Voter List'
      **/
-        function getVoterInfo() public view returns(Voter[] memory) {
-            uint index = voterAddressArray.length;
-            Voter[] memory voter;
-            for(uint i=0; i < index; i++) {
-                voter = voterList[voterAddressArray[i]];
-            }
+        function getVoterInfo(address _voterAddress) public view returns(Voter[] memory) {
+            Voter[] memory voter = voterList[_voterAddress];
             return voter;
         }
         
         /**
      * Function to delete Voter from 'Voter List'
      **/
-        function deleteVoter(address _voterAddress) public onlyOwner returns (bool) {
+        function deleteVoter(address _voterAddress) public returns (bool) {
             delete voterList[_voterAddress];
             return true;
         }
