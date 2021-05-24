@@ -26,9 +26,9 @@ export const addCandidateInfo = (_conNum, _candidateAddress, _name) => {
     };
 }
 
-export const getCandidateInfo = (_conNum) => {
+export const getCandidateInfo = (candidateListArray) => {
     return {
         type: 'GET_CANDIDATE_INFO',
-        payload: _conNum
+        payload: candidateListArray
     }
 }

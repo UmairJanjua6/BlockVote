@@ -1,7 +1,7 @@
 
 import Web3 from "web3";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './contract';
-import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo} from "./actions";
+import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo, getCandidateInfo} from "./actions";
 
 
 
@@ -70,4 +70,13 @@ export const addCandidate = async (_conNum, _candidateAddress, _name,accounts, c
     }
 }
 
-
+export const getCandidatesInConsi = async (_conNum, contract, accounts, dispatch) => {
+    try {
+        var candidateList = [];
+        candidateList = await contract.methods.getCandidatesInConsi(_conNum).call({ from: accounts[0]});
+        dispatch(getCandidateInfo(candidateList));
+    }
+    catch (error) {
+        console.log("error: ", error);
+    }
+}
