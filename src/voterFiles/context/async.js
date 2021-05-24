@@ -1,7 +1,7 @@
 
 import Web3 from "web3";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './contract';
-import { setupWeb3, setupContract, addEthereumAccounts, } from "./actions";
+import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo} from "./actions";
 
 
 
@@ -58,3 +58,16 @@ export const deleteVoter = async (_voterAddress, contract, accounts) => {
 
     }
 }
+
+export const addCandidate = async (_conNum, _candidateAddress, _name,accounts, contract, dispatch) => {
+    try {
+        const receipt = await contract.methods.addCandidate(_conNum, _candidateAddress, _name).send({from: accounts[0]});
+        dispatch(addCandidateInfo(_conNum, _candidateAddress, _name));
+        console.log("receipt: " + receipt);
+    }
+    catch (error) {
+        console.log("error: " + error);
+    }
+}
+
+

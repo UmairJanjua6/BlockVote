@@ -17,6 +17,18 @@ export default (state, action) => {
           ...state,
           accounts: action.payload
         }
+
+        case 'ADD_CANDIDATE_INFO':
+          return {
+            ...state,
+            addCandidateInfo: action.payload
+          }
+
+          case 'GET_CANDIDATE_INFO':
+            return {
+              ...state,
+              getCandidateInfo: action.payload
+            }
         default: 
         return state;
     }

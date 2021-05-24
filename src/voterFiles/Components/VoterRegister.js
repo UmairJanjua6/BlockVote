@@ -1,19 +1,19 @@
 import { Avatar, Container , Grid , Link } from "@material-ui/core";
-import React, { Component } from "react";
+import React, { useCallback } from "react";
 import { Form , Button , Col} from "react-bootstrap";
-import web3 from 'web3';
+import {useStore} from '../context/GlobalState';
+import {loadBlockchain} from '../context/async';
 
-export default class VoterRegister extends Component {
+const VoterRegister = () => {
 
-  
-async loadBlockchainData() {
-  const Web3 = window.web3
-    const accounts = await Web3.eth.getAccounts()
-    console.log(accounts);
-  }
-    render() {
+const [{ accounts }, dispatch] = useStore();
+const handleWeb3 = useCallback(async () => {
+  loadBlockchain(dispatch);
+  console.log("accounts")
+}, []);
+
         return (
-          <div >
+          <div onLoad={handleWeb3}>
             <Container maxWidth="xs" style={{ marginTop:'100px'}} >
             <Form>
             
@@ -46,7 +46,7 @@ async loadBlockchainData() {
   </Form.Group>
   <Form.Group>
     <Form.Label>Voter Ethereum Address</Form.Label>
-    <Form.Control placeholder="Connect your Wallet" disabled />
+    <Form.Control placeholder={accounts} disabled />
   </Form.Group>
                 <Form.Group>
                     <Form.Label> Fingerprint Scan </Form.Label>
@@ -61,4 +61,5 @@ async loadBlockchainData() {
             </div>
         );
     }
-}
+
+    export default VoterRegister;
