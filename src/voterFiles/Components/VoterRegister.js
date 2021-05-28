@@ -1,21 +1,30 @@
-import { Avatar, Container , Grid , Link } from "@material-ui/core";
-import React, { useCallback } from "react";
+import {Container} from "@material-ui/core";
+import React, { useState } from "react";
 import { Form , Button , Col} from "react-bootstrap";
 import {useStore} from '../context/GlobalState';
-import {loadBlockchain} from '../context/async';
+import {addVoter} from '../context/async';
 
 const VoterRegister = () => {
 
-const [{ accounts }, dispatch] = useStore();
-const handleWeb3 = useCallback(async () => {
-  loadBlockchain(dispatch);
-  console.log("accounts")
-}, []);
+const[name, setName] = useState("");
+const[cnic, setCnic] = useState();
+const[constituency, setConstituency] = useState();
+const [address, setAddress] = useState();
+const [{ accounts, contract }, dispatch] = useStore();
+
+const addVoterFunc = async () => {
+  try {
+    await addVoter(address, name, cnic, constituency, contract, accounts, dispatch);
+  }
+  catch(error) {
+    console.log("error: ", error);
+  }
+};
 
         return (
-          <div onLoad={handleWeb3}>
+          <div>
             <Container maxWidth="xs" style={{ marginTop:'100px'}} >
-            <Form>
+            <Form onSubmit={addVoterFunc}>
             
               <Form.Group>
                 <div style={{textAlign:'center', alignItems:"center" }}>
@@ -25,17 +34,17 @@ const handleWeb3 = useCallback(async () => {
                 <Form.Row>
                 <Form.Group as={Col}  controlId="VoterName">
                 <Form.Label>Name</Form.Label>
-                <Form.Control  pattern="[A-Za-z]{1-30}" type="name" placeholder="Enter your Name" />
+                <Form.Control   value={name} onChange={(e) => setName(e.target.value)} type="name" placeholder="Enter your Name" />
                 </Form.Group>
                 <Form.Group as={Col} >
                     <Form.Label> CNIC </Form.Label>
-                    <Form.Control pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}" type="cnic" placeholder="Enter your CNIC"></Form.Control>
+                    <Form.Control pattern="[0-9]{13}" value={cnic} onChange={(e) => setCnic(e.target.value)} type="cnic" placeholder="Enter your CNIC"></Form.Control>
                 </Form.Group>
                 </Form.Row>
                 
   <Form.Group>
   <Form.Label>Select Constituency</Form.Label>
-  <Form.Control as="select" >
+  <Form.Control as="select" value={constituency} onChange={(e) => setConstituency(e.target.value)}>
   <option value="0">Choose...</option>
     <option value="1">Constituency 1</option>
     <option value="2">Constituency 2</option>
@@ -46,7 +55,7 @@ const handleWeb3 = useCallback(async () => {
   </Form.Group>
   <Form.Group>
     <Form.Label>Voter Ethereum Address</Form.Label>
-    <Form.Control placeholder={accounts} disabled />
+    <Form.Control placeholder= "Ethereum wallet address" value = {address}  onChange={(e) => setAddress(e.target.value)} />
   </Form.Group>
                 <Form.Group>
                     <Form.Label> Fingerprint Scan </Form.Label>

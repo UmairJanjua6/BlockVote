@@ -32,3 +32,17 @@ export const getCandidateInfo = (candidateListArray) => {
         payload: candidateListArray
     }
 }
+
+export const addVoterInfo = (voterInfo) => {
+    return {
+        type: 'ADD_VOTER',
+        payload: voterInfo
+    }
+}
+
+export const getVoterData = (voterList) => {
+    return {
+        type: 'GET_VOTER_LIST',
+        payload: voterList
+    }
+}

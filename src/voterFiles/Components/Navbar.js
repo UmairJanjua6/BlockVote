@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useCallback} from "react";
 import '../../index.css';
 import Headerlogo from '../img/Logo3.png';
-import Web3 from 'web3';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import {loadBlockchain} from '../context/async';

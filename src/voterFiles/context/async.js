@@ -1,7 +1,6 @@
-
 import Web3 from "web3";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './contract';
-import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo, getCandidateInfo} from "./actions";
+import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo, getCandidateInfo, addVoterInfo, getVoterData} from "./actions";
 
 
 
@@ -19,12 +18,8 @@ export const loadBlockchain = async (dispatch) => {
             dispatch(setupContract(contract));
             const accounts = await web3.eth.getAccounts();
             dispatch(addEthereumAccounts(accounts));
-            let voteraddresses = await contract.methods.getVoterAddress().call();
-            let addressesLength = voteraddresses.addressesLength
-            for (let i = 0; i < addressesLength; i++) {
-                let getVoterDetails = await contract.methods.getVoterInfo(voteraddresses[i]).call();
-                console.log(getVoterDetails);
-            }
+            // let voteraddresses = await contract.methods.getVoterAddress().call();
+            
         }
 
     }
@@ -36,10 +31,11 @@ export const loadBlockchain = async (dispatch) => {
     }
 }
 
-export const addVoter = async (_voterAddress, name, cnic, voteConstituency, contract, accounts) => {
+export const addVoter = async (address, name, cnic, constituency, contract, accounts, dispatch) => {
     try {
-        const receipt = await contract.methods.addVoter(_voterAddress, name, cnic, voteConstituency).send({ from: accounts[0] });
-        console.log(receipt)
+        const receipt = await contract.methods.addVoter(address, name, cnic, constituency).send({ from: accounts[0] });
+        dispatch(addVoterInfo(address, name, cnic, constituency));
+        console.log("aynce voter info: ", receipt);
     }
     catch (error) {
         console.log(error)
@@ -47,6 +43,23 @@ export const addVoter = async (_voterAddress, name, cnic, voteConstituency, cont
     }
 }
 
+export const getVoterList = async (dispatch) => {
+    try {
+        const web3 = new Web3(Web3.givenProvider);
+        const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+        const accounts = await web3.eth.getAccounts();
+        let voterArray = [];
+        voterArray = await contract.methods.getVoterAddress().call({ from: accounts[0]});
+        let addressesLength = voterArray.length;
+            for (let i = 0; i < addressesLength; i++) {
+                let getVoterDetails = await contract.methods.getVoterInfo(voterArray[i]).call();
+                dispatch(getVoterData(getVoterDetails));
+            }
+    }
+    catch(error) {
+        console.log("error: ", error);
+    }
+}
 
 export const deleteVoter = async (_voterAddress, contract, accounts) => {
     try {
@@ -75,6 +88,7 @@ export const getCandidatesInConsi = async (_conNum, contract, accounts, dispatch
         var candidateList = [];
         candidateList = await contract.methods.getCandidatesInConsi(_conNum).call({ from: accounts[0]});
         dispatch(getCandidateInfo(candidateList));
+        console.log("array: ", candidateList);
     }
     catch (error) {
         console.log("error: ", error);

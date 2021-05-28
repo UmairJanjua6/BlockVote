@@ -1,6 +1,6 @@
-import { Box, Container, Toolbar, Typography } from '@material-ui/core';
+import { Box, Toolbar } from '@material-ui/core';
 import React, { useState } from 'react';
-import { Card, Dropdown } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import SideBar from '../Components/SideBar';
 import avatarImg from '../../../voterFiles/img/avatar.png';
@@ -13,6 +13,9 @@ const CandidateList = () => {
     const [consNum, setConsNum] = useState();
     console.log("consNum: ", consNum);
     const [{ contract, accounts, getCandidateInfo }, dispatch] = useStore();
+    console.log("data: ", contract, accounts);
+    console.log("info: ", getCandidateInfo);
+    console.log("consNum: ", consNum);
 
     const getCandidateData = async () => {
         try {
@@ -23,7 +26,7 @@ const CandidateList = () => {
         }
     }
 
-    let renderCard = (card, index) => {
+    const renderCard = (card, index) => {
         return (
             <Card style={{ width: '18rem' }} key={index} className="box">
                 <Card.Img variant="top" src="holder.js/100px180" src={avatarImg} />

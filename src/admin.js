@@ -1,6 +1,6 @@
 import React from 'react'
 import './adminFiles/App.css';
-import {Switch, Route , Router} from "react-router-dom"
+import {Switch, Route} from "react-router-dom"
 
 import Dashboard from './adminFiles/admin/AdminDashboard'
 import AddCandidate from './adminFiles/admin/Pages/AddCandidate';

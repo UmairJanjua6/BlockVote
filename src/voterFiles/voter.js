@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import CardContainer from './Components/CardContainer.js';
 import UserLogin from './Components/UserLogin.js';
@@ -8,9 +8,9 @@ import Navbar from './Components/Navbar.js';
 import '.././index.css';
 import User from './Components/User.js';
 import VoterRegister from './Components/VoterRegister.js';
-import {ElectionTimeContext} from './context/ElectionTimeContext.js';
+// import {ElectionTimeContext} from './context/ElectionTimeContext.js';
 function Voter() {
-  const [canVote, setCanVote] = useState(false);
+  // const [canVote, setCanVote] = useState(false);
   return (
     <div className="container-fluid">
       <Navbar/>
