@@ -46,3 +46,10 @@ export const getVoterData = (voterList) => {
         payload: voterList
     }
 }
+
+export const mintVotesDispatch = (mintNewVotes) => {
+    return {
+        type: 'MINT_VOTE',
+        payload: mintNewVotes
+    }
+}

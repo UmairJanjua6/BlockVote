@@ -9,6 +9,7 @@ import DisplayResult from './adminFiles/admin/Pages/Result';
 import CandidateList from './adminFiles/admin/Pages/CandidateList';
 import AddAdmin from './adminFiles/admin/Pages/AddAdmin';
 import VoterApproval from './adminFiles/admin/Pages/voterApproval';
+import Setting from './adminFiles/admin/Pages/Setting';
 function Admin() {
   return (
   
@@ -20,6 +21,7 @@ function Admin() {
       <Route exact path= "/approvevoter" component ={VoterApproval} />
       <Route exact path="/electionstatus" component ={ElectionStatus} />
       <Route exact path="/displayresult" component ={DisplayResult} />
+      <Route exact path="/setting" component ={Setting} />
       <Route exact path="/addadmin" component ={AddAdmin} />
     </Switch>
  

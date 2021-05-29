@@ -27,8 +27,8 @@ export default (state, action) => {
           case 'GET_CANDIDATE_INFO':
             return {
               ...state,
-              getCandidateInfo: action.payload
-            }
+              getCandidateInfo: action.payload         
+              }
           case 'ADD_VOTER':
             return {
               ...state,
@@ -39,6 +39,11 @@ export default (state, action) => {
                 ...state,
                 getVoterData: action.payload
               }
+              case 'MINT_VOTE':
+                return {
+                  ...state,
+                  mintVotesDispatch: action.payload
+                }
         default: 
         return state;
     }

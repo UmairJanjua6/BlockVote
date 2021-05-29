@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './contract';
-import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo, getCandidateInfo, addVoterInfo, getVoterData} from "./actions";
+import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo, getCandidateInfo, addVoterInfo, getVoterData, mintVotesDispatch} from "./actions";
 
 
 
@@ -16,10 +16,10 @@ export const loadBlockchain = async (dispatch) => {
             dispatch(setupWeb3(web3));
             const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
             dispatch(setupContract(contract));
+            // sessionStorage.setItem("contract", JSON.stringify(contract));
             const accounts = await web3.eth.getAccounts();
             dispatch(addEthereumAccounts(accounts));
-            // let voteraddresses = await contract.methods.getVoterAddress().call();
-            
+            // sessionStorage.setItem("accounts", JSON.stringify(accounts));
         }
 
     }
@@ -51,9 +51,13 @@ export const getVoterList = async (dispatch) => {
         let voterArray = [];
         voterArray = await contract.methods.getVoterAddress().call({ from: accounts[0]});
         let addressesLength = voterArray.length;
+        console.log("length: ", addressesLength);
+        let getVoterDetails = [];
             for (let i = 0; i < addressesLength; i++) {
-                let getVoterDetails = await contract.methods.getVoterInfo(voterArray[i]).call();
+                getVoterDetails[i] = await contract.methods.getVoterInfo(voterArray[i]).call();
                 dispatch(getVoterData(getVoterDetails));
+                sessionStorage.setItem("voterArray", getVoterDetails);
+                // console.log("voter ", i, " data: ", getVoterDetails);
             }
     }
     catch(error) {
@@ -72,11 +76,14 @@ export const deleteVoter = async (_voterAddress, contract, accounts) => {
     }
 }
 
-export const addCandidate = async (_conNum, _candidateAddress, _name,accounts, contract, dispatch) => {
+export const addCandidate = async (_conNum, _candidateAddress, _name, contract, accounts, dispatch) => {
     try {
+        console.log("cani data:", _conNum, _candidateAddress, _name);
+        console.log("dataaaa: ", contract, accounts);
         const receipt = await contract.methods.addCandidate(_conNum, _candidateAddress, _name).send({from: accounts[0]});
         dispatch(addCandidateInfo(_conNum, _candidateAddress, _name));
         console.log("receipt: " + receipt);
+        console.log("AC after");
     }
     catch (error) {
         console.log("error: " + error);
@@ -92,5 +99,16 @@ export const getCandidatesInConsi = async (_conNum, contract, accounts, dispatch
     }
     catch (error) {
         console.log("error: ", error);
+    }
+}
+
+export const mintVotes = async (_conNum, _totalVotes, _uri, _id, _data, accounts, contract, dispatch) => {
+    try {
+        const receipt = await contract.methods.mint(_conNum, _totalVotes, _uri, _id, _data).send({from: accounts[0]});
+        dispatch(mintVotesDispatch(_conNum, _totalVotes, _uri, _id, _data));
+        console.log("receipt: " + receipt);
+    }
+    catch (error) {
+        console.log("error: " + error);
     }
 }

@@ -1,4 +1,6 @@
+import React, { useState, useEffect } from 'react';
 import { Toolbar, Box } from "@material-ui/core"
+import {Button } from "react-bootstrap";
 import SideBar from "../Components/SideBar"
 import { makeStyles } from '@material-ui/core/styles';
 import * as ReactBootStrap from 'react-bootstrap';
@@ -13,13 +15,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VoterApproval() {
+const VoterApproval = () => {
   const [{ contract, accounts, getVoterData }, dispatch] = useStore();
-  console.log("outer voter data: ", getVoterData);
+  const [VoterDataState, setVoterDataState] = useState([]);
+  // console.log("contract", contract);
 
-  const clickFunc = async () => {
+  useEffect( () => {
+        loadBlockchain(dispatch);
+    }, []);
+
+  const loadData = () => {
+    getList();
+    changeState();
+  }
+  const getList = async () => {
     await getVoterList(dispatch);
   }
+
+  const changeState = () => {
+    if(getVoterData != null) {
+      setVoterDataState(getVoterData);
+    }
+  
+  }
+  
+  console.log("voter state: ", VoterDataState);
   const classes = useStyles();
 
   const renderVoterList = (voter, index) => {
@@ -40,21 +60,19 @@ export default function VoterApproval() {
         <main className={classes.content}>
           <Box maxWidth="md" style={{ paddingLeft: '250px' }}>
             <h1>Approve the Voter</h1>
-            <button onClick={clickFunc}>Click!</button>
+            <button onClick={loadData}>Click!</button>
             <ReactBootStrap.Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Name</th>
                   <th>cnic</th>
                   <th>Constituency</th>
+                  <th>Approve</th>
                 </tr>
               </thead>
               <tbody>
-                {/* {getVoterData.map(renderVoterList)} */}
-                
-                <th>{getVoterData.voterName}</th>
-                <th>{getVoterData.cnic}</th>
-                <th>{getVoterData.voteConstituency}</th>
+                {VoterDataState.map(renderVoterList)}
+                {/* <Button variant="primary"  className="btn btn-dark " >Approve</Button> */}
               </tbody>
             </ReactBootStrap.Table>
           </Box>
@@ -63,3 +81,5 @@ export default function VoterApproval() {
     </div>
   );
 }
+
+export default VoterApproval;

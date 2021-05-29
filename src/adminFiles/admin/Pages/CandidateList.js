@@ -1,22 +1,38 @@
 import { Box, Toolbar } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import SideBar from '../Components/SideBar';
 import avatarImg from '../../../voterFiles/img/avatar.png';
 import { useStore } from '../../../voterFiles/context/GlobalState';
 import { getCandidatesInConsi } from '../../../voterFiles/context/async';
+import { loadBlockchain } from '../../../voterFiles/context/async';
 import '../../App.css';
 
 
 const CandidateList = () => {
+    
     const [consNum, setConsNum] = useState();
+    const [candidateData, setCandidateData] = useState([]);
     console.log("consNum: ", consNum);
     const [{ contract, accounts, getCandidateInfo }, dispatch] = useStore();
+    useEffect( () => {
+        loadBlockchain(dispatch);
+    }, []);
     console.log("data: ", contract, accounts);
-    console.log("info: ", getCandidateInfo);
     console.log("consNum: ", consNum);
 
+    const clickFunc = () => {
+        dataState();
+        getCandidateData();
+
+    }
+    const dataState = () => {
+        if(getCandidateInfo != null) {
+            setCandidateData(getCandidateInfo);
+        }
+    }
+        console.log("info state: ", candidateData);
     const getCandidateData = async () => {
         try {
             await getCandidatesInConsi(consNum, contract, accounts, dispatch);
@@ -25,6 +41,7 @@ const CandidateList = () => {
             console.log("addCandidate error: ", error);
         }
     }
+    
 
     const renderCard = (card, index) => {
         return (
@@ -50,9 +67,9 @@ const CandidateList = () => {
                         <option value="2" selected>2</option>
                         <option value="3">3</option>
                     </select>
-                    <Button variant="secondary" onClick={getCandidateData}>Search</Button>
+                    <Button variant="secondary" onClick={clickFunc}>Search</Button>
                     <div className="grid" display="flex" >
-                        {getCandidateInfo.map(renderCard)}
+                        {candidateData.map(renderCard)}
                     </div>
                 </Box>
             </main>
