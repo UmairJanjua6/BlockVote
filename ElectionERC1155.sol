@@ -655,7 +655,6 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
 implemetation of new token
 */
 contract Election is ERC1155("BlockVote Token"){
-    
     event addVoterEvent(string name, uint256 cnic, uint256 constituency, address voterAddress, bool isVoter, bool authorize);
     event addCandidateEvent(uint256 constituency, address candidateAddress, string name);
     struct constituencyVotes{
@@ -672,8 +671,6 @@ contract Election is ERC1155("BlockVote Token"){
             idToVotes[_id]=token;
             _mint( owner,  _id,  _totalVotes,  data);
             ownersToken[owner].push(_id);
-
-
         }
         function tokensOfOwner(address owner)public view returns(uint[]memory){
             return ownersToken[owner];
@@ -715,25 +712,16 @@ contract Election is ERC1155("BlockVote Token"){
             bool isVoter;
         }
         
-        mapping(address => Voter) internal voterList;
+        mapping(address => Voter[]) voterList;
         address[] voterAddressArray;
         
         /**
      * Function to add voter information into 'Voter List'
      **/
         function addVoter(address _voterAddress, string memory _name, uint256 _cnic,uint256  _voteConstituency) public returns (bool) {
-            require(_voterAddress != address(0), "invalid address");
-            bool check;
-            Voter[] memory voter = voterList[_voterAddress];
-            if(voter.length == 0) {
             voterList[_voterAddress].push(Voter(_name, _cnic, _voteConstituency, false, true));
             voterAddressArray.push(_voterAddress);
-            check = true;
-            }
-            else{
-                check = false;
-            }
-            return check;
+            return true;
         }
         
         /**
@@ -747,8 +735,7 @@ contract Election is ERC1155("BlockVote Token"){
      * Function to get Voter Information from 'Voter List'
      **/
         function getVoterInfo(address _voterAddress) public view returns(Voter[] memory) {
-            Voter[] memory voter = voterList[_voterAddress];
-            return voter;
+            return voterList[_voterAddress];
         }
         
         /**
@@ -796,16 +783,16 @@ contract Election is ERC1155("BlockVote Token"){
         function authorizeVoter(address _voterAddress, uint256 _id, bytes memory _data) public onlyOwner {
             //send 1 token to voter address
             safeTransferFrom(owner, _voterAddress, _id, 1, _data);
-            voterList[_voterAddress].authorize = true;
+            voterList[_voterAddress][0].authorize = true;
         }
         
         function vote(address _candidateAddress, uint256 _voteConstituency, bytes memory _data) public returns(bool) {
             require(msg.sender != address(0), "cannot provide zero address of voter");
             require(_candidateAddress != address(0), "cannot provide zero address of candidate");
-            require(voterList[msg.sender].authorize != false, "You are not authorize to vote");
+            require(voterList[msg.sender][0].authorize != false, "You are not authorize to vote");
             
             safeTransferFrom(msg.sender, _candidateAddress, _voteConstituency, 1, _data);
-            voterList[msg.sender].authorize = false;
+            voterList[msg.sender][0].authorize = false;
             return true;
         }
 }
