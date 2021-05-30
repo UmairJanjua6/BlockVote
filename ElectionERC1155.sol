@@ -712,14 +712,18 @@ contract Election is ERC1155("BlockVote Token"){
             bool isVoter;
         }
         
-        mapping(address => Voter[]) voterList;
+        mapping(address => Voter) voterList;
         address[] voterAddressArray;
         
         /**
      * Function to add voter information into 'Voter List'
      **/
         function addVoter(address _voterAddress, string memory _name, uint256 _cnic,uint256  _voteConstituency) public returns (bool) {
-            voterList[_voterAddress].push(Voter(_name, _cnic, _voteConstituency, false, true));
+            voterList[_voterAddress].voterName = _name;
+            voterList[_voterAddress].cnic = _cnic;
+            voterList[_voterAddress].voteConstituency = _voteConstituency;
+            voterList[_voterAddress].authorize = false;
+            voterList[_voterAddress].isVoter = true;
             voterAddressArray.push(_voterAddress);
             return true;
         }
@@ -734,15 +738,20 @@ contract Election is ERC1155("BlockVote Token"){
         /**
      * Function to get Voter Information from 'Voter List'
      **/
-        function getVoterInfo(address _voterAddress) public view returns(Voter[] memory) {
+        function getVoterInfo(address _voterAddress) public view returns(Voter memory) {
             return voterList[_voterAddress];
         }
         
         /**
      * Function to delete Voter from 'Voter List'
      **/
-        function deleteVoter(address _voterAddress) public returns (bool) {
+        function deleteVoter(address _voterAddress, uint256 index) public returns (bool) {
+            require(index < voterAddressArray.length);
+            voterAddressArray[index] = voterAddressArray[voterAddressArray.length - 1];
+            voterAddressArray.pop();
             delete voterList[_voterAddress];
+            
+            
             return true;
         }
         
@@ -783,16 +792,16 @@ contract Election is ERC1155("BlockVote Token"){
         function authorizeVoter(address _voterAddress, uint256 _id, bytes memory _data) public onlyOwner {
             //send 1 token to voter address
             safeTransferFrom(owner, _voterAddress, _id, 1, _data);
-            voterList[_voterAddress][0].authorize = true;
+            voterList[_voterAddress].authorize = true;
         }
         
         function vote(address _candidateAddress, uint256 _voteConstituency, bytes memory _data) public returns(bool) {
             require(msg.sender != address(0), "cannot provide zero address of voter");
             require(_candidateAddress != address(0), "cannot provide zero address of candidate");
-            require(voterList[msg.sender][0].authorize != false, "You are not authorize to vote");
+            require(voterList[msg.sender].authorize != false, "You are not authorize to vote");
             
             safeTransferFrom(msg.sender, _candidateAddress, _voteConstituency, 1, _data);
-            voterList[msg.sender][0].authorize = false;
+            voterList[msg.sender].authorize = false;
             return true;
         }
 }
