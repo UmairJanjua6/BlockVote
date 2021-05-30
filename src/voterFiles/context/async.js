@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './contract';
-import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo, getCandidateInfo, addVoterInfo, getVoterData, mintVotesDispatch} from "./actions";
+import { setupWeb3, setupContract, addEthereumAccounts, addCandidateInfo, getCandidateInfo, addVoterInfo, authorizeVote, voterListArray, getVoterData, mintVotesDispatch} from "./actions";
 
 
 
@@ -16,10 +16,8 @@ export const loadBlockchain = async (dispatch) => {
             dispatch(setupWeb3(web3));
             const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
             dispatch(setupContract(contract));
-            // sessionStorage.setItem("contract", JSON.stringify(contract));
             const accounts = await web3.eth.getAccounts();
             dispatch(addEthereumAccounts(accounts));
-            // sessionStorage.setItem("accounts", JSON.stringify(accounts));
         }
 
     }
@@ -43,21 +41,16 @@ export const addVoter = async (address, name, cnic, constituency, contract, acco
     }
 }
 
-export const getVoterList = async (dispatch) => {
+export const getVoterList = async (dispatch, contract, accounts) => {
     try {
-        const web3 = new Web3(Web3.givenProvider);
-        const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-        const accounts = await web3.eth.getAccounts();
         let voterArray = [];
         voterArray = await contract.methods.getVoterAddress().call({ from: accounts[0]});
+        dispatch(voterListArray(voterArray));
         let addressesLength = voterArray.length;
-        console.log("length: ", addressesLength);
         let getVoterDetails = [];
             for (let i = 0; i < addressesLength; i++) {
                 getVoterDetails[i] = await contract.methods.getVoterInfo(voterArray[i]).call();
                 dispatch(getVoterData(getVoterDetails));
-                sessionStorage.setItem("voterArray", getVoterDetails);
-                // console.log("voter ", i, " data: ", getVoterDetails);
             }
     }
     catch(error) {
@@ -65,9 +58,20 @@ export const getVoterList = async (dispatch) => {
     }
 }
 
-export const deleteVoter = async (_voterAddress, contract, accounts) => {
+export const authorizeVoter = async(_voterAddress, _id, contract, accounts, dispatch) => {
     try {
-        const receipt = await contract.methods.deleteVoter(_voterAddress).send({ from: accounts[0] });
+        const receipt = await contract.methods.authorizeVoter(_voterAddress, _id, "0x00").send({ from: accounts[0]});
+        dispatch(authorizeVote(authorizeVoter));
+        console.log("receipt: " + receipt);
+    }
+    catch(error) {
+        console.log("error: ", error);
+    }
+}
+
+export const deleteVoter = async (_voterAddress, _index, contract, accounts) => {
+    try {
+        const receipt = await contract.methods.deleteVoter(_voterAddress, _index).send({ from: accounts[0] });
         console.log(receipt)
     }
     catch (error) {

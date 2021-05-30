@@ -53,3 +53,17 @@ export const mintVotesDispatch = (mintNewVotes) => {
         payload: mintNewVotes
     }
 }
+
+export const voterListArray = (voterArrayList) => {
+    return {
+        type: 'VOTER_LIST_ARRAY',
+        payload: voterArrayList
+    }
+}
+
+export const authorizeVote = (authorizeVoter) => {
+    return {
+        type: 'AUTHORIZE_VOTE',
+        payload: authorizeVoter
+    }
+}
