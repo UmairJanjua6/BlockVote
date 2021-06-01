@@ -42,7 +42,7 @@ export default (state, action) => {
     case 'MINT_VOTE':
       return {
         ...state,
-        mintVotesDispatch: action.payload,
+        mintNewVote: action.payload,
       };
     case 'VOTER_LIST_ARRAY':
       return {

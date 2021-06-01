@@ -31,13 +31,6 @@ export default function AddCandidate() {
   useEffect ( () => {
     loadBlockchain(dispatch);
     console.log("handle");
-    // let account = sessionStorage.getItem("accounts");
-    // account = JSON.parse(account);
-    // setAccounts(account);
-    // let contract = sessionStorage.getItem("contract");
-    // contract = JSON.parse(contract);
-    // setContracts(contract);
-    // console.log("asdasdasaaa: ", account, contract);
   }, []);
   
 

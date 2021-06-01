@@ -93,11 +93,11 @@ export default  function SideBar() {
                 <ListItemText primary="Overview"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='AddCandidate'} >
-              <ListItemIcon><VisibilityIcon/></ListItemIcon>
+              <ListItemIcon><ListIcon/></ListItemIcon>
                 <ListItemText primary="Add Candidate"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='CandidateList'} >
-              <ListItemIcon>< ListIcon/></ListItemIcon>
+              <ListItemIcon>< VisibilityIcon/></ListItemIcon>
                 <ListItemText primary="Candidate List"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='approvevoter'} >
@@ -112,9 +112,9 @@ export default  function SideBar() {
               <ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
                 <ListItemText primary="Display Result"/>
               </ListItem>
-              <ListItem button onClick={event =>  window.location.href='AddAdmin'} >
+              <ListItem button onClick={event =>  window.location.href='mintvote'} >
               <ListItemIcon><AddIcon/></ListItemIcon>
-                <ListItemText primary="Add New Admin"/>
+                <ListItemText primary="Mint Votes"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='#'} >
               <ListItemIcon><SettingsIcon/></ListItemIcon>
