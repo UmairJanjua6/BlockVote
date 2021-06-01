@@ -47,13 +47,6 @@ export const getVoterData = (voterList) => {
     }
 }
 
-export const mintNewVote = (mintNewVotes) => {
-    return {
-        type: 'MINT_VOTE',
-        payload: mintNewVotes
-    }
-}
-
 export const voterListArray = (voterArrayList) => {
     return {
         type: 'VOTER_LIST_ARRAY',
@@ -65,5 +58,47 @@ export const authorizeVote = (authorizeVoter) => {
     return {
         type: 'AUTHORIZE_VOTE',
         payload: authorizeVoter
+    }
+}
+
+export const idToVote1 = (voteId) => {
+    return {
+        type: 'ID_TO_VOTE1',
+        payload: voteId
+    }
+}
+
+export const idToVote2 = (voteId) => {
+    return {
+        type: 'ID_TO_VOTE2',
+        payload: voteId
+    }
+}
+
+export const idToVote3 = (voteId) => {
+    return {
+        type: 'ID_TO_VOTE3',
+        payload: voteId
+    }
+}
+
+export const candiArrayLength1 = (length) => {
+    return {
+        type: 'CANDI_ARRAY_LENGTH1',
+        payload: length
+    }
+}
+
+export const candiArrayLength2 = (length) => {
+    return {
+        type: 'CANDI_ARRAY_LENGTH2',
+        payload: length
+    }
+}
+
+export const candiArrayLength3 = (length) => {
+    return {
+        type: 'CANDI_ARRAY_LENGTH3',
+        payload: length
     }
 }

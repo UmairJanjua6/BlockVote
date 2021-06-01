@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xc01CD8F100dDa53A8Bc6BA316a6AbCFEA5F1bedC";
+export const CONTRACT_ADDRESS = "0x0734892a114e27f40fCf186EA9dd1e3D1650d885";
 export const CONTRACT_ABI = [
 	{
 		"anonymous": false,
@@ -532,6 +532,25 @@ export const CONTRACT_ABI = [
 				"internalType": "uint256[]",
 				"name": "",
 				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_consNum",
+				"type": "uint256"
+			}
+		],
+		"name": "getCandidateLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

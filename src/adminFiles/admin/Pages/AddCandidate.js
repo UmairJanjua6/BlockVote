@@ -19,13 +19,10 @@ export default function AddCandidate() {
   const classes = useStyles();
   const [conNum, setConNum] = useState(0);
   const [candidateAddress, setCandidateAddress] = useState(0);
-  // const [accounts, setAccounts] = useState();
-  // const [contracts, setContracts] = useState();
   const [name, setName] = useState("");
   const [{ contract, accounts}, dispatch] = useStore();
   console.log("asdasdasaaa: ", accounts, contract);
   console.log("conNum: " + conNum, "candidateAddress: " + candidateAddress, "name: " + name);
-  // const [{ accounts, contract }, dispatch] = useStore();
   
  
   useEffect ( () => {

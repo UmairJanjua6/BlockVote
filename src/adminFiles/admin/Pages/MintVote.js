@@ -20,7 +20,7 @@ export default function MintVote () {
   const [consNum, setConsNum] = useState(0);
   const [votes, setVotes] = useState(0);
   const classes = useStyles ();
-  const [{contract, accounts, mintNewVote}, dispatch] = useStore ();
+  const [{contract, accounts}, dispatch] = useStore ();
   console.log ('data: ', contract, accounts);
   console.log("con: ", consNum, " votes: ",votes);
   useEffect ( () => {

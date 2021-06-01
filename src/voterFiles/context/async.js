@@ -10,7 +10,12 @@ import {
   authorizeVote,
   voterListArray,
   getVoterData,
-  mintNewVote,
+  candiArrayLength1,
+  candiArrayLength2,
+  candiArrayLength3,
+  idToVote1,
+  idToVote2,
+  idToVote3,
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -157,12 +162,72 @@ export const mintVotes = async (
   dispatch
 ) => {
   try {
+    console.log ('aaaaaaa: ');
     const receipt = await contract.methods
       .mint (_conNum, _totalVotes, _uri, _id, _data)
       .send ({from: accounts[0]});
-    dispatch (mintNewVote (_conNum, _totalVotes, _uri, _id, _data));
     console.log ('receipt: ' + receipt);
   } catch (error) {
     console.log ('error: ' + error);
   }
 };
+
+export const candidateArrayLength1 = async (consNum, accounts, contract, dispatch) => {
+    try {
+        const receipt = await contract.methods.getCandidateLength(consNum).call({from: accounts[0]});
+        dispatch(candiArrayLength1(receipt));
+        console.log("receipt: " + receipt);
+    } catch (error) {
+        console.log("error: " + error);
+    }
+}
+
+export const candidateArrayLength2 = async (consNum, accounts, contract, dispatch) => {
+    try {
+        const receipt = await contract.methods.getCandidateLength(consNum).call({from: accounts[0]});
+        dispatch(candiArrayLength2(receipt));
+        console.log("receipt: " + receipt);
+    } catch (error) {
+        console.log("error: " + error);
+    }
+}
+
+export const candidateArrayLength3 = async (consNum, accounts, contract, dispatch) => {
+    try {
+        const receipt = await contract.methods.getCandidateLength(consNum).call({from: accounts[0]});
+        dispatch(candiArrayLength3(receipt));
+        console.log("receipt: " + receipt);
+    } catch (error) {
+        console.log("error: " + error);
+    }
+}
+
+export const getVotes1 = async (_id, accounts, contract, dispatch) => {
+  try {
+    const receipt = await contract.methods.idToVotes(_id).call({from: accounts[0]});
+    console.log("receipt: " + receipt);
+    dispatch(idToVote1(receipt));
+  } catch (error) {
+    console.log("error: " + error);
+  }
+}
+
+export const getVotes2 = async (_id, accounts, contract, dispatch) => {
+  try {
+    const receipt = await contract.methods.idToVotes(_id).call({from: accounts[0]});
+    console.log("receipt: " + receipt);
+    dispatch(idToVote2(receipt));
+  } catch (error) {
+    console.log("error: " + error);
+  }
+}
+
+export const getVotes3 = async (_id, accounts, contract, dispatch) => {
+  try {
+    const receipt = await contract.methods.idToVotes(_id).call({from: accounts[0]});
+    console.log("receipt: " + receipt);
+    dispatch(idToVote3(receipt));
+  } catch (error) {
+    console.log("error: " + error);
+  }
+}

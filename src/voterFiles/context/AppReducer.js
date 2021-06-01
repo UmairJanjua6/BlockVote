@@ -39,11 +39,6 @@ export default (state, action) => {
         ...state,
         getVoterData: action.payload,
       };
-    case 'MINT_VOTE':
-      return {
-        ...state,
-        mintNewVote: action.payload,
-      };
     case 'VOTER_LIST_ARRAY':
       return {
         ...state,
@@ -54,6 +49,36 @@ export default (state, action) => {
         ...state,
         authorizeVote: action.payload,
       };
+      case 'CANDI_ARRAY_LENGTH1':
+        return {
+          ...state,
+          candiArrayLength1: action.payload
+        }
+        case 'CANDI_ARRAY_LENGTH2':
+        return {
+          ...state,
+          candiArrayLength2: action.payload
+        }
+        case 'CANDI_ARRAY_LENGTH3':
+        return {
+          ...state,
+          candiArrayLength3: action.payload
+        }
+        case 'ID_TO_VOTE1':
+          return {
+            ...state,
+            idToVote1: action.payload
+          }
+          case 'ID_TO_VOTE2':
+          return {
+            ...state,
+            idToVote2: action.payload
+          }
+          case 'ID_TO_VOTE3':
+          return {
+            ...state,
+            idToVote3: action.payload
+          }
     default:
       return state;
   }

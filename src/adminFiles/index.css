@@ -201,29 +201,41 @@ h3 {
 }
 
 .infoTab {
-  width: 250px;
-  height: 200px;
+  width: 280px;
+  height: 150px;
   margin: 30px;
-  border: 1px solid #12161C;
   float: left;
   text-align: center;
 }
 
 .topTab {
   width: 100%;
-  height: 50%;
-  padding-top: 30px;
+  height: 60%;
+  padding-top: 20px;
   color: rgb(240, 185, 11);
   background-color: #12161C;
 }
 
 .downTab {
   width: 100%;
-  height: 50%;
-  padding-top: 30px;
+  height: 40%;
+  padding-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid #12161C;
 }
 
-.infoTab h4 {
-  color: aqua;
+#heading {
+  float: left;
 }
+
+#refresh {
+  width: 100%;
+  text-align: right;
+}
+
+#infoCard {
+  display: inline-block;
+}
+
 
