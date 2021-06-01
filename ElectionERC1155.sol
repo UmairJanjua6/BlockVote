@@ -778,6 +778,11 @@ contract Election is ERC1155("BlockVote Token"){
             return (candidateList[_consNum]);
             
         }
+        
+        function getCandidateLength(uint256 _consNum) public view returns (uint256) {
+            uint256 length = candidateList[_consNum].length;
+            return length;
+        }
         /**
      * Function to delete Candidate from 'candidate List'
      **/
