@@ -25,7 +25,6 @@ const VoterApproval = () => {
   const [VoterDataState, setVoterDataState] = useState ([]);
   console.log ('array: ', voterListArray);
   console.log ('data: ', VoterDataState);
-  console.log ('length: ', VoterDataState.length);
 
   useEffect (() => {
     loadBlockchain (dispatch, contract, accounts);
@@ -75,10 +74,12 @@ const VoterApproval = () => {
         <td>{voter.voterName}</td>
         <td>{voter.cnic}</td>
         <td>{voter.voteConstituency}</td>
+        <td>{voter.authorize == true ? "Registered" : "Not Registered"}</td>
         <td>
           <Button
             variant="success"
             className="btn  "
+            disabled= {voter.authorize == true ? true: false}
             onClick={() => {
               authorizeVoterBtn (index);
             }}
@@ -90,6 +91,7 @@ const VoterApproval = () => {
           <Button
             variant="secondary"
             className="btn"
+            disabled= {voter.authorize == true ? true: false}
             onClick={() => {
               RejectVoterBtn (index);
             }}
@@ -117,6 +119,7 @@ const VoterApproval = () => {
                   <th>NAME</th>
                   <th>CNIC</th>
                   <th>CONSTITUENCY</th>
+                  <th>STATUS</th>
                   <th>APPROVE</th>
                   <th>REJECT</th>
                 </tr>
