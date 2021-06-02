@@ -79,6 +79,11 @@ export default (state, action) => {
             ...state,
             idToVote3: action.payload
           }
+          case 'VOTER_INFO':
+            return {
+              ...state,
+              singleVoterInfo: action.payload
+            }
     default:
       return state;
   }

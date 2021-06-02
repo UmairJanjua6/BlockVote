@@ -1,47 +1,49 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import ImranKhanImg from '../img/imran_khan.jpg';
-import BrackObamaImg from '../img/barack_obama.jpg';
-import DonaldTrumpImg from '../img/donald_trump.jpg';
-import VladimirPutinImg from '../img/vladmir_putin.jpeg';
+import avatar from '../img/avatar.png';
+import {getCandidatesInConsi} from '../context/async';
+import {loadBlockchain} from '../context/async';
+import {getVoterDetails} from '../context/async';
+import {useStore} from '../context/GlobalState';
 import '../../index.css';
 
 const UserCanVote = () => {
-    const cardInfo = [
-        {
-            image: `${ImranKhanImg}`, 
-            title: "Imran Khan", 
-            text: "Pakistan Peoples Party",
-            variant: "primary",
-        },
-        {
-            image: `${DonaldTrumpImg}`, 
-            title: "Donald Trump", 
-            text: "Republician",
-            variant: "secondary",
-        },
-        {
-            image: `${BrackObamaImg}`, 
-            title: "Brack Obama", 
-            text: "Democratic Party",
-            variant: "danger"
-        },
-        {
-            image: `${VladimirPutinImg}`, 
-            title: "Vladimir Putin", 
-            text: "Russia KGB",
-            variant: "warning",
-        },
-    ];
 
+    const [candidateList, setCandidateList] = useState([]);
+    const [voterInfo, setVoterInfo] = useState([]);
+    const [ { contract, accounts, getCandidateInfo, singleVoterInfo}, dispatch] = useStore();
+    console.log("data: ", accounts[0]);
+
+    useEffect ( async() => {
+        await loadBlockchain(dispatch);
+    }, []);
+
+    const getCandidateList = async(consNum) => {
+        try {
+            await getVoterDetails(accounts[0], accounts, contract, dispatch);
+            if(singleVoterInfo) {
+                setVoterInfo(singleVoterInfo);
+            }
+            await getCandidatesInConsi(consNum, contract, accounts, dispatch);
+            if(getCandidateInfo) {
+            setCandidateList(getCandidateInfo);
+            }
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    }
+    
+    console.log("details: ", candidateList);
+    console.log("voter info: ", voterInfo);
+    console.log("authorize: ", voterInfo.authorize);
     const renderCard = (card, index) => {
         return (
         <Card style={{ width: '18rem'}} key={index} className="box">
-                <Card.Img variant="top" src="holder.js/100px180" src={card.image} />
+                <Card.Img variant="top" src="holder.js/100px180" src={avatar} />
                 <Card.Body>
-                    <Card.Title>{card.title}</Card.Title>
-                    <Card.Text>{card.text}</Card.Text>
+                    <Card.Title>{card.candiName}</Card.Title>
+                    <Card.Text>{card.candiAddress}</Card.Text>
                     <Button style={{width: '100px'}} variant={card.variant}>Vote</Button>
              </Card.Body>
             </Card>
@@ -51,11 +53,17 @@ const UserCanVote = () => {
         <div>
             <div className="userInstruction">
                 <h2>Election 2021</h2>
+                <Button variant="primary" onClick={() => getCandidateList(1)}>Click</Button>
                 <p>Select a suitable candidate that you <b>prefer</b>.</p>
             </div>
-            <div className="grid">
-                {cardInfo.map(renderCard)}
+            <div>
+                {voterInfo.authorize == true ? <div className="started">
+                {candidateList.map(renderCard)}
+            </div> : <div className="ended">
+                <h1>Election Not started yet!</h1>
+            </div>}
             </div>
+            
         </div>
     );
 }

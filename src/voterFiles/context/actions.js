@@ -102,3 +102,10 @@ export const candiArrayLength3 = (length) => {
         payload: length
     }
 }
+
+export const singleVoterInfo = (info) => {
+    return {
+        type: 'VOTER_INFO',
+        payload: info
+    }
+}

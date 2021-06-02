@@ -16,6 +16,7 @@ import {
   idToVote1,
   idToVote2,
   idToVote3,
+  singleVoterInfo,
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -28,7 +29,7 @@ export const loadBlockchain = async dispatch => {
       dispatch (setupWeb3 (web3));
       const contract = new web3.eth.Contract (CONTRACT_ABI, CONTRACT_ADDRESS);
       dispatch (setupContract (contract));
-      const accounts = await web3.eth.getAccounts ();
+      const accounts = await web3.eth.getAccounts();
       dispatch (addEthereumAccounts (accounts));
     }
   } catch (error) {
@@ -58,6 +59,15 @@ export const addVoter = async (
   }
 };
 
+export const getVoterDetails = async (voterAddress, accounts, contract, dispatch) => {
+  try {
+    const receipt = await contract.methods.getVoterInfo(voterAddress).call({from: accounts[0]});
+    dispatch(singleVoterInfo(receipt));
+    console.log("receipt: ", receipt);
+  } catch(error) {
+    console.log("error: ", error);
+  }
+}
 export const getVoterList = async (dispatch, contract, accounts) => {
   try {
     let voterArray = [];
