@@ -260,3 +260,14 @@ export const electionStatusGet = async(accounts, contract, dispatch) => {
     console.log("error: " + error);
   }
 }
+
+export const vote = async (_candidateAddress, _voteConstituency, accounts, contract) => {
+  try {
+    console.log("data: ", contract, accounts);
+    console.log("voterrrrr: ", _candidateAddress, _voteConstituency);
+ const receipt = await contract.methods.vote(_candidateAddress, _voteConstituency, "0x00").send ({from: accounts[0]});
+ console.log("receipt: " + receipt);
+  } catch (error) {
+    console.log("error: " + error);
+  }
+}
