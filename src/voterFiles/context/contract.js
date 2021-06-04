@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0x0734892a114e27f40fCf186EA9dd1e3D1650d885";
+export const CONTRACT_ADDRESS = "0x0FE05Cd096aDc49250C6D902bf781a73F0A8A25F";
 export const CONTRACT_ABI = [
 	{
 		"anonymous": false,
@@ -463,6 +463,25 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "bool",
+				"name": "_status",
+				"type": "bool"
+			}
+		],
+		"name": "setElectionStatus",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "_candidateAddress",
 				"type": "address"
@@ -582,6 +601,19 @@ export const CONTRACT_ABI = [
 				"internalType": "struct Election.CandidateStruct[]",
 				"name": "",
 				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getElectionStatus",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",

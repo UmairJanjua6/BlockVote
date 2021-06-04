@@ -665,6 +665,7 @@ contract Election is ERC1155("BlockVote Token"){
     }
     mapping(uint=>constituencyVotes) public idToVotes ;
      mapping(address=>uint[]) public ownersToken;
+     bool electionTime;
      
         function mint(uint256 _consNum, uint256 _totalVotes, string memory _uri, uint256 _id, bytes memory data) public virtual {
             constituencyVotes memory token = constituencyVotes(_consNum,_totalVotes,_id,_uri);
@@ -798,6 +799,15 @@ contract Election is ERC1155("BlockVote Token"){
             //send 1 token to voter address
             safeTransferFrom(owner, _voterAddress, _id, 1, _data);
             voterList[_voterAddress].authorize = true;
+        }
+        
+        function setElectionStatus(bool _status) public returns (bool) {
+            electionTime = _status;
+            return true;
+        }
+        
+        function getElectionStatus () public view returns (bool) {
+            return electionTime;
         }
         
         function vote(address _candidateAddress, uint256 _voteConstituency, bytes memory _data) public returns(bool) {

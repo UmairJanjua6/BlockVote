@@ -60,7 +60,7 @@ const UserCanVote = () => {
                 {voterInfo.authorize == true ? <div className="started">
                 {candidateList.map(renderCard)}
             </div> : <div className="ended">
-                <h1>Election Not started yet!</h1>
+                <h1>You are not authorize to vote!</h1>
             </div>}
             </div>
             
