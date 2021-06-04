@@ -17,6 +17,7 @@ import {
   idToVote2,
   idToVote3,
   singleVoterInfo,
+  electionStatus,
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -237,6 +238,24 @@ export const getVotes3 = async (_id, accounts, contract, dispatch) => {
     const receipt = await contract.methods.idToVotes(_id).call({from: accounts[0]});
     console.log("receipt: " + receipt);
     dispatch(idToVote3(receipt));
+  } catch (error) {
+    console.log("error: " + error);
+  }
+}
+
+export const electionStatusSet = async (flag, accounts, contract) => {
+  try {
+  const receipt = await contract.methods.setElectionStatus(flag).send({from: accounts[0]});
+  console.log("receipt set: " + receipt);
+  } catch (error) {
+    console.log("error: " + error);
+  }
+}
+
+export const electionStatusGet = async(accounts, contract, dispatch) => {
+  try {
+ const receipt = await contract.methods.getElectionStatus().call({from: accounts[0]});
+ dispatch(electionStatus(receipt));
   } catch (error) {
     console.log("error: " + error);
   }

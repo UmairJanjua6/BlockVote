@@ -109,3 +109,10 @@ export const singleVoterInfo = (info) => {
         payload: info
     }
 }
+
+export const electionStatus = (flag) => {
+    return {
+        type: 'ELECTION_STATUS',
+        payload: flag
+    }
+}

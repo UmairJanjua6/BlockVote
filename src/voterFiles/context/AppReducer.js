@@ -49,41 +49,46 @@ export default (state, action) => {
         ...state,
         authorizeVote: action.payload,
       };
-      case 'CANDI_ARRAY_LENGTH1':
-        return {
-          ...state,
-          candiArrayLength1: action.payload
-        }
-        case 'CANDI_ARRAY_LENGTH2':
-        return {
-          ...state,
-          candiArrayLength2: action.payload
-        }
-        case 'CANDI_ARRAY_LENGTH3':
-        return {
-          ...state,
-          candiArrayLength3: action.payload
-        }
-        case 'ID_TO_VOTE1':
-          return {
-            ...state,
-            idToVote1: action.payload
-          }
-          case 'ID_TO_VOTE2':
-          return {
-            ...state,
-            idToVote2: action.payload
-          }
-          case 'ID_TO_VOTE3':
-          return {
-            ...state,
-            idToVote3: action.payload
-          }
-          case 'VOTER_INFO':
-            return {
-              ...state,
-              singleVoterInfo: action.payload
-            }
+    case 'CANDI_ARRAY_LENGTH1':
+      return {
+        ...state,
+        candiArrayLength1: action.payload,
+      };
+    case 'CANDI_ARRAY_LENGTH2':
+      return {
+        ...state,
+        candiArrayLength2: action.payload,
+      };
+    case 'CANDI_ARRAY_LENGTH3':
+      return {
+        ...state,
+        candiArrayLength3: action.payload,
+      };
+    case 'ID_TO_VOTE1':
+      return {
+        ...state,
+        idToVote1: action.payload,
+      };
+    case 'ID_TO_VOTE2':
+      return {
+        ...state,
+        idToVote2: action.payload,
+      };
+    case 'ID_TO_VOTE3':
+      return {
+        ...state,
+        idToVote3: action.payload,
+      };
+    case 'VOTER_INFO':
+      return {
+        ...state,
+        singleVoterInfo: action.payload,
+      };
+    case 'ELECTION_STATUS':
+      return {
+        ...state,
+        electionStatus: action.payload,
+      };
     default:
       return state;
   }
