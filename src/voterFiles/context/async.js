@@ -313,6 +313,6 @@ export const vote = async (
       .send ({from: accounts[0]});
     dispatch(voteCast(receipt));
   } catch (error) {
-    console.log ('error: ' + error);
+    console.log ('error vote: ' + error);
   }
 };
