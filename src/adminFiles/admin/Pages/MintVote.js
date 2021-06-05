@@ -1,5 +1,5 @@
 import {Box, Typography} from '@material-ui/core';
-import React, { useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import SideBar from '../Components/SideBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,20 +17,25 @@ const useStyles = makeStyles (theme => ({
 }));
 
 export default function MintVote () {
-  const [consNum, setConsNum] = useState(0);
-  const [votes, setVotes] = useState(0);
+  const [consNum, setConsNum] = useState (0);
+  const [votes, setVotes] = useState (0);
   const classes = useStyles ();
   const [{contract, accounts}, dispatch] = useStore ();
-  console.log ('data: ', contract, accounts);
-  console.log("con: ", consNum, " votes: ",votes);
-  useEffect ( () => {
-    loadBlockchain(dispatch);
-    console.log("handle");
+  useEffect (() => {
+    loadBlockchain (dispatch);
   }, []);
   const mintVoteFunc = () => {
-    mintVotes (consNum, votes, "", consNum, "0x00", accounts, contract, dispatch);
-    console.log("button clicked");
-  }
+    mintVotes (
+      consNum,
+      votes,
+      '',
+      consNum,
+      '0x00',
+      accounts,
+      contract,
+      dispatch
+    );
+  };
   return (
     <div>
       <CssBaseline />
@@ -59,7 +64,6 @@ export default function MintVote () {
               </Form.Group>
               <Button
                 variant="primary"
-                type="submit"
                 className="btn btn-dark "
                 onClick={mintVoteFunc}
               >

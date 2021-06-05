@@ -49,12 +49,12 @@ return(
        <br></br>
 <Form>
 <Form.Group>
-<Button variant="primary" type="submit" className="btn btn-dark " onClick={ () => {updateElectionState(true)}}>
+<Button variant="primary" className="btn btn-dark " onClick={ () => {updateElectionState(true)}}>
    Start Election
   </Button>
 </Form.Group>
 <Form.Group>
-<Button variant="primary" type="submit" className="btn btn-dark " onClick={ () => {updateElectionState(false)}}>
+<Button variant="primary"  className="btn btn-dark " onClick={ () => {updateElectionState(false)}}>
    End Election
   </Button>
 </Form.Group>

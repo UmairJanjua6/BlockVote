@@ -73,7 +73,7 @@ export default function AddCandidate() {
                   <option value="5">Constituency 5</option>
                 </Form.Control>
               </Form.Group>
-              <Button variant="primary" type="submit" className="btn btn-dark " onClick={addCandidateFunc}>
+              <Button variant="primary" className="btn btn-dark " onClick={addCandidateFunc}>
                 Add candidate
   </Button>
             </Form>

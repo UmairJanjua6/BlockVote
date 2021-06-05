@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Toolbar, Box} from '@material-ui/core';
 import {Button} from 'react-bootstrap';
 import SideBar from '../Components/SideBar';
@@ -22,32 +22,21 @@ const VoterApproval = () => {
     {contract, accounts, getVoterData, voterListArray},
     dispatch,
   ] = useStore ();
-  const [VoterDataState, setVoterDataState] = useState ([]);
-  console.log ('array: ', voterListArray);
-  console.log ('data: ', VoterDataState);
 
   useEffect (() => {
-    loadBlockchain (dispatch, contract, accounts);
+    loadBlockchain (dispatch);
   }, []);
-
-  const loadData = () => {
-    getList ();
-    changeState ();
-  };
   const getList = async () => {
     await getVoterList (dispatch, contract, accounts);
-  };
-
-  const changeState = () => {
-    if (getVoterData != null) {
-      setVoterDataState (getVoterData);
-    }
   };
 
   const authorizeVoterBtn = async (index) => {
     try {
       let voterAddress = voterListArray[index];
-      let id = VoterDataState[index].voteConstituency;
+      let id;
+      if(getVoterData) {
+        id = getVoterData[index].voteConstituency;
+      }
       await authorizeVoter (voterAddress, id, contract, accounts, dispatch);
     } catch (error) {
       console.log ('error: ', error);
@@ -57,10 +46,7 @@ const VoterApproval = () => {
   const RejectVoterBtn = async (index) => {
     try {
       let voterAddress = voterListArray[index];
-      console.log("address: ", voterAddress);
       await deleteVoter(voterAddress, index, contract, accounts);
-      console.log("index: ", index);
-
     } catch (error) {
       console.log("error: ", error);
     }
@@ -74,12 +60,12 @@ const VoterApproval = () => {
         <td>{voter.voterName}</td>
         <td>{voter.cnic}</td>
         <td>{voter.voteConstituency}</td>
-        <td>{voter.authorize == true ? "Registered" : "Not Registered"}</td>
+        <td>{voter.authorize === true ? "Registered" : "Not Registered"}</td>
         <td>
           <Button
             variant="success"
             className="btn  "
-            disabled= {voter.authorize == true ? true: false}
+            disabled= {voter.authorize === true ? true: false}
             onClick={() => {
               authorizeVoterBtn (index);
             }}
@@ -91,7 +77,7 @@ const VoterApproval = () => {
           <Button
             variant="secondary"
             className="btn"
-            disabled= {voter.authorize == true ? true: false}
+            disabled= {voter.authorize === true ? true: false}
             onClick={() => {
               RejectVoterBtn (index);
             }}
@@ -111,7 +97,7 @@ const VoterApproval = () => {
         <main className={classes.content} >
           <Box maxWidth="md" style={{paddingLeft: '250px'}}>
             <h1 style={{width: '82%', textAlign: 'center'}}>Voter List</h1>
-            <Button variant="dark" style={{marginBottom: '15px', float: 'right'}} onClick={loadData} >Fetch Voter List</Button>
+            <Button variant="dark" style={{marginBottom: '15px', float: 'right'}} onClick={getList} >Fetch Voter List</Button>
             <br/>
             <ReactBootStrap.Table striped bordered hover>
               <thead>
@@ -125,7 +111,7 @@ const VoterApproval = () => {
                 </tr>
               </thead>
               <tbody>
-                {VoterDataState.map (renderVoterList)}
+                {getVoterData ? getVoterData.map (renderVoterList) : ""}
               </tbody>
             </ReactBootStrap.Table>
           </Box>
