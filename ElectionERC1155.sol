@@ -677,23 +677,11 @@ contract Election is ERC1155("BlockVote Token"){
             return ownersToken[owner];
 
         }
-        // function getMetadata(uint  id)public view returns (NFT memory){
-        //     return idToNFT[id];
-        // }
+        
          function uri(uint  id)public override view returns (string memory){
             return idToVotes[id]._uri;
         }
-        //  function name(uint  id)public  view returns (string memory){
-        //     return idToNFT[id]._name;
-            
-        // }
-
-        //  function symbol(uint  id)public  view returns (string memory){
-        //     return idToNFT[id]._symbol;
-            
-        // }
     
-        
         /**
      * Throws if called by any account other than the owner.
      **/
@@ -711,6 +699,7 @@ contract Election is ERC1155("BlockVote Token"){
             uint256 voteConstituency;
             bool authorize;
             bool isVoter;
+            bool voteCast;
         }
         
         mapping(address => Voter) voterList;
@@ -725,6 +714,7 @@ contract Election is ERC1155("BlockVote Token"){
             voterList[_voterAddress].voteConstituency = _voteConstituency;
             voterList[_voterAddress].authorize = false;
             voterList[_voterAddress].isVoter = true;
+            voterList[_voterAddress].voteCast = false;
             voterAddressArray.push(_voterAddress);
             return true;
         }
@@ -746,7 +736,7 @@ contract Election is ERC1155("BlockVote Token"){
         /**
      * Function to delete Voter from 'Voter List'
      **/
-        function deleteVoter(address _voterAddress, uint256 index) public returns (bool) {
+        function deleteVoter(address _voterAddress, uint256 index) public onlyOwner returns (bool) {
             require(index < voterAddressArray.length);
             voterAddressArray[index] = voterAddressArray[voterAddressArray.length - 1];
             voterAddressArray.pop();
@@ -756,6 +746,9 @@ contract Election is ERC1155("BlockVote Token"){
             return true;
         }
         
+        /**
+     * structure to hold Candidate Information
+     **/
         struct CandidateStruct {
             address candiAddress;
             string candiName;
@@ -796,12 +789,14 @@ contract Election is ERC1155("BlockVote Token"){
      * Function to tranfer 'Vote token' to 'Voter balance' and change Voter 'authorize' status to 'true'
      **/
         function authorizeVoter(address _voterAddress, uint256 _id, bytes memory _data) public onlyOwner {
+            require(_voterAddress != address(0), "cannot provide zero address of voter");
+            require(voterList[_voterAddress].voteCast != true, "Vote has already been casted");
             //send 1 token to voter address
             safeTransferFrom(owner, _voterAddress, _id, 1, _data);
             voterList[_voterAddress].authorize = true;
         }
         
-        function setElectionStatus(bool _status) public returns (bool) {
+        function setElectionStatus(bool _status) public onlyOwner returns (bool) {   
             electionTime = _status;
             return true;
         }
@@ -817,6 +812,7 @@ contract Election is ERC1155("BlockVote Token"){
             
             safeTransferFrom(msg.sender, _candidateAddress, _voteConstituency, 1, _data);
             voterList[msg.sender].authorize = false;
+            voterList[msg.sender].voteCast = true;
             return true;
         }
 }
