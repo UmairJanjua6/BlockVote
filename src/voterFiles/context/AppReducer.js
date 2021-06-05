@@ -89,6 +89,11 @@ export default (state, action) => {
         ...state,
         electionStatus: action.payload,
       };
+      case 'CAST_VOTE':
+        return {
+          ...state,
+          voteCast: action.payload,
+        }
     default:
       return state;
   }

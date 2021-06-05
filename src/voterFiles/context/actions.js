@@ -116,3 +116,10 @@ export const electionStatus = (flag) => {
         payload: flag
     }
 }
+
+export const voteCast = (status) => {
+    return {
+        type: 'CAST_VOTE',
+        payload: status
+    }
+}
