@@ -20,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Overview(){
-  const [vote1, setVote1] = useState([]);
-  const [vote2, setVote2] = useState([]);
-  const [vote3, setVote3] = useState([]);
     const classes = useStyles();
     const [{ contract, accounts, candiArrayLength1, candiArrayLength2, candiArrayLength3, idToVote1, idToVote2, idToVote3}, dispatch] = useStore();
     
@@ -30,7 +27,7 @@ export default function Overview(){
       await loadBlockchain(dispatch);
     }, []);
 
-    const refreshData = () => {
+    const FetchData = () => {
       loadCandidateData();
       loadVotesData();
     }
@@ -42,15 +39,6 @@ export default function Overview(){
       await getVotes1(1, accounts, contract, dispatch);
       await getVotes2(2, accounts, contract, dispatch);
       await getVotes3(3, accounts, contract, dispatch);
-      if(idToVote1) {
-        setVote1(idToVote1);
-      }
-      if(idToVote2) {
-        setVote2(idToVote2);
-      }
-      if(idToVote3) {
-        setVote3(idToVote3);
-      }
       } catch (error) {
         console.log("error: ", error);
       }
@@ -61,15 +49,6 @@ export default function Overview(){
         await getVotes1(1, accounts, contract, dispatch);
       await getVotes2(2, accounts, contract, dispatch);
       await getVotes3(3, accounts, contract, dispatch);
-      if(idToVote1) {
-        setVote1(idToVote1);
-      }
-      if(idToVote2) {
-        setVote2(idToVote2);
-      }
-      if(idToVote3) {
-        setVote3(idToVote3);
-      }
       } catch (error) {
         console.log("error: ", error);
       }
@@ -78,8 +57,8 @@ return(
     <main className={classes.content}>
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>
       <Typography variant="h3" id="heading">Overview</Typography>
-      <div id="refresh">
-      <Button variant="info" onClick={refreshData}>Refresh</Button>
+      <div id="fetchData">
+      <Button variant="info" onClick={FetchData}>Fetch Data</Button>
       </div>
       <div id="infoCard">
       <div className="infoTab">
@@ -114,7 +93,7 @@ return(
           <h5>Votes in Constituency #01</h5>
         </div>
         <div className="downTab">
-          <p>{vote1.totalVotes}</p>
+          <p>{idToVote1 ? idToVote1.totalVotes : ""}</p>
         </div>
       </div>
 
@@ -123,7 +102,7 @@ return(
           <h5>Votes in Constituency #02</h5>
         </div>
         <div className="downTab">
-          <p>{vote2.totalVotes}</p>
+          <p>{idToVote2 ? idToVote2.totalVotes : ""}</p>
         </div>
       </div>
 
@@ -132,7 +111,7 @@ return(
           <h5>Votes in Constituency #03</h5>
         </div>
         <div className="downTab">
-          <p>{vote3.totalVotes}</p>
+          <p>{idToVote3 ? idToVote3.totalVotes : ""}</p>
         </div>
       </div>
       </div>

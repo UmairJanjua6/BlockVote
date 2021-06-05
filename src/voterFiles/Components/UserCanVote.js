@@ -36,11 +36,10 @@ const UserCanVote = () => {
   }
 
   const voteStatus = () => {
-    if(voteCast) {
-      console.log("vote: ", voteCast.status);
-      setVoteCasted(voteCast.status);
+    if (voteCast) {
+      setVoteCasted (voteCast.status);
     }
-  }
+  };
 
   const getCandidateList = async () => {
     try {
@@ -95,7 +94,6 @@ const UserCanVote = () => {
     );
   }
 
-  
   const renderCard = (card, index) => {
     return (
       <Card style={{width: '18rem'}} key={index} className="box">
@@ -120,8 +118,12 @@ const UserCanVote = () => {
     <div className="container-fluid">
       <div className="userInstruction">
         <h2>Election 2021</h2>
-        <Button variant="primary" id="voteStatusBtn" onClick={voteStatus}>Vote Status</Button>
-        <p id="voteStatusP">{voteCasted ? "VoteCasted Successfully" : "Didn't cast the vote yet."}</p>
+        <Button variant="primary" id="voteStatusBtn" onClick={voteStatus}>
+          Vote Status
+        </Button>
+        <p id="voteStatusP">
+          {voteCasted ? 'VoteCasted Successfully' : "Didn't cast the vote yet."}
+        </p>
         <Button
           variant="primary"
           onClick={() => {
@@ -168,7 +170,7 @@ const UserCanVote = () => {
           getCandidateList ();
         }}
       />
-      
+
     </div>
   );
 };
