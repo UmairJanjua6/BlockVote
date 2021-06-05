@@ -13,26 +13,11 @@ import '../../App.css';
 const CandidateList = () => {
     
     const [consNum, setConsNum] = useState();
-    const [candidateData, setCandidateData] = useState([]);
     console.log("consNum: ", consNum);
     const [{ contract, accounts, getCandidateInfo }, dispatch] = useStore();
     useEffect( () => {
         loadBlockchain(dispatch);
     }, []);
-    console.log("data: ", contract, accounts);
-    console.log("consNum: ", consNum);
-
-    const clickFunc = () => {
-        dataState();
-        getCandidateData();
-
-    }
-    const dataState = () => {
-        if(getCandidateInfo != null) {
-            setCandidateData(getCandidateInfo);
-        }
-    }
-        console.log("info state: ", candidateData);
     const getCandidateData = async () => {
         try {
             await getCandidatesInConsi(consNum, contract, accounts, dispatch);
@@ -67,9 +52,9 @@ const CandidateList = () => {
                         <option value="2" selected>2</option>
                         <option value="3">3</option>
                     </select>
-                    <Button variant="secondary" onClick={clickFunc}>Search</Button>
+                    <Button variant="secondary" onClick={getCandidateData}>Search</Button>
                     <div className="grid" display="flex" >
-                        {candidateData.map(renderCard)}
+                        { getCandidateInfo ? getCandidateInfo.map(renderCard) : ""}
                     </div>
                 </Box>
             </main>
