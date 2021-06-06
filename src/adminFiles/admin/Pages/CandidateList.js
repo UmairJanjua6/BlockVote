@@ -40,14 +40,14 @@ const CandidateList = () => {
       <Toolbar />
       <main style={{padding: '24px'}}>
         <Box maxWidth="md" style={{paddingLeft: '250px'}}>
-          <h3>Candidate List</h3>
+          <h2>Candidate List</h2>
           <h6>Select Constituency</h6>
           <select id="selectCandi" onChange={e => setConsNum (e.target.value)}>
             <option value="1">1</option>
             <option value="2" selected>2</option>
             <option value="3">3</option>
           </select>
-          <Button variant="secondary" onClick={getCandidateData}>Search</Button>
+          <Button variant="dark" onClick={getCandidateData}>Search</Button>
           <div className="grid" display="flex">
             {getCandidateInfo ? getCandidateInfo.map (renderCard) : ''}
           </div>

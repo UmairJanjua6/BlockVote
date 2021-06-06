@@ -295,6 +295,7 @@ export const electionStatusGet = async (accounts, contract, dispatch) => {
       .getElectionStatus ()
       .call ({from: accounts[0]});
     dispatch (electionStatus (receipt));
+    console.log('receipt: ' + receipt);
   } catch (error) {
     console.log ('error: ' + error);
   }

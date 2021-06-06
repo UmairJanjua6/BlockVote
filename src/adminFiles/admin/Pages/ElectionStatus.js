@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useStore } from '../../../voterFiles/context/GlobalState';
 import { loadBlockchain } from '../../../voterFiles/context/async';
 import { electionStatusSet } from '../../../voterFiles/context/async';
+import { electionStatusGet } from '../../../voterFiles/context/async';
+import '../../index.css';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -23,12 +25,12 @@ export default function ElectionStatus(){
 
   useEffect( async() => {
     await loadBlockchain(dispatch);
-    console.log("useEffect");
   }, []);
 
   const updateElectionState = async(status) => {
  try {
     await electionStatusSet(status, accounts, contract);
+    await electionStatusGet(accounts, contract, dispatch);
  }
  catch (err) {
    console.log("error: ", err);
@@ -45,7 +47,11 @@ return(
       <CssBaseline />
       <main className={classes.content}>
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>
-      <Typography variant="h3">Update Status of Election</Typography>
+      <Typography variant="h3">Election Status</Typography>
+        <div id="electionStatus">
+          <div id="electionStatusText">Election Status:</div>
+          <div id={electionStatus === true? "green" : "red"}>{electionStatus ? "Started" : "Not Started"}</div>
+        </div>
        <br></br>
 <Form>
 <Form.Group>

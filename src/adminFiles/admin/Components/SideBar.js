@@ -10,7 +10,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Avatar } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -92,6 +91,10 @@ export default  function SideBar() {
                 <ListItemIcon><HomeIcon/></ListItemIcon>
                 <ListItemText primary="Overview"/>
               </ListItem>
+              <ListItem button onClick={event =>  window.location.href='mintvote'} >
+              <ListItemIcon><AddIcon/></ListItemIcon>
+                <ListItemText primary="Mint Votes"/>
+              </ListItem>
               <ListItem button onClick={event =>  window.location.href='AddCandidate'} >
               <ListItemIcon><ListIcon/></ListItemIcon>
                 <ListItemText primary="Add Candidate"/>
@@ -106,19 +109,11 @@ export default  function SideBar() {
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='ElectionStatus'} >
               <ListItemIcon><AccountBalanceIcon/></ListItemIcon>
-                <ListItemText primary="Update status of Election"/>
+                <ListItemText primary="Election Status"/>
               </ListItem>
               <ListItem button onClick={event =>  window.location.href='DisplayResult'} >
               <ListItemIcon><DesktopWindowsIcon/></ListItemIcon>
                 <ListItemText primary="Display Result"/>
-              </ListItem>
-              <ListItem button onClick={event =>  window.location.href='mintvote'} >
-              <ListItemIcon><AddIcon/></ListItemIcon>
-                <ListItemText primary="Mint Votes"/>
-              </ListItem>
-              <ListItem button onClick={event =>  window.location.href='#'} >
-              <ListItemIcon><SettingsIcon/></ListItemIcon>
-                <ListItemText primary="Settings"/>
               </ListItem>
               <Divider/>
               <ListItem button  onClick={handleLogout }>

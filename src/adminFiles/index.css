@@ -150,12 +150,6 @@ h3 {
   margin: 0;
 }
 
-/* .btn  {
-  margin: 7px;
-  width: 95%;
-  font-size: 18px;
-} */
-
 .btnAdmin {
   margin: 7px;
   width: 95%;
@@ -246,7 +240,48 @@ h3 {
 
 #voteStatusP {
   float: left;
-  margin-left: 20px;
+  font-size: 22px;
   margin-top: 8px;
+  color: #fff;
 }
 
+#success {
+  background-color: green;
+}
+
+#error {
+  background-color: red;
+}
+
+#electionStatus {
+  display: flex;
+  flex-direction: row;
+}
+
+#electionStatusText {
+  width: 120px;
+  height: 50px;
+  padding: 10px 0px 0 3px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: rgb(240, 185, 11);
+}
+
+#red {
+  margin-left: 0px;
+  width: 90px;
+  height: 50px;
+  font-weight: bold;
+  padding: 10px 0px 0 3px;
+  background-color: #FF3131;
+}
+
+#green {
+  margin-left: 0px;
+  width: 90px;
+  height: 50px;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px 0px 0 10px;
+  background-color: #32CD32;
+}
