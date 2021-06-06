@@ -24,7 +24,6 @@ const UserCanVote = () => {
   ] = useStore ();
   const [modalShow, setModalShow] = useState (false);
   const [showList, setShowList] = useState (false);
-  const [voteCasted, setVoteCasted] = useState (false);
   const [text, setText] = useState ('Show');
   useEffect (async () => {
     await loadBlockchain (dispatch);
@@ -34,12 +33,6 @@ const UserCanVote = () => {
   if (singleVoterInfo) {
     constituency = singleVoterInfo.voteConstituency;
   }
-
-  const voteStatus = () => {
-    if (voteCast) {
-      setVoteCasted (voteCast.status);
-    }
-  };
 
   const getCandidateList = async () => {
     try {
@@ -118,11 +111,8 @@ const UserCanVote = () => {
     <div className="container-fluid">
       <div className="userInstruction">
         <h2>Election 2021</h2>
-        <Button variant="primary" id="voteStatusBtn" onClick={voteStatus}>
-          Vote Status
-        </Button>
         <p id="voteStatusP">
-          {voteCasted ? 'VoteCasted Successfully' : "Didn't cast the vote yet."}
+          {voteCast ? "Vote Casted Successfully" : "Didn't cast the vote yet."}
         </p>
         <Button
           variant="primary"

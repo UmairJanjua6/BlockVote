@@ -1,8 +1,9 @@
 import {Container} from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form , Button , Col} from "react-bootstrap";
 import {useStore} from '../context/GlobalState';
 import {addVoter} from '../context/async';
+import {loadBlockchain} from '../context/async';
 
 const VoterRegister = () => {
 
@@ -11,6 +12,10 @@ const[cnic, setCnic] = useState();
 const[constituency, setConstituency] = useState();
 const [address, setAddress] = useState();
 const [{ accounts, contract }, dispatch] = useStore();
+
+useEffect (async () => {
+  await loadBlockchain (dispatch);
+}, []);
 
 const addVoterFunc = async () => {
   try {
@@ -24,7 +29,7 @@ const addVoterFunc = async () => {
         return (
           <div>
             <Container maxWidth="xs" style={{ marginTop:'100px'}} >
-            <Form onSubmit={addVoterFunc}>
+            <Form>
             
               <Form.Group>
                 <div style={{textAlign:'center', alignItems:"center" }}>
@@ -62,7 +67,7 @@ const addVoterFunc = async () => {
                     <Form.Control type=""  placeholder=""></Form.Control>
                 </Form.Group>
                 <Form.Group style={{textAlign:'center'}} >
-                <Button variant="contained" size="lg" type="submit" style={{backgroundColor:'#f0b90b' , color:'#12161C'}} block>Register</Button>
+                <Button variant="contained" size="lg" style={{backgroundColor:'#f0b90b' , color:'#12161C'}} onClick= {addVoterFunc} block>Register</Button>
                 </Form.Group>
                
             </Form>
