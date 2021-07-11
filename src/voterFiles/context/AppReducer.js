@@ -94,6 +94,16 @@ export default (state, action) => {
           ...state,
           voteCast: action.payload,
         }
+        case 'USER_BALANCE':
+          return {
+            ...state,
+            userBalance: action.payload,
+          }
+          case 'ID_VOTE':
+            return {
+              ...state,
+              idVote: action.payload,
+            }
     default:
       return state;
   }

@@ -285,3 +285,27 @@ h3 {
   padding: 10px 0px 0 10px;
   background-color: #32CD32;
 }
+
+#turnOver {
+  float: right;
+}
+
+#consiOption {
+  width: 40px;
+  height: 37px;
+ margin-right: 3px;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .Navbar *, #printTable *{
+    visibility: visible;
+  }
+
+  .walletBtn *{
+    visibility: hidden;
+  }
+}

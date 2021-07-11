@@ -123,3 +123,17 @@ export const voteCast = (status) => {
         payload: status
     }
 }
+
+export const userBalance = (balance) => {
+    return {
+        type: 'USER_BALANCE',
+        payload: balance
+    }
+}
+
+export const idVote = (id) => {
+    return {
+        type: 'ID_VOTE',
+        payload: id
+    }
+}

@@ -19,6 +19,8 @@ import {
   singleVoterInfo,
   electionStatus,
   voteCast,
+  userBalance,
+  idVote,
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -163,8 +165,6 @@ export const getCandidatesInConsi = async (
       .getCandidatesInConsi (_conNum)
       .call ({from: accounts[0]});
     dispatch (getCandidateInfo (candidateList));
-    console.log ('array: ', candidateList);
-    console.log ('length: ', candidateList.length);
   } catch (error) {
     console.log ('error: ', error);
   }
@@ -177,13 +177,12 @@ export const mintVotes = async (
   _id,
   _data,
   accounts,
-  contract,
-  dispatch
+  contract
 ) => {
   try {
     console.log ('aaaaaaa: ');
     const receipt = await contract.methods
-      .mint (_conNum, _totalVotes, _uri, _id, _data)
+      .mintVotes (_conNum, _totalVotes, _uri, _id, _data)
       .send ({from: accounts[0]});
     console.log ('receipt: ' + receipt);
   } catch (error) {
@@ -317,3 +316,23 @@ export const vote = async (
     console.log ('error vote: ' + error);
   }
 };
+
+export const getBalance = async (address, id, contract, accounts, dispatch) => {
+  try {
+    const receipt = await contract.methods.balanceOfBatch(address, id).call({from: accounts[0]});
+    dispatch(userBalance(receipt));
+    console.log("balance async: " + receipt);
+  } catch (error) {
+    console.log ('error getBalance: ' + error);
+  }
+}
+
+export const idToVote = async (id, contract, accounts, dispatch) => {
+  try {
+    const receipt = await contract.methods.idToVotes(id).call({from: accounts[0]});
+    dispatch(idVote(receipt));
+    console.log("id async: " + receipt);
+  } catch (error) {
+    console.log ('error getBalance: ' + error);
+  }
+}

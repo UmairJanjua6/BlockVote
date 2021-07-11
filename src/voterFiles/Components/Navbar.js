@@ -40,7 +40,8 @@ const Navbar = () => {
           </div>
 
           <div className="walletBtn" >
-          <button id="btn" onClick={handleWeb3}>Connect Wallet</button>
+          <button id="btn" onClick={handleWeb3}>{web3 ? "Connected" : "Connect Wallet"}</button>
+          <p></p>
            </div>
         </div>
         </AppBar>

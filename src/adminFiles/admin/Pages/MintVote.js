@@ -32,8 +32,7 @@ export default function MintVote () {
       consNum,
       '0x00',
       accounts,
-      contract,
-      dispatch
+      contract
     );
   };
   return (
