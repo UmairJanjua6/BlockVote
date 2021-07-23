@@ -9,6 +9,7 @@ const VoterRegister = () => {
 
 const[name, setName] = useState("");
 const[cnic, setCnic] = useState();
+const[email, setEmail] = useState("");
 const[constituency, setConstituency] = useState();
 const [address, setAddress] = useState();
 const [{ accounts, contract }, dispatch] = useStore();
@@ -19,7 +20,7 @@ useEffect (async () => {
 
 const addVoterFunc = async () => {
   try {
-    await addVoter(address, name, cnic, constituency, contract, accounts, dispatch);
+    await addVoter(address, name, cnic, email, constituency, contract, accounts, dispatch);
   }
   catch(error) {
     console.log("error: ", error);
@@ -46,6 +47,10 @@ const addVoterFunc = async () => {
                     <Form.Control pattern="[0-9]{13}" value={cnic} onChange={(e) => setCnic(e.target.value)} type="cnic" placeholder="Enter your CNIC"></Form.Control>
                 </Form.Group>
                 </Form.Row>
+                <Form.Group>
+                    <Form.Label> Email </Form.Label>
+                    <Form.Control type="email"  placeholder="Enter email" value = {email}  onChange={(e) => setEmail(e.target.value)}></Form.Control>
+                </Form.Group>
                 
   <Form.Group>
   <Form.Label>Select Constituency</Form.Label>
@@ -62,10 +67,6 @@ const addVoterFunc = async () => {
     <Form.Label>Voter Ethereum Address</Form.Label>
     <Form.Control placeholder= "Ethereum wallet address" value = {address}  onChange={(e) => setAddress(e.target.value)} />
   </Form.Group>
-                <Form.Group>
-                    <Form.Label> Fingerprint Scan </Form.Label>
-                    <Form.Control type=""  placeholder=""></Form.Control>
-                </Form.Group>
                 <Form.Group style={{textAlign:'center'}} >
                 <Button variant="contained" size="lg" style={{backgroundColor:'#f0b90b' , color:'#12161C'}} onClick= {addVoterFunc} block>Register</Button>
                 </Form.Group>

@@ -31,7 +31,7 @@ export const loadBlockchain = async dispatch => {
       const web3 = new Web3 (Web3.givenProvider);
       await Web3.givenProvider.enable ();
       dispatch (setupWeb3 (web3));
-      const contract = new web3.eth.Contract (CONTRACT_ABI, CONTRACT_ADDRESS);
+      const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
       dispatch (setupContract (contract));
       const accounts = await web3.eth.getAccounts ();
       dispatch (addEthereumAccounts (accounts));
@@ -47,6 +47,7 @@ export const addVoter = async (
   address,
   name,
   cnic,
+  email,
   constituency,
   contract,
   accounts,
@@ -54,10 +55,10 @@ export const addVoter = async (
 ) => {
   try {
     const receipt = await contract.methods
-      .addVoter (address, name, cnic, constituency)
+      .addVoter (address, name, cnic, email, constituency)
       .send ({from: accounts[0]});
-    dispatch (addVoterInfo (address, name, cnic, constituency));
-    console.log ('aynce voter info: ', receipt);
+    dispatch (addVoterInfo (address, name, cnic, email, constituency));
+    console.log ('async voter info: ', receipt);
   } catch (error) {
     console.log (error);
   }

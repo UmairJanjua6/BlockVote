@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xF28aCEA8a9f92120F684161c46C0a675565fa041";
+export const CONTRACT_ADDRESS = "0xbb3d13340839F8e11fc338f83Dd3e59A24551188";
 export const CONTRACT_ABI = [
 	{
 		"anonymous": false,
@@ -261,6 +261,11 @@ export const CONTRACT_ABI = [
 				"type": "uint256"
 			},
 			{
+				"internalType": "string",
+				"name": "_email",
+				"type": "string"
+			},
+			{
 				"internalType": "uint256",
 				"name": "_voteConstituency",
 				"type": "uint256"
@@ -298,54 +303,6 @@ export const CONTRACT_ABI = [
 		"name": "authorizeVoter",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address[]",
-				"name": "accounts",
-				"type": "address[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "ids",
-				"type": "uint256[]"
-			}
-		],
-		"name": "balanceOfBatch",
-		"outputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -397,191 +354,6 @@ export const CONTRACT_ABI = [
 				"internalType": "uint256",
 				"name": "_consNum",
 				"type": "uint256"
-			}
-		],
-		"name": "getCandidateLength",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_consNum",
-				"type": "uint256"
-			}
-		],
-		"name": "getCandidatesInConsi",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "candiAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "candiName",
-						"type": "string"
-					}
-				],
-				"internalType": "struct Election.CandidateStruct[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getElectionStatus",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getVoterAddress",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_voterAddress",
-				"type": "address"
-			}
-		],
-		"name": "getVoterInfo",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "voterName",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "cnic",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "voteConstituency",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "authorize",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "isVoter",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "voteCast",
-						"type": "bool"
-					}
-				],
-				"internalType": "struct Election.Voter",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "idToVotes",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "consNum",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "totalVotes",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_Id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_uri",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			}
-		],
-		"name": "isApprovedForAll",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_consNum",
-				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
@@ -607,30 +379,6 @@ export const CONTRACT_ABI = [
 		"name": "mint",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "ownersToken",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -739,6 +487,339 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "_voterAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "_status",
+				"type": "bool"
+			}
+		],
+		"name": "setEmailStatus",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_candidateAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_voteConstituency",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_data",
+				"type": "bytes"
+			}
+		],
+		"name": "vote",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "accounts",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "ids",
+				"type": "uint256[]"
+			}
+		],
+		"name": "balanceOfBatch",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_consNum",
+				"type": "uint256"
+			}
+		],
+		"name": "getCandidateLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_consNum",
+				"type": "uint256"
+			}
+		],
+		"name": "getCandidatesInConsi",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "candiAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "candiName",
+						"type": "string"
+					}
+				],
+				"internalType": "struct Election.CandidateStruct[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getElectionStatus",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_voterAddress",
+				"type": "address"
+			}
+		],
+		"name": "getEmailStatus",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getVoterAddress",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_voterAddress",
+				"type": "address"
+			}
+		],
+		"name": "getVoterInfo",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "voterName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cnic",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "email",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "voteConstituency",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "authorize",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "emailStatus",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "isVoter",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "voteCast",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct Election.Voter",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "idToVotes",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "consNum",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalVotes",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_Id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_uri",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			}
+		],
+		"name": "isApprovedForAll",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "ownersToken",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "bytes4",
 				"name": "interfaceId",
 				"type": "bytes4"
@@ -791,35 +872,6 @@ export const CONTRACT_ABI = [
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_candidateAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_voteConstituency",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "_data",
-				"type": "bytes"
-			}
-		],
-		"name": "vote",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
