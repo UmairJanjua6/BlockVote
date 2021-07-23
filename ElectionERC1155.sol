@@ -696,8 +696,10 @@ contract Election is ERC1155("BlockVote Token"){
         struct Voter {
             string voterName;
             uint256 cnic;
+            string email;
             uint256 voteConstituency;
             bool authorize;
+            bool emailStatus;
             bool isVoter;
             bool voteCast;
         }
@@ -708,15 +710,25 @@ contract Election is ERC1155("BlockVote Token"){
         /**
      * Function to add voter information into 'Voter List'
      **/
-        function addVoter(address _voterAddress, string memory _name, uint256 _cnic,uint256  _voteConstituency) public returns (bool) {
+        function addVoter(address _voterAddress, string memory _name, uint256 _cnic, string memory _email, uint256  _voteConstituency) public returns (bool) {
             voterList[_voterAddress].voterName = _name;
             voterList[_voterAddress].cnic = _cnic;
+            voterList[_voterAddress].email = _email;
             voterList[_voterAddress].voteConstituency = _voteConstituency;
             voterList[_voterAddress].authorize = false;
+            voterList[_voterAddress].emailStatus = false;
             voterList[_voterAddress].isVoter = true;
             voterList[_voterAddress].voteCast = false;
             voterAddressArray.push(_voterAddress);
             return true;
+        }
+        
+        function setEmailStatus(address _voterAddress, bool _status) public {
+            voterList[_voterAddress].emailStatus = _status;
+        }
+        
+        function getEmailStatus(address _voterAddress) public view returns(bool) {
+            return voterList[_voterAddress].emailStatus;
         }
         
         /**

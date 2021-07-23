@@ -49,7 +49,7 @@ const addVoterFunc = async () => {
                 </Form.Row>
                 <Form.Group>
                     <Form.Label> Email </Form.Label>
-                    <Form.Control type="email"  placeholder="Enter email" value = {email}  onChange={(e) => setEmail(e.target.value)}></Form.Control>
+                    <Form.Control type="email" placeholder="Enter email" value = {email}  onChange={(e) => setEmail(e.target.value)}></Form.Control>
                 </Form.Group>
                 
   <Form.Group>
