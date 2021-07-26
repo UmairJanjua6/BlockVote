@@ -31,7 +31,7 @@ const VoterRegister = () => {
         accounts,
         dispatch
       );
-      if (handleReceipt !== null) {
+      if ( handleReceipt !== null ) {
         setOpenModal (true);
       }
     } catch (error) {
