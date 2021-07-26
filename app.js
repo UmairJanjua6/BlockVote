@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 let express = require('express');
 let app = express();
 let nodemailer = require('nodemailer');
@@ -7,13 +9,13 @@ const path = require('path');
 // Static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-nodemailer.createTransport({
-  host: "blockvote2021@gmail.com", 
+let transporter = nodemailer.createTransport({
+  host: process.env.HOST_EMAIL, 
   port: 587,
   secure: false,
   auth: {
-    user: "blockvote2021@gmail.com",
-    pass: "Janjua9598"
+    user: process.env.HOST_EMAIL,
+    pass: process.env.HOST_PASSWORD
   }
 });
 
@@ -32,7 +34,7 @@ router.post('/send-email', (req, res) => {
     var content = `email: ${targetEmail} \n message: ${message} `
   
     var mail = {
-      from: "blockvote2021@gmail.com", 
+      from: process.env.HOST_EMAIL, 
       to: req.body.email, 
       message: subject,
       text: content
@@ -41,7 +43,8 @@ router.post('/send-email', (req, res) => {
     transporter.sendMail(mail, (err, data) => {
       if (err) {
         res.json({
-          status: 'fail'
+          status: 'fail',
+          Error: err
         })
       } else {
         res.json({
