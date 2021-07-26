@@ -32,12 +32,31 @@ const VoterRegister = () => {
         dispatch
       );
       if ( handleReceipt !== null ) {
-        setOpenModal (true);
+        await setOpenModal (true);
+        await sendEmail();
       }
     } catch (error) {
       console.log ('error: ', error);
     }
   };
+
+  const sendEmail = async(email) => {
+    const response = await fetch("/send-email", { 
+        method: 'POST', 
+        headers: { 
+            'Content-type': 'application/json'
+        }, 
+        body: JSON.stringify({ email }) 
+    }); 
+      const resData = await response.json(); 
+      if (resData.status === 'success'){
+        alert("Email Sent."); 
+        this.resetForm()
+    }else if(resData.status === 'fail'){
+        alert("Message failed to send.")
+    }
+  };
+
   return (
     <div>
       {openModal &&
