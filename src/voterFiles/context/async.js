@@ -21,6 +21,7 @@ import {
   voteCast,
   userBalance,
   idVote,
+  handleReceipt,
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -59,6 +60,9 @@ export const addVoter = async (
       .send ({from: accounts[0]});
     dispatch (addVoterInfo (address, name, cnic, email, constituency));
     console.log ('async voter info: ', receipt);
+    if(receipt) {
+    dispatch(handleReceipt(receipt));
+    }
   } catch (error) {
     console.log (error);
   }
@@ -278,10 +282,21 @@ export const getVotes3 = async (_id, accounts, contract, dispatch) => {
   }
 };
 
-export const electionStatusSet = async (flag, accounts, contract) => {
+export const startElection = async (accounts, contract) => {
   try {
     const receipt = await contract.methods
-      .setElectionStatus (flag)
+      .startElection()
+      .send ({from: accounts[0]});
+    console.log ('receipt set: ' + receipt);
+  } catch (error) {
+    console.log ('error: ' + error);
+  }
+};
+
+export const endElection = async (accounts, contract) => {
+  try {
+    const receipt = await contract.methods
+      .endElection()
       .send ({from: accounts[0]});
     console.log ('receipt set: ' + receipt);
   } catch (error) {
@@ -292,12 +307,12 @@ export const electionStatusSet = async (flag, accounts, contract) => {
 export const electionStatusGet = async (accounts, contract, dispatch) => {
   try {
     const receipt = await contract.methods
-      .getElectionStatus ()
+      .getElectionStatus()
       .call ({from: accounts[0]});
     dispatch (electionStatus (receipt));
     console.log('receipt: ' + receipt);
   } catch (error) {
-    console.log ('error: ' + error);
+    console.log ('electionStatusGet error: ' + error);
   }
 };
 

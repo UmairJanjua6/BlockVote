@@ -137,3 +137,10 @@ export const idVote = (id) => {
         payload: id
     }
 }
+
+export const handleReceipt = (receipt) => {
+    return {
+        type: 'RECEIPT',
+        payload: receipt
+    }
+}

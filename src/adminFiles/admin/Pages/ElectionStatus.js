@@ -7,7 +7,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core/styles';
 import { useStore } from '../../../voterFiles/context/GlobalState';
 import { loadBlockchain } from '../../../voterFiles/context/async';
-import { electionStatusSet } from '../../../voterFiles/context/async';
+import { startElection } from '../../../voterFiles/context/async';
+import { endElection} from '../../../voterFiles/context/async';
 import { electionStatusGet } from '../../../voterFiles/context/async';
 import '../../index.css';
 
@@ -20,22 +21,46 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ElectionStatus(){
   const classes = useStyles();
+
+  
+  useEffect( async() => {
+    await loadBlockchain(dispatch);
+    await electionStatusGet(accounts, contract, dispatch);
+  }, []);
+  
   const [{ contract, accounts, electionStatus}, dispatch] = useStore();
   console.log("status: ", electionStatus);
 
-  useEffect( async() => {
-    await loadBlockchain(dispatch);
-  }, []);
+    let status;
+    if(electionStatus === "0") {
+      status = "NOT STARTED";
+    } else if (electionStatus === "1") {
+      status = "STARTED";
+    } else if (electionStatus === "2") {
+      status = "ENDED";
+    }
 
-  const updateElectionState = async(status) => {
+    console.log("if status: ", status);
+
+  const startElectionFunc = async() => {
  try {
-    await electionStatusSet(status, accounts, contract);
+    await startElection(accounts, contract);
     await electionStatusGet(accounts, contract, dispatch);
  }
  catch (err) {
    console.log("error: ", err);
  }
   }
+
+  const endElectionFunc = async() => {
+    try {
+       await endElection(accounts, contract);
+       await electionStatusGet(accounts, contract, dispatch);
+    }
+    catch (err) {
+      console.log("error: ", err);
+    }
+     }
 
 return(
 
@@ -50,17 +75,17 @@ return(
       <Typography variant="h3">Election Status</Typography>
         <div id="electionStatus">
           <div id="electionStatusText">Election Status:</div>
-          <div id={electionStatus === true? "green" : "red"}>{electionStatus ? "Started" : "Not Started"}</div>
+          <div id={electionStatus === "1" ? "green" : "red"}>{status}</div>
         </div>
        <br></br>
 <Form>
 <Form.Group>
-<Button variant="primary" className="btn btn-dark " onClick={ () => {updateElectionState(true)}}>
+<Button variant="primary" className="btn btn-dark " onClick={startElectionFunc}>
    Start Election
   </Button>
 </Form.Group>
 <Form.Group>
-<Button variant="primary"  className="btn btn-dark " onClick={ () => {updateElectionState(false)}}>
+<Button variant="primary"  className="btn btn-dark " onClick={endElectionFunc}>
    End Election
   </Button>
 </Form.Group>

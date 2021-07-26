@@ -272,7 +272,8 @@ h3 {
   width: 90px;
   height: 50px;
   font-weight: bold;
-  padding: 10px 0px 0 3px;
+  font-size: 15px;
+  padding: 10px 0px 0 15px;
   background-color: #FF3131;
 }
 
@@ -284,6 +285,11 @@ h3 {
   font-size: 15px;
   padding: 10px 0px 0 10px;
   background-color: #32CD32;
+}
+
+#printBtn {
+  float: right;
+  margin-bottom: 5px;
 }
 
 #turnOver {

@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xbb3d13340839F8e11fc338f83Dd3e59A24551188";
+export const CONTRACT_ADDRESS = "0xbd950e362Bb2Ed9cd965B6fA95c99c5C76352935";
 export const CONTRACT_ABI = [
 	{
 		"anonymous": false,
@@ -349,6 +349,19 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "endElection",
+		"outputs": [
+			{
+				"internalType": "enum Election.electionStatus",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -468,25 +481,6 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "bool",
-				"name": "_status",
-				"type": "bool"
-			}
-		],
-		"name": "setElectionStatus",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "_voterAddress",
 				"type": "address"
@@ -499,6 +493,19 @@ export const CONTRACT_ABI = [
 		],
 		"name": "setEmailStatus",
 		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "startElection",
+		"outputs": [
+			{
+				"internalType": "enum Election.electionStatus",
+				"name": "",
+				"type": "uint8"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -634,9 +641,9 @@ export const CONTRACT_ABI = [
 		"name": "getElectionStatus",
 		"outputs": [
 			{
-				"internalType": "bool",
+				"internalType": "enum Election.electionStatus",
 				"name": "",
-				"type": "bool"
+				"type": "uint8"
 			}
 		],
 		"stateMutability": "view",

@@ -97,9 +97,9 @@ export default function DisplayResult(){
         <option value="2">3</option>
       </select>
       <Button variant="primary" onClick={fetchResult}>Show</Button>
-      <Button variant="primary" id="printBtn" onClick={printFunc}>print</Button>
+      <Button variant="primary" id="printBtn" onClick={printFunc}>Print</Button>
       
-      {idVote ? <div><p id="turnOver">Election Turn over: {turnOver}%</p></div> : "null"}
+      {idVote ? <div><p id="turnOver">Election Turn over: {turnOver}%</p></div> : ""}
       <ReactBootStrap.Table striped bordered hover id="printTable">
               <thead>
                 <tr>
