@@ -1,0 +1,50 @@
+{
+  "name": "blockvote-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "clone-response": "^1.0.2",
+    "debug": "^2.6.9",
+    "decompress-response": "^3.3.0",
+    "dot-prop": "^5.3.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "is-npm": "^4.0.0",
+    "is-installed-globally": "^0.3.2",
+    "is-number": "^7.0.0",
+    "is-obj": "^2.0.0",
+    "is-path-inside": "^3.0.3",
+    "is-yarn-global": "^0.3.0",
+    "is-typedarray": "^1.0.0",
+    "json-buffer": "^3.0.0",
+    "keyv": "^3.1.0",
+    "lowercase-keys": "^1.0.1",
+    "make-dir": "^3.1.0",
+    "media-typer": "^0.3.0",
+    "mime": "^1.6.0",
+    "mime-db": "^1.48.0",
+    "mime-types": "^2.1.31",
+    "mimic-response": "^1.0.1",
+    "minimist": "^1.2.5",
+    "ms": "^2.0.0",
+    "negotiator": "^0.6.2",
+    "nodemailer": "^6.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UmairJanjua6/BlockVote.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UmairJanjua6/BlockVote/issues"
+  },
+  "homepage": "https://github.com/UmairJanjua6/BlockVote#readme"
+}

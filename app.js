@@ -1,8 +1,9 @@
 require('dotenv').config();
 
-let express = require('express');
-let app = express();
-let nodemailer = require('nodemailer');
+const express = require('express');
+const router = express.Router();
+const app = express();
+const nodemailer = require('nodemailer');
 
 const path = require('path');
 
@@ -10,22 +11,12 @@ const path = require('path');
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 let transporter = nodemailer.createTransport({
-  host: process.env.HOST_EMAIL, 
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.HOST_EMAIL,
-    pass: process.env.HOST_PASSWORD
-  }
-});
-
-transporter.verify(function(error, success) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Ready to recieve messages for email");
+    service: "gmail",
+    auth: {
+        user: process.env.HOST_EMAIL,
+        pass: process.env.HOST_PASSWORD
     }
-})
+});
 
 router.post('/send-email', (req, res) => {
     const targetEmail = req.body.email;
@@ -55,5 +46,5 @@ router.post('/send-email', (req, res) => {
   })
 
 // serve PORT running here
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT
 app.listen(PORT, () => console.info(`server has started on ${PORT}`))
