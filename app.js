@@ -1,14 +1,17 @@
 require('dotenv').config();
 
-const express = require('express');
-const router = express.Router();
-const app = express();
+const express = require("express");
+const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+const route = express.Router();
 
-const path = require('path');
+const PORT = process.env.PORT || 5000;
 
-// Static folder
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/v1', route);
+app.listen(PORT, () => console.info(`server has started on ${PORT}`))
 
 let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -18,7 +21,13 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-router.post('/send-email', (req, res) => {
+route.get('/check', (req,res) => {
+    res.json({
+        status: 'success',
+        msg: "check me, i am here"
+       })
+})
+route.post('/send-email', (req, res) => {
     const targetEmail = req.body.email;
     console.log("email => ", targetEmail);
     var message = "I am sent from Block chain app"
@@ -44,7 +53,3 @@ router.post('/send-email', (req, res) => {
       }
     })
   })
-
-// serve PORT running here
-const PORT = process.env.PORT
-app.listen(PORT, () => console.info(`server has started on ${PORT}`))
