@@ -32,8 +32,8 @@ const VoterRegister = () => {
         dispatch
       );
       if ( handleReceipt !== null ) {
+        await sendEmail(email);
         await setOpenModal (true);
-        await sendEmail();
       }
     } catch (error) {
       console.log ('error: ', error);
@@ -41,7 +41,8 @@ const VoterRegister = () => {
   };
 
   const sendEmail = async(email) => {
-    const response = await fetch("/send-email", { 
+    const url = "http://localhost:8000/v1/send-email";
+    const response = await fetch(url, { 
         method: 'POST', 
         headers: { 
             'Content-type': 'application/json'
@@ -50,8 +51,7 @@ const VoterRegister = () => {
     }); 
       const resData = await response.json(); 
       if (resData.status === 'success'){
-        alert("Email Sent."); 
-        this.resetForm()
+        alert("Email Sent.");
     }else if(resData.status === 'fail'){
         alert("Message failed to send.")
     }
