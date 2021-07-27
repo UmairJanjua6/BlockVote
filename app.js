@@ -54,7 +54,7 @@ route.post('/send-email', (req, res) => {
                 <strong>Thanks for registering. Click below button to verify your email</strong>
                 <br/>
                 <br/>
-                <a href="http://localhost:3000/adminlogin">
+                <a href="${process.env.LOCAL_ENVIRONMENT_URL + process.env.EMAIL_REDIRECTION_URL}">
                     <button style="padding: 10px 20px 10px 20px;background:#efb903;border:none;color:white;">Verify</button>
                 </a>
             </div>`
