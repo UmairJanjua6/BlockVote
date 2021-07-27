@@ -41,7 +41,7 @@ const VoterRegister = () => {
   };
 
   const sendEmail = async(email) => {
-    const url = "http://localhost:8000/v1/send-email";
+    const url = process.env.DEV_NODE_URL + process.env.ROUTE_PATH + process.env.REGISTER_EMAIL_PATH;
     const response = await fetch(url, { 
         method: 'POST', 
         headers: { 
