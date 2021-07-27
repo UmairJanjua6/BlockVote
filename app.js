@@ -48,7 +48,16 @@ route.post('/send-email', (req, res) => {
         path: './assets/Logo1.png',
         cid: 'logo'
       }],
-      html: '<b><a href="#"><img style="margin-left:auto;margin-right:auto;display:block" src="cid:logo"></a> <br/> <strong>{{username}}</strong>, Your <a href="http://localhost:3000/adminlogin">password</a> is:\n<b>{{ password }}</b></p>'
+      html: `<a href="#"><img style="margin-left:auto;margin-right:auto;display:block" src="cid:logo"></a>
+            <br/> 
+            <div style="text-align: center;">
+                <strong>Thanks for registering. Click below button to verify your email</strong>
+                <br/>
+                <br/>
+                <a href="http://localhost:3000/adminlogin">
+                    <button style="padding: 10px 20px 10px 20px;background:#efb903;border:none;color:white;">Verify</button>
+                </a>
+            </div>`
     }
   
     transporter.sendMail(mail, (err, data) => {
