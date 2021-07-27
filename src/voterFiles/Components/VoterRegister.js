@@ -41,7 +41,8 @@ const VoterRegister = () => {
   };
 
   const sendEmail = async(email) => {
-    const url = process.env.DEV_NODE_URL + process.env.ROUTE_PATH + process.env.REGISTER_EMAIL_PATH;
+    const url = process.env.REACT_APP_DEV_NODE_URL + process.env.REACT_APP_ROUTE_PATH + process.env.REACT_APP_REGISTER_EMAIL_PATH;
+    alert(url);
     const response = await fetch(url, { 
         method: 'POST', 
         headers: { 
