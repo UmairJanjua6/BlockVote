@@ -48,7 +48,9 @@ route.post('/send-email', (req, res) => {
         path: './assets/Logo1.png',
         cid: 'logo'
       }],
-      html: `<a href="#"><img style="margin-left:auto;margin-right:auto;display:block" src="cid:logo"></a>
+      html: `<a href="#">
+                <img style="margin-left:auto;margin-right:auto;display:block" src="cid:logo">
+            </a>
             <br/> 
             <div style="text-align: center;">
                 <strong>Thanks for registering. Click below button to verify your email</strong>
