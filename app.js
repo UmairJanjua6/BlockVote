@@ -4,9 +4,12 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const app = express();
+const route = express.Router();
+const cors = require('cors');
+
+route.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-const route = express.Router();
 
 const PORT = process.env.PORT || 5000;
 
@@ -30,14 +33,22 @@ route.get('/check', (req,res) => {
 route.post('/send-email', (req, res) => {
     const targetEmail = req.body.email;
     console.log("email => ", targetEmail);
-    var message = "I am sent from Block chain app"
-    var content = `email: ${targetEmail} \n message: ${message} `
-  
+    const message = "I am sent from Block chain app";
+    const content = `email: ${targetEmail} \n message: ${message} asdasdas`;
+    const subject = `Block Vote Email Verification`;
+
     var mail = {
       from: process.env.HOST_EMAIL, 
       to: req.body.email, 
-      message: subject,
-      text: content
+    //   message: message,
+      subject: subject,
+      text: content,
+      attachments: [{
+        filename: 'Logo1.png',
+        path: './assets/Logo1.png',
+        cid: 'logo'
+      }],
+      html: '<b><a href="#"><img style="margin-left:auto;margin-right:auto;display:block" src="cid:logo"></a> <br/> <strong>{{username}}</strong>, Your <a href="http://localhost:3000/adminlogin">password</a> is:\n<b>{{ password }}</b></p>'
     }
   
     transporter.sendMail(mail, (err, data) => {
