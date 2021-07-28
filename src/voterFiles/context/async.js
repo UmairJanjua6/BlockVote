@@ -333,6 +333,9 @@ export const vote = async (
       .vote (_candidateAddress, _voteConstituency, '0x00')
       .send ({from: accounts[0]});
     dispatch(voteCast(receipt));
+    if(receipt) {
+      dispatch(handleReceipt(receipt));
+    }
   } catch (error) {
     console.log ('error vote: ' + error);
   }

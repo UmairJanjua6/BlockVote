@@ -4,7 +4,7 @@ import {Form, Button, Col} from 'react-bootstrap';
 import {useStore} from '../context/GlobalState';
 import {addVoter} from '../context/async';
 import {loadBlockchain} from '../context/async';
-import Modal from '../context/Modal.js';
+import userModal from '../context/Modal.js';
 
 const VoterRegister = () => {
   const [name, setName] = useState ('');
@@ -62,7 +62,7 @@ const VoterRegister = () => {
     <div>
       {openModal &&
         handleReceipt &&
-        <Modal
+        <userModal
           closeModal={setOpenModal}
           title={'Vote Status'}
           body={'You vote registration request has been received successfully. Kindly check your email for more details.'}

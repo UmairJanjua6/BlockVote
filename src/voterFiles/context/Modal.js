@@ -1,7 +1,7 @@
 import React from 'react';
 import './Modal.css';
 
-const Modal = ({closeModal, title, body, txLink}) => {
+const userModal = ({closeModal, title, body, txLink}) => {
   return (
     <div className="modalBackground">
       <div className="modalContainer">
@@ -25,4 +25,4 @@ const Modal = ({closeModal, title, body, txLink}) => {
   );
 };
 
-export default Modal;
+export default userModal;

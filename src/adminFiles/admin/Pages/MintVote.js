@@ -8,7 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useStore} from '../../../voterFiles/context/GlobalState';
 import {mintVotes} from '../../../voterFiles/context/async';
 import {loadBlockchain} from '../../../voterFiles/context/async';
-import Modal from '../../../voterFiles/context/Modal.js';
+import userModal from '../../../voterFiles/context/Modal.js';
 
 const useStyles = makeStyles (theme => ({
   content: {
@@ -53,7 +53,7 @@ export default function MintVote () {
       <Toolbar />
       {openModal &&
         handleReceipt &&
-        <Modal
+        <userModal
           closeModal={setOpenModal}
           title={'New Votes'}
           body={'New votes has been added in Constituency no:' + consNum}

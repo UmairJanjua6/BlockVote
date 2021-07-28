@@ -8,7 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useStore} from '../../../voterFiles/context/GlobalState';
 import {loadBlockchain} from '../../../voterFiles/context/async';
 import {addCandidate} from '../../../voterFiles/context/async';
-import Modal from '../../../voterFiles/context/Modal.js';
+import userModal from '../../../voterFiles/context/Modal.js';
 
 const useStyles = makeStyles (theme => ({
   content: {
@@ -55,7 +55,7 @@ export default function AddCandidate () {
         <CssBaseline />
         {openModal &&
           handleReceipt &&
-          <Modal
+          <userModal
             closeModal={setOpenModal}
             title={'Transaction Success'}
             body={'New Candidate has been added successfully.'}

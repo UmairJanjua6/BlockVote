@@ -19,9 +19,11 @@ const User = () => {
       singleVoterInfo,
       electionStatus,
       voteCast,
+      handleReceipt,
     },
     dispatch,
   ] = useStore ();
+  console.log("receipt: ", handleReceipt);
   const [modalShow, setModalShow] = useState (false);
   const [showList, setShowList] = useState (false);
   const [text, setText] = useState ('Show');
@@ -87,7 +89,6 @@ const User = () => {
     );
   }
 
-  
   const renderCard = (card, index) => {
     return (
       <Card style={{width: '18rem'}} key={index} className="box">
@@ -113,7 +114,9 @@ const User = () => {
       <div className="userInstruction">
         <h2>Election 2021</h2>
         <p id="voteStatusP">
-          {voteCast ? <div id="success">Vote Casted Successfully, Logout Now</div> : <div id="error">Didn't cast the vote yet.</div>}
+          {voteCast
+            ? <div id="success">Vote Casted Successfully, Logout Now</div>
+            : <div id="error">Didn't cast the vote yet.</div>}
         </p>
         <Button
           variant="primary"
@@ -161,7 +164,6 @@ const User = () => {
           getCandidateList ();
         }}
       />
-
 
     </div>
   );
