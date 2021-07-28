@@ -20,7 +20,7 @@ function Voter() {
         <Route path= '/registervoter' component={VoterRegister} />
         <Route path= '/adminlogin' component={AdminLogin} />
         <Route path= '/user' component={User} />
-        <Route path= '/email-success' component={EmailSuccess} />
+        <Route path= '/email-success/:email' component={EmailSuccess} />
       </Switch>
       </div>
   );
