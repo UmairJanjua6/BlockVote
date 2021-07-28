@@ -54,6 +54,23 @@ const User = () => {
     }
   };
 
+  const sendVoteEmail = async ( email ) => {
+    const url = process.env.REACT_APP_DEV_NODE_URL + process.env.REACT_APP_ROUTE_PATH + process.env.REACT_APP_VOTE_CONFIRMATION_EMAIL_PATH;
+    const response = await fetch(url, { 
+        method: 'POST', 
+        headers: { 
+            'Content-type': 'application/json'
+        }, 
+        body: JSON.stringify({ email }) 
+    }); 
+      const resData = await response.json(); 
+      if (resData.status === 'success'){
+        alert("Email Sent.");
+    }else if(resData.status === 'fail'){
+        alert("Message failed to send.")
+    }
+  };
+
   const handleText = () => {
     if (text === 'Show') {
       setText ('Hide');
@@ -164,7 +181,7 @@ const User = () => {
           getCandidateList ();
         }}
       />
-
+      {handleReceipt && sendVoteEmail("ehsansoomro306@gmail.com")}
     </div>
   );
 };
