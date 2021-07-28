@@ -16,8 +16,8 @@
 // export default EmailSuccess;
 
 import {Container} from '@material-ui/core';
-import React, {useState, useEffect} from 'react';
-import {Form, Button, Col} from 'react-bootstrap';
+import React from 'react';
+import {Form, Button} from 'react-bootstrap';
 import { MultiStepForm, Step } from 'react-multi-form';
 
 const EmailSuccess = () => {
@@ -25,7 +25,7 @@ const [active, setActive] = React.useState(1)
   return (
     <div>
       <Container maxWidth="xs" style={{marginTop: '100px'}}>
-        <MultiStepForm activeStep={active}>
+        <MultiStepForm activeStep={active} accentColor="#f0b90b">
             <Step>
                 <Form.Group style={{textAlign: 'center'}}>
                     <Button
@@ -35,7 +35,7 @@ const [active, setActive] = React.useState(1)
                         onClick={() => setActive(active + 1)}
                         block
                     >
-                        Click here to continue
+                        Click here to continue verification
                     </Button>
                 </Form.Group>
             </Step>
