@@ -34,12 +34,12 @@ route.get('/check', (req,res) => {
 /* ---------------------------------------------------------------------------- */
 route.post('/send-email', (req, res) => {
     const targetEmail = req.body.email;
-    const content = `email: ${targetEmail} \n message: ${message}`;
+    const content = `Email: ${targetEmail} \n`;
     const subject = `Block Vote Email Verification`;
 
     var mail = {
       from: process.env.HOST_EMAIL, 
-      to: req.body.email, 
+      to: targetEmail, 
       subject: subject,
       text: content,
       attachments: [{
@@ -55,7 +55,7 @@ route.post('/send-email', (req, res) => {
                 <strong>Thanks for registering. Click below button to verify your email</strong>
                 <br/>
                 <br/>
-                <a href="${process.env.LOCAL_ENVIRONMENT_URL + process.env.EMAIL_REDIRECTION_PATH}">
+                <a href="${process.env.LOCAL_ENVIRONMENT_URL + process.env.EMAIL_REDIRECTION_PATH}/${targetEmail}">
                     <button style="padding: 10px 20px 10px 20px;background:#efb903;border:none;color:white;">Verify</button>
                 </a>
             </div>`
@@ -80,12 +80,12 @@ route.post('/send-email', (req, res) => {
 /* ---------------------------------------------------------------------------- */
 route.post('/vote-send-email', (req, res) => {
     const targetEmail = req.body.email;
-    const content = `email: ${targetEmail} \n message: ${message}`;
+    const content = `Email: ${targetEmail} \n`;
     const subject = `Block Vote Confirmation`;
 
     var mail = {
       from: process.env.HOST_EMAIL, 
-      to: req.body.email, 
+      to: targetEmail, 
       subject: subject,
       text: content,
       attachments: [{
