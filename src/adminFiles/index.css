@@ -302,6 +302,20 @@ h3 {
  margin-right: 3px;
 }
 
+.resultFooter {
+  visibility: hidden;
+}
+
+#date {
+  visibility: hidden;
+  float: right;
+}
+
+#consiNum {
+  visibility: hidden;
+  float: center;
+}
+
 @media print {
   body * {
     visibility: hidden;
@@ -313,5 +327,23 @@ h3 {
 
   .walletBtn *{
     visibility: hidden;
+  }
+
+  .resultFooter {
+    visibility: visible;
+    bottom: 0;
+    position: absolute;
+    text-align: center;
+  }
+
+  #date {
+    visibility: visible;
+    float: right;
+  }
+
+  #consiNum {
+    visibility: visible;
+    float: left;
+    margin-left: 25px;
   }
 }

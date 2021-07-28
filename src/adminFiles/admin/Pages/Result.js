@@ -50,6 +50,9 @@ export default function DisplayResult(){
     const printFunc = () => {
       window.print();
     }
+    let date;
+    var today = new Date();
+    date = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
 
     const candidateBalance = async() => {
       try {
@@ -65,10 +68,6 @@ export default function DisplayResult(){
         console.log("error: ", e);
       }
     }
-
-    const print = () => {
-      window.print();
-    }
     const calTurnOver = () => {
       let sum = userBalance.reduce((a, b) => (parseInt(a) + parseInt(b)), 0);
       let percentage = (sum / idVote.totalVotes) * 100;
@@ -83,14 +82,15 @@ export default function DisplayResult(){
       )
     }
     return(
-
         <div>
             <SideBar></SideBar>
             <Toolbar/>
             <div >
       <main className={classes.content}>
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>
+      <p id="date">Date: {date}</p>
       <h1 id="title">Election Result of: </h1>
+      <h3 id="consiNum">Result of Constituency No: {consi}</h3>
       <select id="consiOption" onChange={(e) => setConsi(e.target.value)}>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -108,11 +108,14 @@ export default function DisplayResult(){
                 </tr>
               </thead>
               <tbody>
-              {getCandidateInfo && userBalance ? (getCandidateInfo).map(renderResult) : "null"}
+              {getCandidateInfo && userBalance ? (getCandidateInfo).map(renderResult) : ""}
               </tbody>
             </ReactBootStrap.Table>
 
       </Box>
+      <div className="resultFooter">
+        This is system generated result and does not requires any signature verification.
+      </div>
       </main>
     </div>
         </div>

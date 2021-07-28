@@ -151,8 +151,10 @@ export const addCandidate = async (
       .addCandidate (_conNum, _candidateAddress, _name)
       .send ({from: accounts[0]});
     dispatch (addCandidateInfo (_conNum, _candidateAddress, _name));
+    if(receipt) {
+      dispatch(handleReceipt(receipt));
+    }
     console.log ('receipt: ' + receipt);
-    console.log ('AC after');
   } catch (error) {
     console.log ('error: ' + error);
   }
@@ -182,13 +184,16 @@ export const mintVotes = async (
   _id,
   _data,
   accounts,
-  contract
+  contract,
+  dispatch
 ) => {
   try {
-    console.log ('aaaaaaa: ');
     const receipt = await contract.methods
-      .mintVotes (_conNum, _totalVotes, _uri, _id, _data)
+      .mint(_conNum, _totalVotes, _uri, _id, _data)
       .send ({from: accounts[0]});
+      if(receipt) {
+      dispatch(handleReceipt(receipt));
+      }
     console.log ('receipt: ' + receipt);
   } catch (error) {
     console.log ('error: ' + error);

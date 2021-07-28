@@ -29,7 +29,6 @@ export default function ElectionStatus(){
   }, []);
   
   const [{ contract, accounts, electionStatus}, dispatch] = useStore();
-  console.log("status: ", electionStatus);
 
     let status;
     if(electionStatus === "0") {

@@ -45,7 +45,7 @@ const VoterRegister = () => {
         <Modal
           closeModal={setOpenModal}
           title={'Vote Status'}
-          body={'You vote has been casted successfully.'}
+          body={'You vote registration request has been received successfully. Kindly check your email for more details.'}
           txLink={
             <a
               href={

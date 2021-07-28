@@ -8,6 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useStore} from '../../../voterFiles/context/GlobalState';
 import {mintVotes} from '../../../voterFiles/context/async';
 import {loadBlockchain} from '../../../voterFiles/context/async';
+import Modal from '../../../voterFiles/context/Modal.js';
 
 const useStyles = makeStyles (theme => ({
   content: {
@@ -20,32 +21,58 @@ export default function MintVote () {
   const [consNum, setConsNum] = useState (0);
   const [votes, setVotes] = useState (0);
   const classes = useStyles ();
-  const [{contract, accounts}, dispatch] = useStore ();
+  const [openModal, setOpenModal] = useState ();
+  const [{contract, accounts, handleReceipt}, dispatch] = useStore ();
   useEffect (() => {
     loadBlockchain (dispatch);
   }, []);
-  const mintVoteFunc = () => {
-    mintVotes (
+  const mintVoteFunc = async () => {
+    try{
+    await mintVotes (
       consNum,
       votes,
       '',
       consNum,
       '0x00',
       accounts,
-      contract
+      contract,
+      dispatch
     );
+    if (handleReceipt) {
+      setOpenModal (true);
+      console.log ('handleReceipt: ' + handleReceipt);
+    }
+  } catch (error) {
+    console.log("Error: ", error);
+  }
   };
   return (
     <div>
       <CssBaseline />
-
       <SideBar />
       <Toolbar />
+      {openModal &&
+        handleReceipt &&
+        <Modal
+          closeModal={setOpenModal}
+          title={'New Votes'}
+          body={'New votes has been added in Constituency no:' + consNum}
+          txLink={
+            <a
+              href={
+                'https://ropsten.etherscan.io/tx/' +
+                  handleReceipt.transactionHash
+              }
+            >
+              See on etherscan
+            </a>
+          }
+        />}
       <div>
         <CssBaseline />
         <main className={classes.content}>
           <Box maxWidth="md" style={{paddingLeft: '250px'}}>
-            <Typography variant="h3">Mint Vote</Typography>
+            <Typography variant="h3">Mint Votes</Typography>
             <Form>
               <Form.Group controlId="constiNum">
                 <Form.Label>Constituency Number</Form.Label>

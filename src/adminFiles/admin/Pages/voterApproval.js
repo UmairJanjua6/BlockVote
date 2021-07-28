@@ -38,6 +38,7 @@ const VoterApproval = () => {
         id = getVoterData[index].voteConstituency;
       }
       await authorizeVoter (voterAddress, id, contract, accounts, dispatch);
+      await getVoterList (dispatch, contract, accounts);
     } catch (error) {
       console.log ('error: ', error);
     }
@@ -47,6 +48,7 @@ const VoterApproval = () => {
     try {
       let voterAddress = voterListArray[index];
       await deleteVoter(voterAddress, index, contract, accounts);
+      await getVoterList (dispatch, contract, accounts);
     } catch (error) {
       console.log("error: ", error);
     }
@@ -59,6 +61,7 @@ const VoterApproval = () => {
       <tr key={index}>
         <td>{voter.voterName}</td>
         <td>{voter.cnic}</td>
+        <td>{voter.email}</td>
         <td>{voter.voteConstituency}</td>
         <td>{voter.authorize === true ? "Registered" : "Not Registered"}</td>
         <td>
@@ -104,6 +107,7 @@ const VoterApproval = () => {
                 <tr>
                   <th>NAME</th>
                   <th>CNIC</th>
+                  <th>EMAIL</th>
                   <th>CONSTITUENCY</th>
                   <th>STATUS</th>
                   <th>APPROVE</th>
