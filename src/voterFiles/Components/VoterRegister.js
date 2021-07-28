@@ -31,13 +31,33 @@ const VoterRegister = () => {
         accounts,
         dispatch
       );
-      if (handleReceipt !== null) {
-        setOpenModal (true);
+      if ( handleReceipt !== null ) {
+        await sendEmail(email);
+        await setOpenModal (true);
       }
     } catch (error) {
       console.log ('error: ', error);
     }
   };
+
+  const sendEmail = async(email) => {
+    const url = process.env.REACT_APP_DEV_NODE_URL + process.env.REACT_APP_ROUTE_PATH + process.env.REACT_APP_REGISTER_EMAIL_PATH;
+    alert(url);
+    const response = await fetch(url, { 
+        method: 'POST', 
+        headers: { 
+            'Content-type': 'application/json'
+        }, 
+        body: JSON.stringify({ email }) 
+    }); 
+      const resData = await response.json(); 
+      if (resData.status === 'success'){
+        alert("Email Sent.");
+    }else if(resData.status === 'fail'){
+        alert("Message failed to send.")
+    }
+  };
+
   return (
     <div>
       {openModal &&
