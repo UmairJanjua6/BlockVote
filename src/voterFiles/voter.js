@@ -7,6 +7,8 @@ import Navbar from './Components/Navbar.js';
 import '.././index.css';
 import User from './Components/User.js';
 import VoterRegister from './Components/VoterRegister.js';
+import EmailSuccess from './Components/EmailSuccess.js';
+
 function Voter() {
   return (
     <div className="container-fluid">
@@ -18,6 +20,7 @@ function Voter() {
         <Route path= '/registervoter' component={VoterRegister} />
         <Route path= '/adminlogin' component={AdminLogin} />
         <Route path= '/user' component={User} />
+        <Route path= '/email-success' component={EmailSuccess} />
       </Switch>
       </div>
   );
