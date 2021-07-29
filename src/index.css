@@ -184,5 +184,12 @@ h3 {
     padding-left: 20px;
 }
 
+.para {
+    color: #f0b90b;
+}
+
+.para-error{
+    color: #e70c0c;
+}
 
 

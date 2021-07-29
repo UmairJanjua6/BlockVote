@@ -5,6 +5,7 @@ import {useStore} from '../context/GlobalState';
 import {addVoter} from '../context/async';
 import {loadBlockchain} from '../context/async';
 import userModal from '../context/Modal.js';
+import Spinner from "./Spinner";
 
 const VoterRegister = () => {
   const [name, setName] = useState ('');
@@ -14,6 +15,9 @@ const VoterRegister = () => {
   const [address, setAddress] = useState ();
   const [openModal, setOpenModal] = useState ();
   const [{accounts, contract, handleReceipt}, dispatch] = useStore ();
+  const [ loading, setLoading ] = useState(false);
+  const [ successConfirmation, setSuccessConfirmation ] = useState(false);
+  const [ failConfirmation, setFailConfirmation ] = useState(false);
 
   useEffect (async () => {
     await loadBlockchain (dispatch);
@@ -42,6 +46,7 @@ const VoterRegister = () => {
 
   const sendEmail = async(email) => {
     const url = process.env.REACT_APP_DEV_NODE_URL + process.env.REACT_APP_ROUTE_PATH + process.env.REACT_APP_REGISTER_EMAIL_PATH;
+    setLoading(true);
     const response = await fetch(url, { 
         method: 'POST', 
         headers: { 
@@ -51,9 +56,13 @@ const VoterRegister = () => {
     }); 
       const resData = await response.json(); 
       if (resData.status === 'success'){
-        alert("Email Sent.");
+        await setLoading(false);
+        await setSuccessConfirmation (true);
+        await setFailConfirmation (false);
     }else if(resData.status === 'fail'){
-        alert("Message failed to send.")
+        await setLoading(false);
+        await setSuccessConfirmation (false);
+        await setFailConfirmation (true);
     }
   };
 
@@ -138,13 +147,17 @@ const VoterRegister = () => {
               onChange={e => setAddress (e.target.value)}
             />
           </Form.Group>
-          <Form.Group style={{textAlign: 'center'}}>
+          {loading && <Form.Row>Verification Email Sending... <Spinner /></Form.Row>}
+          {successConfirmation && !loading && <p class="para">Verification Email Sent!</p>}
+          {failConfirmation && !loading && <p class="para-error">Verification Email Sending Failed. Please try again</p>}
+          <Form.Group style={{textAlign: 'center', marginTop: '30px'}}>
             <Button
               variant="contained"
               size="lg"
               style={{backgroundColor: '#f0b90b', color: '#12161C'}}
               onClick={addVoterFunc}
               block
+              disabled={loading}
             >
               Register
             </Button>
