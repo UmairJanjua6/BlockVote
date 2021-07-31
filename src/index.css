@@ -135,12 +135,6 @@ h3 {
     margin: 0;
 }
 
-/* .btn  {
-    margin: 7px;
-    width: 95%;
-    font-size: 18px;
-} */
-
 .btnAdmin {
     margin: 7px;
     width: 95%;
@@ -192,4 +186,60 @@ h3 {
     color: #e70c0c;
 }
 
+.user-login {
+    width: 450px;
+    height: 350px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 1px solid #12161C;
+}
 
+.user-header h2{
+    margin: 20px;
+}
+
+.user-body {
+    margin-top: 30px;
+    margin-left: 10px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.user-body p {
+    margin-left: 0px;
+}
+
+.user-btn {
+    margin-top: 20px;
+    margin-left: 140px;
+}
+
+.btnVoterLogin {
+    margin-right: 20px;
+    width: 80px;
+    background-color: rgb(240, 185, 11);
+    border: none;
+    color: #12161C;
+}
+
+.btnVoterRegister {
+    background-color: #12161C;
+    color: #fff;
+    border: none;
+}
+
+.btnVoterLogin:hover {
+    background-color: rgb(248, 209, 47);
+    color:rgb(33, 40, 51);
+}
+
+.btnVoterRegister:hover {
+    background-color: #12161C;
+    color: rgb(240, 185, 11);
+}
+
+#metamask-link {
+    color: #EE811A;
+}
