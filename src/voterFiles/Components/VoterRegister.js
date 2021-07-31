@@ -4,7 +4,7 @@ import {Form, Button, Col} from 'react-bootstrap';
 import {useStore} from '../context/GlobalState';
 import {addVoter} from '../context/async';
 import {loadBlockchain} from '../context/async';
-import userModal from '../context/Modal.js';
+import Modal from '../context/Modal.js';
 import Spinner from "./Spinner";
 
 const VoterRegister = () => {
@@ -18,6 +18,7 @@ const VoterRegister = () => {
   const [ loading, setLoading ] = useState(false);
   const [ successConfirmation, setSuccessConfirmation ] = useState(false);
   const [ failConfirmation, setFailConfirmation ] = useState(false);
+  const [ modalMessage, setModalMessage ] = useState("");
 
   useEffect (async () => {
     await loadBlockchain (dispatch);
@@ -37,7 +38,7 @@ const VoterRegister = () => {
       );
       if ( handleReceipt !== null ) {
         await sendEmail(email);
-        await setOpenModal (true);
+        setOpenModal (true);
       }
     } catch (error) {
       console.log ('error: ', error);
@@ -70,7 +71,7 @@ const VoterRegister = () => {
     <div>
       {openModal &&
         handleReceipt &&
-        <userModal
+        <Modal
           closeModal={setOpenModal}
           title={'Vote Status'}
           body={'You vote registration request has been received successfully. Kindly check your email for more details.'}
@@ -81,7 +82,7 @@ const VoterRegister = () => {
                   handleReceipt.transactionHash
               }
             >
-              See on etherscan
+              View on etherscan
             </a>
           }
         />}
