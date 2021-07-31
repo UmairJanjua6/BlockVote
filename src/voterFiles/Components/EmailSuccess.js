@@ -1,20 +1,3 @@
-// import React from 'react';
-// import { useHistory} from 'react-router-dom';
-// import { Button } from 'react-bootstrap';
-
-// const EmailSuccess = () => {
-//   let history = useHistory();
-//   return (
-//     <div className="container-fluid">
-//       Congratulations! Your email is successfully verified.
-//       <br/>
-//       <Button className="btnAdmin" onClick= {() => {history.push("/adminlogin")}}>Admin Login</Button>
-//     </div>
-//   )
-// }
-
-// export default EmailSuccess;
-
 import {Container} from '@material-ui/core';
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
