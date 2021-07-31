@@ -18,7 +18,7 @@ const VoterRegister = () => {
   const [ loading, setLoading ] = useState(false);
   const [ successConfirmation, setSuccessConfirmation ] = useState(false);
   const [ failConfirmation, setFailConfirmation ] = useState(false);
-  const [ modalMessage, setModalMessage ] = useState("");
+  const [ modalBody, setModalBody ] = useState("");
 
   useEffect (async () => {
     await loadBlockchain (dispatch);
@@ -58,10 +58,12 @@ const VoterRegister = () => {
       const resData = await response.json(); 
       if (resData.status === 'success'){
         await setLoading(false);
+        await setModalBody("Verification Email Sent.");
         await setSuccessConfirmation (true);
         await setFailConfirmation (false);
     }else if(resData.status === 'fail'){
         await setLoading(false);
+        await setModalBody("Verification Email Sending Failed. Please try again")
         await setSuccessConfirmation (false);
         await setFailConfirmation (true);
     }
@@ -74,7 +76,7 @@ const VoterRegister = () => {
         <Modal
           closeModal={setOpenModal}
           title={'Vote Status'}
-          body={'You vote registration request has been received successfully. Kindly check your email for more details.'}
+          body={modalBody}
           txLink={
             <a
               href={
@@ -149,8 +151,8 @@ const VoterRegister = () => {
             />
           </Form.Group>
           {loading && <Form.Row>Verification Email Sending... <Spinner /></Form.Row>}
-          {successConfirmation && !loading && <p class="para">Verification Email Sent!</p>}
-          {failConfirmation && !loading && <p class="para-error">Verification Email Sending Failed. Please try again</p>}
+          {/* {successConfirmation && !loading && <p class="para">Verification Email Sent!</p>}
+          {failConfirmation && !loading && <p class="para-error">Verification Email Sending Failed. Please try again</p>} */}
           <Form.Group style={{textAlign: 'center', marginTop: '30px'}}>
             <Button
               variant="contained"
