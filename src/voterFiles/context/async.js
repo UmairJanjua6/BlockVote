@@ -36,7 +36,6 @@ export const loadBlockchain = async dispatch => {
       dispatch (setupContract (contract));
       const accounts = await web3.eth.getAccounts ();
       dispatch (addEthereumAccounts (accounts));
-      web3.eth.handleRevert = false;
     }
   } catch (error) {
     console.log ('Error in loading Web3 = ', error);

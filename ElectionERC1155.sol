@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: unlicenced
 pragma solidity ^0.8.0;
 
 /*ERC1155 interface*/
@@ -657,6 +658,8 @@ implemetation of new token
 contract Election is ERC1155("BlockVote Token"){
     event addVoterEvent(string name, uint256 cnic, uint256 constituency, address voterAddress, bool isVoter, bool authorize);
     event addCandidateEvent(uint256 constituency, address candidateAddress, string name);
+    event cnicExist(string);
+    event addressExist(string);
     struct constituencyVotes{
         uint256 consNum;
         uint256 totalVotes;
@@ -666,6 +669,10 @@ contract Election is ERC1155("BlockVote Token"){
     mapping(uint=>constituencyVotes) public idToVotes ;
      mapping(address=>uint[]) public ownersToken;
      bool electionTime;
+     
+     enum electionStatus{NotStart, start, end}
+     electionStatus status;
+     electionStatus constant defaultStatus = electionStatus.NotStart;
      
         function mint(uint256 _consNum, uint256 _totalVotes, string memory _uri, uint256 _id, bytes memory data) public virtual {
             constituencyVotes memory token = constituencyVotes(_consNum,_totalVotes,_id,_uri);
@@ -711,6 +718,13 @@ contract Election is ERC1155("BlockVote Token"){
      * Function to add voter information into 'Voter List'
      **/
         function addVoter(address _voterAddress, string memory _name, uint256 _cnic, string memory _email, uint256  _voteConstituency) public returns (bool) {
+            require(_voterAddress == msg.sender, "Please use your own address to generate this transaction");
+            
+            for(uint i = 0; i< voterAddressArray.length; i++) {
+                require(voterAddressArray[i] != _voterAddress, "Address already exists");
+                require(voterList[voterAddressArray[i]].cnic != _cnic, "User cnic already exits");
+            }
+            
             voterList[_voterAddress].voterName = _name;
             voterList[_voterAddress].cnic = _cnic;
             voterList[_voterAddress].email = _email;
@@ -797,6 +811,10 @@ contract Election is ERC1155("BlockVote Token"){
             return true;
         }
         
+        function mintVotes(uint256 _consNum, uint256 _amount, bytes memory _data) public onlyOwner returns(bool) {
+            
+        }
+        
         /**
      * Function to tranfer 'Vote token' to 'Voter balance' and change Voter 'authorize' status to 'true'
      **/
@@ -808,19 +826,25 @@ contract Election is ERC1155("BlockVote Token"){
             voterList[_voterAddress].authorize = true;
         }
         
-        function setElectionStatus(bool _status) public onlyOwner returns (bool) {   
-            electionTime = _status;
-            return true;
+        function startElection() public onlyOwner returns (electionStatus) {   
+            status = electionStatus.start;
+            return status;
         }
         
-        function getElectionStatus () public view returns (bool) {
-            return electionTime;
+        function endElection() public onlyOwner returns(electionStatus) {
+            status = electionStatus.end;
+            return status;
+        }
+        
+        function getElectionStatus() public view returns (electionStatus) {
+            return status;
         }
         
         function vote(address _candidateAddress, uint256 _voteConstituency, bytes memory _data) public returns(bool) {
             require(msg.sender != address(0), "cannot provide zero address of voter");
             require(_candidateAddress != address(0), "cannot provide zero address of candidate");
             require(voterList[msg.sender].authorize != false, "You are not authorize to vote");
+            require(status == electionStatus.start, "Election has not been started yet");
             
             safeTransferFrom(msg.sender, _candidateAddress, _voteConstituency, 1, _data);
             voterList[msg.sender].authorize = false;
