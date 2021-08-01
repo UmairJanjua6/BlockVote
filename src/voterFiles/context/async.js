@@ -36,10 +36,12 @@ export const loadBlockchain = async dispatch => {
       dispatch (setupContract (contract));
       const accounts = await web3.eth.getAccounts ();
       dispatch (addEthereumAccounts (accounts));
+      web3.eth.handleRevert = false;
     }
   } catch (error) {
     console.log ('Error in loading Web3 = ', error);
     if (error.code === 4001) {
+      alert(error.message);
     }
   }
 };
@@ -64,7 +66,7 @@ export const addVoter = async (
     dispatch(handleReceipt(receipt));
     }
   } catch (error) {
-    console.log (error);
+    console.log(error);
   }
 };
 

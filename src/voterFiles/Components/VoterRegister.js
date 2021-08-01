@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {Form, Button, Col} from 'react-bootstrap';
 import {useStore} from '../context/GlobalState';
 import {addVoter} from '../context/async';
+import { getVoterList } from '../context/async';
 import {loadBlockchain} from '../context/async';
 import Modal from '../context/Modal.js';
 import Spinner from "./Spinner";
@@ -14,7 +15,7 @@ const VoterRegister = () => {
   const [constituency, setConstituency] = useState ();
   const [address, setAddress] = useState ();
   const [openModal, setOpenModal] = useState ();
-  const [{accounts, contract, handleReceipt}, dispatch] = useStore ();
+  const [{accounts, contract, handleReceipt, getVoterData, voterListArray}, dispatch] = useStore ();
   const [ loading, setLoading ] = useState(false);
   const [ successConfirmation, setSuccessConfirmation ] = useState(false);
   const [ failConfirmation, setFailConfirmation ] = useState(false);
@@ -22,10 +23,34 @@ const VoterRegister = () => {
 
   useEffect (async () => {
     await loadBlockchain (dispatch);
+    await getVoterList(dispatch, contract, accounts);
   }, []);
 
+  const validateData = async () => {
+    let flag = true;
+    for(var i = 0; i < getVoterData.length; i++) {
+      if(getVoterData[i].cnic === cnic) {
+        flag = false;
+        alert("CNIC already exists");
+      } else if(getVoterData[i].email === email) {
+        flag = false;
+        alert("Email already exists");
+    }
+  }
+
+  for(var j = 0; j <voterListArray.length; j++) {
+    if(voterListArray[j] === address) {
+      flag = false;
+      alert("Address already exists");
+    }
+  }
+  if(flag === true) {
+    addVoterFunc();
+  }
+}
   const addVoterFunc = async () => {
     try {
+      await getVoterList(dispatch, contract, accounts);
       await addVoter (
         address,
         name,
@@ -36,9 +61,12 @@ const VoterRegister = () => {
         accounts,
         dispatch
       );
+
       if ( handleReceipt !== null ) {
-        await sendEmail(email);
-        setOpenModal (true);
+        // await sendEmail(email);
+        if(handleReceipt.status = "true") {
+          setOpenModal (true);  
+        }
       }
     } catch (error) {
       console.log ('error: ', error);
@@ -158,7 +186,7 @@ const VoterRegister = () => {
               variant="contained"
               size="lg"
               style={{backgroundColor: '#f0b90b', color: '#12161C'}}
-              onClick={addVoterFunc}
+              onClick={validateData}
               block
               disabled={loading}
             >
