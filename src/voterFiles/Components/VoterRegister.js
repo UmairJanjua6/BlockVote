@@ -66,9 +66,7 @@ const VoterRegister = () => {
 
       if ( handleReceipt !== null ) {
         await sendEmail(email);
-        if(handleReceipt.status = "true") {
-          setOpenModal (true);  
-        }
+          setOpenModal (true); 
       }
     } catch (error) {
       console.log ('error: ', error);
