@@ -19,6 +19,8 @@ const verifyNow = async () => {
             <Step>
                 <Form.Group style={{textAlign: 'center'}}>
                     <span>You are about to complete verification against the email <strong>{ props.match.params.email }</strong></span>
+                    <br/>
+                    <p>{ props.match.params.address }</p>
                     <Button
                         variant="contained"
                         size="lg"
