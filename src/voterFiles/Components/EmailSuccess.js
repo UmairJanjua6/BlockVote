@@ -11,7 +11,7 @@ const history = useHistory();
 const verifyNow = async () => {
     await setActive(active + 1);
 };
-
+console.log("address: ", props.match.params.address);
  return (
     <div>
         <Container maxWidth="xs" style={{marginTop: '100px'}}>
@@ -19,6 +19,8 @@ const verifyNow = async () => {
             <Step>
                 <Form.Group style={{textAlign: 'center'}}>
                     <span>You are about to complete verification against the email <strong>{ props.match.params.email }</strong></span>
+                    <br/>
+                    <p>{ props.match.params.address }</p>
                     <Button
                         variant="contained"
                         size="lg"

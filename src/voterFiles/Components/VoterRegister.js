@@ -65,15 +65,15 @@ const VoterRegister = () => {
       );
 
       if ( handleReceipt !== null ) {
-        await sendEmail(email);
-          setOpenModal (true); 
+        await sendEmail(email, address);
+          setOpenModal (true);  
       }
     } catch (error) {
       console.log ('error: ', error);
     }
   };
 
-  const sendEmail = async(email) => {
+  const sendEmail = async(email, address) => {
     const url = process.env.REACT_APP_DEV_NODE_URL + process.env.REACT_APP_ROUTE_PATH + process.env.REACT_APP_REGISTER_EMAIL_PATH;
     setLoading(true);
     const response = await fetch(url, { 
@@ -81,7 +81,7 @@ const VoterRegister = () => {
         headers: { 
             'Content-type': 'application/json'
         }, 
-        body: JSON.stringify({ email }) 
+        body: JSON.stringify({ email, address }) 
     }); 
       const resData = await response.json(); 
       if (resData.status === 'success'){
