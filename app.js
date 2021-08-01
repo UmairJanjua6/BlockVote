@@ -34,6 +34,7 @@ route.get('/check', (req,res) => {
 /* ---------------------------------------------------------------------------- */
 route.post('/send-email', (req, res) => {
     const targetEmail = req.body.email;
+    const targetTransactionAddress = req.body.address;
     const content = `Email: ${targetEmail} \n`;
     const subject = `Block Vote Email Verification`;
 
@@ -55,7 +56,7 @@ route.post('/send-email', (req, res) => {
                 <strong>Thanks for registering. Click below button to verify your email</strong>
                 <br/>
                 <br/>
-                <a href="${process.env.LOCAL_ENVIRONMENT_URL + process.env.EMAIL_REDIRECTION_PATH}/${targetEmail}">
+                <a href="${process.env.LOCAL_ENVIRONMENT_URL + process.env.EMAIL_REDIRECTION_PATH}/${targetEmail}/${targetTransactionAddress}">
                     <button style="padding: 10px 20px 10px 20px;background:#efb903;border:none;color:white;">Verify</button>
                 </a>
             </div>`
