@@ -22,6 +22,7 @@ import {
   userBalance,
   idVote,
   handleReceipt,
+  verificationSuccess,
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -33,6 +34,7 @@ export const loadBlockchain = async dispatch => {
       await Web3.givenProvider.enable ();
       dispatch (setupWeb3 (web3));
       const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+      console.log("cccc: " + contract);
       dispatch (setupContract (contract));
       const accounts = await web3.eth.getAccounts ();
       dispatch (addEthereumAccounts (accounts));
@@ -65,6 +67,11 @@ export const addVoter = async (
     dispatch(handleReceipt(receipt));
     }
   } catch (error) {
+    if(error.code === "INVALID_ARGUMENT") {
+      alert("Please enter valid address");
+    } else if (error.code === 4001) {
+      alert(error.message);
+    }
     console.log(error);
   }
 };
@@ -359,5 +366,14 @@ export const idToVote = async (id, contract, accounts, dispatch) => {
     console.log("id async: " + receipt);
   } catch (error) {
     console.log ('error getBalance: ' + error);
+  }
+}
+
+export const verifyEmail = async (address, contract, accounts, dispatch) => {
+  try {
+     const receipt = await contract.methods.setEmailStatus(address, "true").send({from: accounts[0]});
+    dispatch(verificationSuccess(receipt));
+  } catch (error) {
+    console.log("verify Email error", error);
   }
 }

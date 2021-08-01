@@ -1,17 +1,33 @@
 import {Container} from '@material-ui/core';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import { MultiStepForm, Step } from 'react-multi-form';
 import { useHistory} from 'react-router-dom';
+import {verifyEmail} from '../context/async';
+import {useStore} from '../context/GlobalState';
+import {loadBlockchain} from '../context/async';
 
 const EmailSuccess = (props) => {
-const [active, setActive] = React.useState(1);
+const [active, setActive] = useState(1);
+const [address, setAddress] = useState();
 const history = useHistory();
+const [{verificationSuccess, contract, accounts}, dispatch] = useStore();
 
-const verifyNow = async () => {
-    await setActive(active + 1);
-};
-console.log("address: ", props.match.params.address);
+useEffect(async() => {
+    await loadBlockchain(dispatch);
+    setAddress(props.match.params.address);
+}, []);
+console.log("success: ", verificationSuccess);
+const approveEmail = async () => {
+    try {
+        await verifyEmail(address, contract, accounts, dispatch);
+        if(verificationSuccess !== null) {
+            await setActive(active + 1);
+        }
+    } catch (err) {
+        console.log("EmailSuccess: verify email error: ", err);
+    }
+}
  return (
     <div>
         <Container maxWidth="xs" style={{marginTop: '100px'}}>
@@ -25,7 +41,7 @@ console.log("address: ", props.match.params.address);
                         variant="contained"
                         size="lg"
                         style={{backgroundColor: '#f0b90b', color: '#12161C', marginLeft: 'auto', marginRight: 'auto', display: 'flex', fontWeight: '500'}}
-                        onClick={verifyNow}
+                        onClick={approveEmail}
                     >
                         Continue Verification
                     </Button>

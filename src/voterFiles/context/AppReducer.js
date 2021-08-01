@@ -109,6 +109,11 @@ export default (state, action) => {
                 ...state,
                 handleReceipt: action.payload,
               }
+              case 'EMAIL_SUCCESS':
+                return {
+                  ...state,
+                  verificationSuccess: action.payload,
+                }
 
     default:
       return state;

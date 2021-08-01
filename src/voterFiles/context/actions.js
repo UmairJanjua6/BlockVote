@@ -144,3 +144,10 @@ export const handleReceipt = (receipt) => {
         payload: receipt
     }
 }
+
+export const verificationSuccess = (verification) => {
+    return {
+        type: 'EMAIL_SUCCESS',
+        payload: verification
+    }
+}
