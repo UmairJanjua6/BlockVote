@@ -28,15 +28,16 @@ const VoterRegister = () => {
 
   const validateData = async () => {
     let flag = true;
-    for(var i = 0; i < getVoterData.length; i++) {
-      if(getVoterData[i].cnic === cnic) {
-        flag = false;
-        alert("CNIC already exists");
-      } else if(getVoterData[i].email === email) {
-        flag = false;
-        alert("Email already exists");
+    if(getVoterData) {
+      for(var i = 0; i < getVoterData.length; i++) {
+        if(getVoterData[i].cnic === cnic) {
+          flag = false;
+          alert("CNIC already exists");
+        } else if(getVoterData[i].email === email) {
+          flag = false;
+          alert("Email already exists");
+      }
     }
-  }
 
   for(var j = 0; j <voterListArray.length; j++) {
     if(voterListArray[j] === address) {
@@ -44,6 +45,7 @@ const VoterRegister = () => {
       alert("Address already exists");
     }
   }
+}
   if(flag === true) {
     addVoterFunc();
   }
@@ -63,7 +65,7 @@ const VoterRegister = () => {
       );
 
       if ( handleReceipt !== null ) {
-        // await sendEmail(email);
+        await sendEmail(email);
         if(handleReceipt.status = "true") {
           setOpenModal (true);  
         }

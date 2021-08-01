@@ -130,6 +130,7 @@ export const deleteVoter = async (
   accounts
 ) => {
   try {
+    console.log("address: " + _voterAddress);
     const receipt = await contract.methods
       .deleteVoter (_voterAddress, _index)
       .send ({from: accounts[0]});
