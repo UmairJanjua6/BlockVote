@@ -10,6 +10,7 @@ import { candidateArrayLength3 } from '../../../voterFiles/context/async';
 import { getVotes1 } from '../../../voterFiles/context/async';
 import { getVotes2 } from '../../../voterFiles/context/async';
 import { getVotes3 } from '../../../voterFiles/context/async';
+import { getOwner } from '../../../voterFiles/context/async';
 import '../../index.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,12 +22,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Overview(){
     const classes = useStyles();
-    const [{ contract, accounts, candiArrayLength1, candiArrayLength2, candiArrayLength3, idToVote1, idToVote2, idToVote3}, dispatch] = useStore();
+    const [{ contract, accounts, candiArrayLength1, candiArrayLength2, candiArrayLength3, idToVote1, idToVote2, idToVote3, ownerAddress}, dispatch] = useStore();
     
     useEffect ( async() => {
       await loadBlockchain(dispatch);
     }, []);
-
     const FetchData = () => {
       loadCandidateData();
       loadVotesData();

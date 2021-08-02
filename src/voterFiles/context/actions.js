@@ -151,3 +151,10 @@ export const verificationSuccess = (verification) => {
         payload: verification
     }
 }
+
+export const ownerAddress = (owner) => {
+    return {
+        type: 'OWNER_ADDRESS',
+        payload: owner
+    }
+}

@@ -23,6 +23,7 @@ import {
   idVote,
   handleReceipt,
   verificationSuccess,
+  ownerAddress,
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -34,9 +35,10 @@ export const loadBlockchain = async dispatch => {
       await Web3.givenProvider.enable ();
       dispatch (setupWeb3 (web3));
       const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-      console.log("cccc: " + contract);
       dispatch (setupContract (contract));
       const accounts = await web3.eth.getAccounts ();
+      var owner = await contract.methods.owner().call();
+      dispatch(ownerAddress(owner));
       dispatch (addEthereumAccounts (accounts));
     }
   } catch (error) {

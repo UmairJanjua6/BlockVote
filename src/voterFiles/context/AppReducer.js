@@ -114,6 +114,11 @@ export default (state, action) => {
                   ...state,
                   verificationSuccess: action.payload,
                 }
+                case 'OWNER_ADDRESS':
+                  return {
+                    ...state,
+                    ownerAddress: action.payload,
+                  }
 
     default:
       return state;
