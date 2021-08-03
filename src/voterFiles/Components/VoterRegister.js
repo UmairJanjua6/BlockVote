@@ -7,6 +7,7 @@ import { getVoterList } from '../context/async';
 import {loadBlockchain} from '../context/async';
 import Modal from '../context/Modal.js';
 import Spinner from "./Spinner";
+import { ValidateCnic, ValidateEmail } from './Regex';
 import { FormControl } from '@material-ui/core';
 
 const VoterRegister = () => {
@@ -21,6 +22,7 @@ const VoterRegister = () => {
   const [ successConfirmation, setSuccessConfirmation ] = useState(false);
   const [ failConfirmation, setFailConfirmation ] = useState(false);
   const [ modalBody, setModalBody ] = useState("");
+  const [ isError, setError ] = useState(true);
 
   useEffect (async () => {
     await loadBlockchain (dispatch);
@@ -111,6 +113,28 @@ const loadVoterList = async() => {
         await setFailConfirmation (true);
     }
   };
+
+  const handleCnic = e => {
+    const value = e.target.value;
+    const isValid = ValidateCnic(value);
+    if(!isValid){
+      setError(true);
+      return;
+    }
+    setCnic(value);
+    setError(false);
+  }
+
+  const handleEmail = e => {
+    const value = e.target.value;
+    const isValid = ValidateEmail(value);
+    if(!isValid){
+      setError(true);
+      return;
+    }
+    setEmail(value);
+    setError(false);
+  }
   
   return (
     <div >
@@ -151,8 +175,7 @@ const loadVoterList = async() => {
               <Form.Label> CNIC </Form.Label>
               <Form.Control
                 value={cnic}
-                pattern="[0-9]{13}"
-                onChange={e => setCnic(e.target.value)}
+                onChange={handleCnic}
                 placeholder="Enter your CNIC"
               />
             </Form.Group>
@@ -160,9 +183,9 @@ const loadVoterList = async() => {
           <Form.Group controlId="formBasicEmail">
             <Form.Label> Email </Form.Label>
             <Form.Control
-              type="email"
+              type="text"
               placeholder="Enter email"
-              onChange={e => setEmail (e.target.value)}
+              onChange={handleEmail}
             />
           </Form.Group>
 
@@ -197,7 +220,7 @@ const loadVoterList = async() => {
               style={{backgroundColor: '#f0b90b', color: '#12161C'}}
               onClick={validateData}
               block
-              disabled={loading}
+              disabled={loading || isError}
             >
               <Form.Row style={{justifyContent: 'center'}}>Register {loading ? <Spinner /> : null}</Form.Row>
             </Button>
