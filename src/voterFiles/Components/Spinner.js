@@ -4,7 +4,7 @@ import React from 'react';
 export default class Spinner extends React.Component {
   render() {
     return (
-        <Loader type="TailSpin" color="#f0b90b" height={20} width={20} />
+        <Loader type="TailSpin" color="#000" height={30} width={30} />
     );
   }
 }

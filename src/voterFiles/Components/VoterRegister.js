@@ -7,6 +7,7 @@ import { getVoterList } from '../context/async';
 import {loadBlockchain} from '../context/async';
 import Modal from '../context/Modal.js';
 import Spinner from "./Spinner";
+import { FormControl } from '@material-ui/core';
 
 const VoterRegister = () => {
   const [name, setName] = useState ('');
@@ -23,18 +24,19 @@ const VoterRegister = () => {
 
   useEffect (async () => {
     await loadBlockchain (dispatch);
-    await getVoterList(dispatch, contract, accounts);
   }, []);
-
   const validateData = async () => {
+    setLoading(true);
     let flag = true;
     if(getVoterData) {
       for(var i = 0; i < getVoterData.length; i++) {
         if(getVoterData[i].cnic === cnic) {
           flag = false;
+          setLoading(false);
           alert("CNIC already exists");
         } else if(getVoterData[i].email === email) {
           flag = false;
+          setLoading(false);
           alert("Email already exists");
       }
     }
@@ -42,17 +44,26 @@ const VoterRegister = () => {
   for(var j = 0; j <voterListArray.length; j++) {
     if(voterListArray[j] === address) {
       flag = false;
+      setLoading(false);
       alert("Address already exists");
     }
   }
 }
   if(flag === true) {
     addVoterFunc();
+    setLoading(false);
+  }
+}
+
+const loadVoterList = async() => {
+  try {
+    await getVoterList(dispatch, contract, accounts);
+  } catch (error){
+    console.log("error: " + error);
   }
 }
   const addVoterFunc = async () => {
     try {
-      await getVoterList(dispatch, contract, accounts);
       await addVoter (
         address,
         name,
@@ -66,16 +77,20 @@ const VoterRegister = () => {
 
       if ( handleReceipt !== null ) {
         await sendEmail(email, address);
-          setOpenModal (true);  
-      }
+        setOpenModal (true);
+        }  else {
+        setModalBody("Transaction failed. Verification Email Sending Failed. Please try again");
+        await setFailConfirmation (true);
+        setOpenModal (true); 
+        }
     } catch (error) {
+      setLoading(false);
       console.log ('error: ', error);
     }
   };
 
   const sendEmail = async(email, address) => {
     const url = process.env.REACT_APP_DEV_NODE_URL + process.env.REACT_APP_ROUTE_PATH + process.env.REACT_APP_REGISTER_EMAIL_PATH;
-    setLoading(true);
     const response = await fetch(url, { 
         method: 'POST', 
         headers: { 
@@ -91,30 +106,28 @@ const VoterRegister = () => {
         await setFailConfirmation (false);
     }else if(resData.status === 'fail'){
         await setLoading(false);
-        await setModalBody("Verification Email Sending Failed. Please try again")
+        await setModalBody("Verification Email Sending Failed. Please try again");
         await setSuccessConfirmation (false);
         await setFailConfirmation (true);
     }
   };
-
+  
   return (
-    <div>
+    <div >
       {openModal &&
         handleReceipt &&
         <Modal
           closeModal={setOpenModal}
-          title={'Vote Status'}
+          title={'Registration Status'}
           body={modalBody}
-          txLink={
-            <a
-              href={
-                'https://ropsten.etherscan.io/tx/' +
-                  handleReceipt.transactionHash
-              }
-            >
-              View on etherscan
-            </a>
-          }
+          txLink = {!failConfirmation ? <a
+            href={
+              'https://ropsten.etherscan.io/tx/' +
+                handleReceipt.transactionHash
+            }
+          >
+            View on etherscan
+          </a> : ""}
         />}
       <Container maxWidth="xs" style={{marginTop: '100px'}}>
         <Form>
@@ -129,7 +142,7 @@ const VoterRegister = () => {
               <Form.Label>Name</Form.Label>
               <Form.Control
                 value={name}
-                onChange={e => setName (e.target.value)}
+                onChange={(e) => {setName (e.target.value); loadVoterList();}}
                 type="name"
                 placeholder="Enter your Name"
               />
@@ -137,20 +150,18 @@ const VoterRegister = () => {
             <Form.Group as={Col}>
               <Form.Label> CNIC </Form.Label>
               <Form.Control
-                pattern="[0-9]{13}"
                 value={cnic}
-                onChange={e => setCnic (e.target.value)}
-                type="cnic"
+                pattern="[0-9]{13}"
+                onChange={e => setCnic(e.target.value)}
                 placeholder="Enter your CNIC"
               />
             </Form.Group>
           </Form.Row>
-          <Form.Group>
+          <Form.Group controlId="formBasicEmail">
             <Form.Label> Email </Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
-              value={email}
               onChange={e => setEmail (e.target.value)}
             />
           </Form.Group>
@@ -178,19 +189,17 @@ const VoterRegister = () => {
               onChange={e => setAddress (e.target.value)}
             />
           </Form.Group>
-          {loading && <Form.Row>Verification Email Sending... <Spinner /></Form.Row>}
-          {/* {successConfirmation && !loading && <p class="para">Verification Email Sent!</p>}
-          {failConfirmation && !loading && <p class="para-error">Verification Email Sending Failed. Please try again</p>} */}
           <Form.Group style={{textAlign: 'center', marginTop: '30px'}}>
             <Button
               variant="contained"
+              type="submit"
               size="lg"
               style={{backgroundColor: '#f0b90b', color: '#12161C'}}
               onClick={validateData}
               block
               disabled={loading}
             >
-              Register
+              <Form.Row style={{justifyContent: 'center'}}>Register {loading ? <Spinner /> : null}</Form.Row>
             </Button>
           </Form.Group>
 

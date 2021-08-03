@@ -30,7 +30,7 @@ const VoterApproval = () => {
     }
     loadWeb3();
   }, []);
-
+console.log("voter: ", voterListArray);
   const getList = async () => {
     await getVoterList (dispatch, contract, accounts);
   };
@@ -67,6 +67,7 @@ const VoterApproval = () => {
         <td>{voter.voterName}</td>
         <td>{voter.cnic}</td>
         <td>{voter.email}</td>
+        <td>{voter.emailStatus === true ? "Verified" : "Not Verified"}</td>
         <td>{voter.voteConstituency}</td>
         <td>{voter.authorize === true ? "Registered" : "Not Registered"}</td>
         <td>
@@ -114,6 +115,7 @@ const VoterApproval = () => {
                   <th>NAME</th>
                   <th>CNIC</th>
                   <th>EMAIL</th>
+                  <th>EMAIL STATUS</th>
                   <th>CONSTITUENCY</th>
                   <th>STATUS</th>
                   <th>APPROVE</th>
