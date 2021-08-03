@@ -64,7 +64,7 @@ export default function MintVote () {
       <Toolbar />
         <CssBaseline />
     { !loading ?
-    ownerAddress == accounts[0] ?
+    ownerAddress === accounts[0] ?
     <div>
       {openModal &&
         handleReceipt &&

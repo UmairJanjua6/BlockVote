@@ -77,7 +77,7 @@ export default function AddCandidate () {
       <SideBar />
       <Toolbar />
       { !loading ?
-      ownerAddress == accounts[0] ?
+      ownerAddress === accounts[0] ?
       <div>
         <CssBaseline />
         {openModal &&

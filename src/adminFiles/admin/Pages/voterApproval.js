@@ -18,14 +18,11 @@ const useStyles = makeStyles (theme => ({
 }));
 
 const VoterApproval = () => {
-  const [
-    {contract, accounts, getVoterData, voterListArray, ownerAddress},
-    dispatch,
-  ] = useStore ();
+  const [{contract, accounts, getVoterData, voterListArray, ownerAddress}, dispatch] = useStore();
   const [loading, setLoading] = useState(true);
 
   useEffect (() => {
-    const loadWeb3 = async () => {
+    const loadWeb3 = async() => {
       await loadBlockchain (dispatch);
       await setTimeout(() => {
       setLoading(false)
@@ -33,7 +30,7 @@ const VoterApproval = () => {
     }
     loadWeb3();
   }, []);
-  
+
   const getList = async () => {
     await getVoterList (dispatch, contract, accounts);
   };
@@ -104,7 +101,7 @@ const VoterApproval = () => {
       <SideBar />
       <Toolbar />
     { !loading ?
-    ownerAddress == accounts[0] ?
+    ownerAddress === accounts[0] ?
       <div>
         <main className={classes.content} >
           <Box maxWidth="md" style={{paddingLeft: '250px'}}>
@@ -130,7 +127,7 @@ const VoterApproval = () => {
           </Box>
         </main>
       </div>
-      : alert ('Kindly login from owner account') : ""}
+      : alert ('Kindly login from owner account') : null}
     </div>
   );
 };

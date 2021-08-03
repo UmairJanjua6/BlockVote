@@ -46,7 +46,7 @@ const CandidateList = () => {
       <SideBar />
       <Toolbar />
     { !loading ?
-    ownerAddress == accounts[0] ?
+    ownerAddress === accounts[0] ?
       <main style={{padding: '24px'}}>
         <Box maxWidth="md" style={{paddingLeft: '250px'}}>
           <h2>Candidate List</h2>

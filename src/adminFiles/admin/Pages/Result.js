@@ -93,7 +93,7 @@ export default function DisplayResult(){
             <SideBar></SideBar>
             <Toolbar/>
         { !loading ?
-        ownerAddress == accounts[0] ?
+        ownerAddress === accounts[0] ?
             <div >
       <main className={classes.content}>
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>

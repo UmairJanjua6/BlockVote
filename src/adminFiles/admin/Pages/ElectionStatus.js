@@ -74,7 +74,7 @@ return(
     <SideBar></SideBar>
     <Toolbar/>
     { !loading ?
-    ownerAddress == accounts[0] ?
+    ownerAddress === accounts[0] ?
     <div >
       <CssBaseline />
       <main className={classes.content}>

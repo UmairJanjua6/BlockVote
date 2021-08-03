@@ -63,7 +63,7 @@ export default function Overview(){
 return(
     <main className={classes.content}>
       { !loading ?
-      ownerAddress == accounts[0] ?
+      ownerAddress === accounts[0] ?
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>
       <Typography variant="h3" id="heading">Overview</Typography>
       <div id="fetchData">
