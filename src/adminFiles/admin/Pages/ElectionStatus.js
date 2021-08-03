@@ -23,13 +23,15 @@ export default function ElectionStatus(){
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
 
-  
-  useEffect( async() => {
-    await loadBlockchain(dispatch);
+  useEffect (() => {
+    const loadWeb3 = async () => {
+      await loadBlockchain (dispatch);
     await setTimeout(() => {
       setLoading(false)
    }, 1);
-    await electionStatusGet(accounts, contract, dispatch);
+   await electionStatusGet(accounts, contract, dispatch);
+    }
+    loadWeb3();
   }, []);
   
   const [{ contract, accounts, electionStatus, ownerAddress}, dispatch] = useStore();

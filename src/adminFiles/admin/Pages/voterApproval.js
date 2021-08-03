@@ -24,12 +24,16 @@ const VoterApproval = () => {
   ] = useStore ();
   const [loading, setLoading] = useState(true);
 
-  useEffect (async() => {
-    await loadBlockchain (dispatch);
-    await setTimeout(() => {
+  useEffect (() => {
+    const loadWeb3 = async () => {
+      await loadBlockchain (dispatch);
+      await setTimeout(() => {
       setLoading(false)
    }, 1);
+    }
+    loadWeb3();
   }, []);
+  
   const getList = async () => {
     await getVoterList (dispatch, contract, accounts);
   };

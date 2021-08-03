@@ -24,12 +24,16 @@ export default function Overview(){
     const [loading, setLoading] = useState(true);
     const [{ contract, accounts, candiArrayLength1, candiArrayLength2, candiArrayLength3, idToVote1, idToVote2, idToVote3, ownerAddress}, dispatch] = useStore();
     
-    useEffect ( async() => {
-      await loadBlockchain(dispatch);
-      await setTimeout(() => {
+    useEffect (() => {
+      const loadWeb3 = async () => {
+        await loadBlockchain (dispatch);
+        await setTimeout(() => {
         setLoading(false)
      }, 1);
+      }
+      loadWeb3();
     }, []);
+
     const FetchData = () => {
       loadCandidateData();
       loadVotesData();

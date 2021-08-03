@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './adminFiles/App.css';
 import {Switch, Route} from 'react-router-dom';
 import Dashboard from './adminFiles/admin/AdminDashboard';

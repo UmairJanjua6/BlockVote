@@ -24,12 +24,17 @@ export default function MintVote () {
   const classes = useStyles ();
   const [openModal, setOpenModal] = useState ();
   const [{contract, accounts, handleReceipt, ownerAddress}, dispatch] = useStore ();
-  useEffect (async() => {
-    await loadBlockchain (dispatch);
-    await setTimeout(() => {
+  
+  useEffect (() => {
+    const loadWeb3 = async () => {
+      await loadBlockchain (dispatch);
+      await setTimeout(() => {
       setLoading(false)
    }, 1);
+    }
+    loadWeb3();
   }, []);
+
   const mintVoteFunc = async () => {
     try{
     await mintVotes (

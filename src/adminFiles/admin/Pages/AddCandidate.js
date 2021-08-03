@@ -26,11 +26,14 @@ export default function AddCandidate () {
   const [openModal, setOpenModal] = useState ();
   const [{contract, accounts, handleReceipt, ownerAddress, getCandidateInfo}, dispatch] = useStore ();
 
-  useEffect (async() => {
-    await loadBlockchain (dispatch);
-    await setTimeout(() => {
+  useEffect (() => {
+    const loadWeb3 = async () => {
+      await loadBlockchain (dispatch);
+      await setTimeout(() => {
       setLoading(false)
    }, 1);
+    }
+    loadWeb3();
   }, []);
   const getCandidateData = async (consNum) => {
     try {
