@@ -8,7 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useStore} from '../../../voterFiles/context/GlobalState';
 import {mintVotes} from '../../../voterFiles/context/async';
 import {loadBlockchain} from '../../../voterFiles/context/async';
-import userModal from '../../../voterFiles/context/Modal.js';
+import Modal from '../../../voterFiles/context/Modal.js';
 
 const useStyles = makeStyles (theme => ({
   content: {
@@ -19,12 +19,16 @@ const useStyles = makeStyles (theme => ({
 
 export default function MintVote () {
   const [consNum, setConsNum] = useState (0);
+  const [loading, setLoading] = useState(true);
   const [votes, setVotes] = useState (0);
   const classes = useStyles ();
   const [openModal, setOpenModal] = useState ();
-  const [{contract, accounts, handleReceipt}, dispatch] = useStore ();
-  useEffect (() => {
-    loadBlockchain (dispatch);
+  const [{contract, accounts, handleReceipt, ownerAddress}, dispatch] = useStore ();
+  useEffect (async() => {
+    await loadBlockchain (dispatch);
+    await setTimeout(() => {
+      setLoading(false)
+   }, 1);
   }, []);
   const mintVoteFunc = async () => {
     try{
@@ -38,7 +42,9 @@ export default function MintVote () {
       contract,
       dispatch
     );
-    if (handleReceipt) {
+    console.log("handle: ", handleReceipt);
+    console.log("showModal: ", openModal);
+    if (handleReceipt != null) {
       setOpenModal (true);
       console.log ('handleReceipt: ' + handleReceipt);
     }
@@ -51,9 +57,13 @@ export default function MintVote () {
       <CssBaseline />
       <SideBar />
       <Toolbar />
+        <CssBaseline />
+    { !loading ?
+    ownerAddress == accounts[0] ?
+    <div>
       {openModal &&
         handleReceipt &&
-        <userModal
+        <Modal
           closeModal={setOpenModal}
           title={'New Votes'}
           body={'New votes has been added in Constituency no:' + consNum}
@@ -69,7 +79,6 @@ export default function MintVote () {
           }
         />}
       <div>
-        <CssBaseline />
         <main className={classes.content}>
           <Box maxWidth="md" style={{paddingLeft: '250px'}}>
             <Typography variant="h3">Mint Votes</Typography>
@@ -100,7 +109,8 @@ export default function MintVote () {
           </Box>
         </main>
       </div>
-
+      </div>
+      : alert ('Kindly login from owner account') : ""}
     </div>
   );
 }

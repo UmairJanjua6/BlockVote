@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Toolbar, Box} from '@material-ui/core';
 import {Button} from 'react-bootstrap';
 import SideBar from '../Components/SideBar';
@@ -19,12 +19,16 @@ const useStyles = makeStyles (theme => ({
 
 const VoterApproval = () => {
   const [
-    {contract, accounts, getVoterData, voterListArray},
+    {contract, accounts, getVoterData, voterListArray, ownerAddress},
     dispatch,
   ] = useStore ();
+  const [loading, setLoading] = useState(true);
 
-  useEffect (() => {
-    loadBlockchain (dispatch);
+  useEffect (async() => {
+    await loadBlockchain (dispatch);
+    await setTimeout(() => {
+      setLoading(false)
+   }, 1);
   }, []);
   const getList = async () => {
     await getVoterList (dispatch, contract, accounts);
@@ -93,9 +97,10 @@ const VoterApproval = () => {
   };
   return (
     <div>
-
       <SideBar />
       <Toolbar />
+    { !loading ?
+    ownerAddress == accounts[0] ?
       <div>
         <main className={classes.content} >
           <Box maxWidth="md" style={{paddingLeft: '250px'}}>
@@ -121,6 +126,7 @@ const VoterApproval = () => {
           </Box>
         </main>
       </div>
+      : alert ('Kindly login from owner account') : ""}
     </div>
   );
 };

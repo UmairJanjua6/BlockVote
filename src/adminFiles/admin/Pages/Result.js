@@ -21,14 +21,18 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function DisplayResult(){
-  const [{ contract, accounts, getCandidateInfo, userBalance, idVote}, dispatch] = useStore ();
+  const [{ contract, accounts, getCandidateInfo, userBalance, idVote, ownerAddress}, dispatch] = useStore ();
   const [turnOver, setTurnOver] = useState (0);
+  const [loading, setLoading] = useState(true);
   const [consi, setConsi] = useState();
     const classes = useStyles();
     console.log("candidateInfo: ", getCandidateInfo);
 
     useEffect( async() => {
       await loadBlockchain(dispatch);
+      await setTimeout(() => {
+        setLoading(false)
+     }, 1);
     }, []);
 
     const fetchResult = () => {
@@ -85,6 +89,8 @@ export default function DisplayResult(){
         <div>
             <SideBar></SideBar>
             <Toolbar/>
+        { !loading ?
+        ownerAddress == accounts[0] ?
             <div >
       <main className={classes.content}>
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>
@@ -118,6 +124,7 @@ export default function DisplayResult(){
       </div>
       </main>
     </div>
+      : alert ('Kindly login from owner account') : ""}
         </div>
     );
 }

@@ -18,14 +18,18 @@ const useStyles = makeStyles (theme => ({
 }));
 export default function AddCandidate () {
   const classes = useStyles ();
+  const [loading, setLoading] = useState(true);
   const [conNum, setConNum] = useState (0);
   const [candidateAddress, setCandidateAddress] = useState (0);
   const [name, setName] = useState ('');
   const [openModal, setOpenModal] = useState ();
-  const [{contract, accounts, handleReceipt}, dispatch] = useStore ();
+  const [{contract, accounts, handleReceipt, ownerAddress}, dispatch] = useStore ();
 
-  useEffect (() => {
-    loadBlockchain (dispatch);
+  useEffect (async() => {
+    await loadBlockchain (dispatch);
+    await setTimeout(() => {
+      setLoading(false)
+   }, 1);
   }, []);
 
   const addCandidateFunc = async () => {
@@ -51,6 +55,8 @@ export default function AddCandidate () {
     <div>
       <SideBar />
       <Toolbar />
+      { !loading ?
+      ownerAddress == accounts[0] ?
       <div>
         <CssBaseline />
         {openModal &&
@@ -117,7 +123,7 @@ export default function AddCandidate () {
           </Box>
         </main>
       </div>
-
+      : alert ('Kindly login from owner account') : ""}
     </div>
   );
 }

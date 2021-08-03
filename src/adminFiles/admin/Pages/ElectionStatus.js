@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Box , Typography} from "@material-ui/core";
 import { Form , Button} from "react-bootstrap";
 import SideBar from '../Components/SideBar';
@@ -21,14 +21,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ElectionStatus(){
   const classes = useStyles();
+  const [loading, setLoading] = useState(true);
 
   
   useEffect( async() => {
     await loadBlockchain(dispatch);
+    await setTimeout(() => {
+      setLoading(false)
+   }, 1);
     await electionStatusGet(accounts, contract, dispatch);
   }, []);
   
-  const [{ contract, accounts, electionStatus}, dispatch] = useStore();
+  const [{ contract, accounts, electionStatus, ownerAddress}, dispatch] = useStore();
 
     let status;
     if(electionStatus === "0") {
@@ -67,6 +71,8 @@ return(
     <CssBaseline/>
     <SideBar></SideBar>
     <Toolbar/>
+    { !loading ?
+    ownerAddress == accounts[0] ?
     <div >
       <CssBaseline />
       <main className={classes.content}>
@@ -94,7 +100,7 @@ return(
       </Box>
       </main>
     </div>
-   
+      : alert ('Kindly login from owner account') : ""}
 </div>
 );
 

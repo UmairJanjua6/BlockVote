@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "react-bootstrap";
 import { Box , Typography} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +10,6 @@ import { candidateArrayLength3 } from '../../../voterFiles/context/async';
 import { getVotes1 } from '../../../voterFiles/context/async';
 import { getVotes2 } from '../../../voterFiles/context/async';
 import { getVotes3 } from '../../../voterFiles/context/async';
-import { getOwner } from '../../../voterFiles/context/async';
 import '../../index.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,10 +21,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Overview(){
     const classes = useStyles();
+    const [loading, setLoading] = useState(true);
     const [{ contract, accounts, candiArrayLength1, candiArrayLength2, candiArrayLength3, idToVote1, idToVote2, idToVote3, ownerAddress}, dispatch] = useStore();
     
     useEffect ( async() => {
       await loadBlockchain(dispatch);
+      await setTimeout(() => {
+        setLoading(false)
+     }, 1);
     }, []);
     const FetchData = () => {
       loadCandidateData();
@@ -55,6 +58,8 @@ export default function Overview(){
     }
 return(
     <main className={classes.content}>
+      { !loading ?
+      ownerAddress == accounts[0] ?
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>
       <Typography variant="h3" id="heading">Overview</Typography>
       <div id="fetchData">
@@ -117,6 +122,7 @@ return(
       </div>
        
       </Box>
+      : alert ('Kindly login from owner account') : ""}
       </main>
 );
 

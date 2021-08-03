@@ -11,9 +11,13 @@ import '../../App.css';
 
 const CandidateList = () => {
   const [consNum, setConsNum] = useState ();
-  const [{contract, accounts, getCandidateInfo}, dispatch] = useStore ();
-  useEffect (() => {
-    loadBlockchain (dispatch);
+  const [loading, setLoading] = useState(true);
+  const [{contract, accounts, getCandidateInfo, ownerAddress}, dispatch] = useStore ();
+  useEffect (async() => {
+    await loadBlockchain (dispatch);
+    await setTimeout(() => {
+      setLoading(false)
+   }, 1);
   }, []);
   const getCandidateData = async () => {
     try {
@@ -38,6 +42,8 @@ const CandidateList = () => {
     <Box>
       <SideBar />
       <Toolbar />
+    { !loading ?
+    ownerAddress == accounts[0] ?
       <main style={{padding: '24px'}}>
         <Box maxWidth="md" style={{paddingLeft: '250px'}}>
           <h2>Candidate List</h2>
@@ -53,6 +59,7 @@ const CandidateList = () => {
           </div>
         </Box>
       </main>
+      : alert ('Kindly login from owner account') : ""}
     </Box>
   );
 };
