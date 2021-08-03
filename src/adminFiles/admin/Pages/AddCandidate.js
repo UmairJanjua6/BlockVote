@@ -8,7 +8,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useStore} from '../../../voterFiles/context/GlobalState';
 import {loadBlockchain} from '../../../voterFiles/context/async';
 import {addCandidate} from '../../../voterFiles/context/async';
-import userModal from '../../../voterFiles/context/Modal.js';
+import Modal from '../../../voterFiles/context/Modal.js';
+import {getCandidatesInConsi} from '../../../voterFiles/context/async';
 
 const useStyles = makeStyles (theme => ({
   content: {
@@ -23,7 +24,7 @@ export default function AddCandidate () {
   const [candidateAddress, setCandidateAddress] = useState (0);
   const [name, setName] = useState ('');
   const [openModal, setOpenModal] = useState ();
-  const [{contract, accounts, handleReceipt, ownerAddress}, dispatch] = useStore ();
+  const [{contract, accounts, handleReceipt, ownerAddress, getCandidateInfo}, dispatch] = useStore ();
 
   useEffect (async() => {
     await loadBlockchain (dispatch);
@@ -31,8 +32,22 @@ export default function AddCandidate () {
       setLoading(false)
    }, 1);
   }, []);
-
+  const getCandidateData = async (consNum) => {
+    try {
+      await getCandidatesInConsi (consNum, contract, accounts, dispatch);
+    } catch (error) {
+      console.log ('addCandidate error: ', error);
+    }
+  };
   const addCandidateFunc = async () => {
+    let flag = false;
+    for(var i = 0; i < getCandidateInfo.length; i++) {
+      if(getCandidateInfo[i].candiAddress === candidateAddress) {
+        flag = true;
+        alert("Candidate already exists in current constituency");
+      }
+    }
+     if(flag === false) {
     try {
       await addCandidate (
         conNum,
@@ -42,12 +57,15 @@ export default function AddCandidate () {
         accounts,
         dispatch
       );
-      if (handleReceipt) {
+      console.log("inner handle: ", handleReceipt);
+      if (handleReceipt !== null) {
+        console.log("handle: ", handleReceipt);
         setOpenModal (true);
-        console.log("handleReceipt: " + handleReceipt);
       }
     } catch (error) {
       console.log ('addCandidate error: ', error);
+    }
+    await getCandidateData(conNum);
     }
   };
 
@@ -61,7 +79,7 @@ export default function AddCandidate () {
         <CssBaseline />
         {openModal &&
           handleReceipt &&
-          <userModal
+          <Modal
             closeModal={setOpenModal}
             title={'Transaction Success'}
             body={'New Candidate has been added successfully.'}
@@ -104,7 +122,7 @@ export default function AddCandidate () {
                 <Form.Label>Select Constituency</Form.Label>
                 <Form.Control
                   as="select"
-                  onChange={e => setConNum (e.target.value)}
+                  onChange={(e) => {setConNum (e.target.value); getCandidateData(e.target.value)}}
                 >
                   <option value="0">Choose...</option>
                   <option value="1">Constituency 1</option>

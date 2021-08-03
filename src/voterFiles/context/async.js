@@ -28,8 +28,6 @@ import {
 
 export const loadBlockchain = async dispatch => {
   try {
-    console.log ('Web3 = ', Web3);
-    console.log ('Web3.givenProvider = ', Web3.givenProvider.chainId);
     if (Web3.givenProvider) {
       const web3 = new Web3 (Web3.givenProvider);
       await Web3.givenProvider.enable ();
