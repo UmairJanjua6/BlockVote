@@ -23,6 +23,8 @@ export default function MintVote () {
   const [votes, setVotes] = useState (0);
   const classes = useStyles ();
   const [openModal, setOpenModal] = useState ();
+  const [consStates, setConsStates] = useState(true);
+  const [voteState, setVoteState] = useState(true);
   const [{contract, accounts, handleReceipt, ownerAddress}, dispatch] = useStore ();
   
   useEffect (() => {
@@ -47,8 +49,6 @@ export default function MintVote () {
       contract,
       dispatch
     );
-    console.log("handle: ", handleReceipt);
-    console.log("showModal: ", openModal);
     if (handleReceipt != null) {
       setOpenModal (true);
       console.log ('handleReceipt: ' + handleReceipt);
@@ -57,6 +57,26 @@ export default function MintVote () {
     console.log("Error: ", error);
   }
   };
+
+  const handleConstituency = e => {
+    const value = e.target.value;
+    setConsNum(value);
+    if(value < 1 || value > 3) {
+      setConsStates(true);
+      return;
+    }
+    setConsStates(false);
+  }
+
+  const handleVotes = e => {
+    const value = e.target.value;
+    setVotes(value);
+    if(value < 1) {
+      setVoteState(true);
+      return;
+    }
+    setVoteState(false);
+  }
   return (
     <div>
       <CssBaseline />
@@ -89,23 +109,24 @@ export default function MintVote () {
             <Typography variant="h3">Mint Votes</Typography>
             <Form>
               <Form.Group controlId="constiNum">
-                <Form.Label>Constituency Number</Form.Label>
+                <Form.Label>Constituency Number (1 - 3)</Form.Label>
                 <Form.Control
                   placeholder="Cons Number"
-                  onChange={e => setConsNum (e.target.value)}
+                  onChange={handleConstituency}
                 />
               </Form.Group>
               <Form.Group controlId="vote">
                 <Form.Label>Total Votes</Form.Label>
                 <Form.Control
                   placeholder="No. of votes"
-                  onChange={e => setVotes (e.target.value)}
+                  onChange={handleVotes}
                 />
               </Form.Group>
               <Button
                 variant="primary"
                 className="btn btn-dark "
                 onClick={mintVoteFunc}
+                disabled = {consStates || voteState}
               >
                 Mint Votes
               </Button>
