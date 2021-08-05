@@ -104,7 +104,7 @@ export default function AddCandidate () {
             <br />
             <Form>
               <Form.Group controlId="CandidateName">
-                <Form.Label>Candidate Name</Form.Label>
+                <Form.Label>Candidate Name*</Form.Label>
                 <Form.Control
                   type="name"
                   placeholder="Name"
@@ -113,7 +113,7 @@ export default function AddCandidate () {
                 />
               </Form.Group>
               <Form.Group controlId="CandidateAddress">
-                <Form.Label>Candidate Address</Form.Label>
+                <Form.Label>Candidate Address*</Form.Label>
                 <Form.Control
                   type="name"
                   placeholder="Ethereum address"
@@ -122,7 +122,7 @@ export default function AddCandidate () {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Select Constituency</Form.Label>
+                <Form.Label>Select Constituency*</Form.Label>
                 <Form.Control
                   as="select"
                   onChange={(e) => {setConNum (e.target.value); getCandidateData(e.target.value)}}

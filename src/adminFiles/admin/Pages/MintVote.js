@@ -109,14 +109,14 @@ export default function MintVote () {
             <Typography variant="h3">Mint Votes</Typography>
             <Form>
               <Form.Group controlId="constiNum">
-                <Form.Label>Constituency Number (1 - 3)</Form.Label>
+                <Form.Label>Constituency Number* (1 - 3)</Form.Label>
                 <Form.Control
                   placeholder="Cons Number"
                   onChange={handleConstituency}
                 />
               </Form.Group>
               <Form.Group controlId="vote">
-                <Form.Label>Total Votes</Form.Label>
+                <Form.Label>Total Votes*</Form.Label>
                 <Form.Control
                   placeholder="No. of votes"
                   onChange={handleVotes}

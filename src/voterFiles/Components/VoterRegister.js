@@ -192,7 +192,7 @@ const loadVoterList = async() => {
           </Form.Group>
           <Form.Row>
             <Form.Group as={Col} controlId="VoterName">
-              <Form.Label>Full Name</Form.Label>
+              <Form.Label>Full Name*</Form.Label>
               <Form.Control
                 value={name}
                 onChange={handleName}
@@ -201,7 +201,7 @@ const loadVoterList = async() => {
               />
             </Form.Group>
             <Form.Group as={Col}>
-              <Form.Label> CNIC </Form.Label>
+              <Form.Label> CNIC* </Form.Label>
               <Form.Control
                 value={cnic}
                 onChange={handleCnic}
@@ -210,7 +210,7 @@ const loadVoterList = async() => {
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label> Email </Form.Label>
+            <Form.Label> Email* </Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter email"
@@ -219,7 +219,7 @@ const loadVoterList = async() => {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Select Constituency</Form.Label>
+            <Form.Label>Select Constituency*</Form.Label>
             <Form.Control
               as="select"
               value={constituency}
@@ -232,7 +232,7 @@ const loadVoterList = async() => {
             </Form.Control>
           </Form.Group>
           <Form.Group>
-            <Form.Label>Voter Ethereum Address</Form.Label>
+            <Form.Label>Voter Ethereum Address*</Form.Label>
             <Form.Control
               placeholder="Ethereum wallet address"
               value={address}
