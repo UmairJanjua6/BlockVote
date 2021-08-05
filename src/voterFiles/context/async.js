@@ -58,6 +58,11 @@ export const addVoter = async (
   dispatch
 ) => {
   try {
+    console.log("name:", name);
+    console.log("address:", address);
+    console.log("cnic:", cnic);
+    console.log("email:", email);
+    console.log("constituency:", constituency);
     const receipt = await contract.methods
       .addVoter (address, name, cnic, email, constituency)
       .send ({from: accounts[0]});

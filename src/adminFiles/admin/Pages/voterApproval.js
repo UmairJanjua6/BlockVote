@@ -30,7 +30,7 @@ const VoterApproval = () => {
     }
     loadWeb3();
   }, []);
-console.log("voter: ", voterListArray);
+  
   const getList = async () => {
     await getVoterList (dispatch, contract, accounts);
   };

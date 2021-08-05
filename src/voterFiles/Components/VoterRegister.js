@@ -8,7 +8,6 @@ import {loadBlockchain} from '../context/async';
 import Modal from '../context/Modal.js';
 import Spinner from "./Spinner";
 import { ValidateCnic, ValidateEmail } from './Regex';
-import { FormControl } from '@material-ui/core';
 
 const VoterRegister = () => {
   const [name, setName] = useState ('');
@@ -22,11 +21,15 @@ const VoterRegister = () => {
   const [ successConfirmation, setSuccessConfirmation ] = useState(false);
   const [ failConfirmation, setFailConfirmation ] = useState(false);
   const [ modalBody, setModalBody ] = useState("");
-  const [ isError, setError ] = useState(true);
+  const [ isCnicError, setCnicError ] = useState(true);
+  const [ isEmailError, setEmailError ] = useState(true);
+  const [consValue, setConsValue ] = useState(true);
+  const [nameValue, setNameValue ] = useState(true);
 
   useEffect (async () => {
     await loadBlockchain (dispatch);
   }, []);
+  
   const validateData = async () => {
     setLoading(true);
     let flag = true;
@@ -49,6 +52,11 @@ const VoterRegister = () => {
       setLoading(false);
       alert("Address already exists");
     }
+  }
+  if(address !== accounts[0]) {
+    flag = false;
+    setLoading(false);
+    alert("Kindly initiate the transaction from your own account");
   }
 }
   if(flag === true) {
@@ -82,7 +90,7 @@ const loadVoterList = async() => {
         setOpenModal (true);
         }  else {
         setModalBody("Transaction failed. Verification Email Sending Failed. Please try again");
-        await setFailConfirmation (true);
+        setFailConfirmation (true);
         setOpenModal (true); 
         }
     } catch (error) {
@@ -114,28 +122,49 @@ const loadVoterList = async() => {
     }
   };
 
+  const handleName = e => {
+    loadVoterList();
+    const value = e.target.value;
+    setName(value);
+    if(value.length > 5) {
+      setNameValue(false);
+      return;
+    }
+    setNameValue(true);
+  }
+
   const handleCnic = e => {
     const value = e.target.value;
     const isValid = ValidateCnic(value);
+    setCnic(value);
     if(!isValid){
-      setError(true);
+      setCnicError(true);
       return;
     }
-    setCnic(value);
-    setError(false);
+    setCnicError(false);
   }
 
   const handleEmail = e => {
     const value = e.target.value;
     const isValid = ValidateEmail(value);
     if(!isValid){
-      setError(true);
+      setEmailError(true);
       return;
     }
     setEmail(value);
-    setError(false);
+    setEmailError(false);
   }
   
+  const handleConstituency = e => {
+    const value = e.target.value;
+    if(value != 0) {
+      setConstituency(value);
+      setConsValue(false);
+      return;
+    }
+    setConsValue(true);
+  }
+
   return (
     <div >
       {openModal &&
@@ -163,10 +192,10 @@ const loadVoterList = async() => {
           </Form.Group>
           <Form.Row>
             <Form.Group as={Col} controlId="VoterName">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Full Name</Form.Label>
               <Form.Control
                 value={name}
-                onChange={(e) => {setName (e.target.value); loadVoterList();}}
+                onChange={handleName}
                 type="name"
                 placeholder="Enter your Name"
               />
@@ -194,14 +223,12 @@ const loadVoterList = async() => {
             <Form.Control
               as="select"
               value={constituency}
-              onChange={e => setConstituency (e.target.value)}
+              onChange={handleConstituency}
             >
               <option value="0">Choose...</option>
               <option value="1">Constituency 1</option>
               <option value="2">Constituency 2</option>
               <option value="3">Constituency 3</option>
-              <option value="4">Constituency 4</option>
-              <option value="5">Constituency 5</option>
             </Form.Control>
           </Form.Group>
           <Form.Group>
@@ -215,12 +242,12 @@ const loadVoterList = async() => {
           <Form.Group style={{textAlign: 'center', marginTop: '30px'}}>
             <Button
               variant="contained"
-              type="submit"
+              // type="submit"
               size="lg"
-              style={{backgroundColor: '#f0b90b', color: '#12161C'}}
+              style={{backgroundColor: '#f0b90b', color: '#12161C', borderStyle: 'none'}}
               onClick={validateData}
               block
-              disabled={loading || isError}
+              disabled={loading || isCnicError || isEmailError || consValue || nameValue}
             >
               <Form.Row style={{justifyContent: 'center'}}>Register {loading ? <Spinner /> : null}</Form.Row>
             </Button>
