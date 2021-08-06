@@ -297,7 +297,6 @@ h3 {
 }
 
 #consiOption {
-  width: 40px;
   height: 37px;
  margin-right: 3px;
 }
@@ -345,5 +344,13 @@ h3 {
     visibility: visible;
     float: left;
     margin-left: 25px;
+  }
+
+  #printTable tr {
+    text-align: left;
+  }
+
+  #printTable th {
+    text-align: left;
   }
 }

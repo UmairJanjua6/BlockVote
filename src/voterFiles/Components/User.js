@@ -19,11 +19,12 @@ const User = () => {
       singleVoterInfo,
       electionStatus,
       voteCast,
-      handleReceipt,
+      handleVoteCast,
     },
     dispatch,
   ] = useStore ();
-  console.log("receipt: ", handleReceipt);
+  console.log("single voter info: ", singleVoterInfo);
+  console.log("handleVoteCast: ", handleVoteCast);
   const [modalShow, setModalShow] = useState (false);
   const [showList, setShowList] = useState (false);
   const [text, setText] = useState ('Show');
@@ -78,6 +79,14 @@ const User = () => {
       setText ('Show');
     }
   };
+
+  const getVoterInfo = async () => {
+    try {
+      await getVoterDetails(accounts[0], accounts, contract, dispatch);
+    } catch (error) {
+      console.log("error: " + error);
+    }
+  }
 
   function MyVerticallyCenteredModal (props) {
     return (
@@ -139,6 +148,7 @@ const User = () => {
           variant="primary"
           onClick={() => {
             getCandidateList ();
+            getVoterInfo();
             setShowList (!showList);
             handleText ();
           }}
@@ -181,7 +191,7 @@ const User = () => {
           getCandidateList ();
         }}
       />
-      {handleReceipt && sendVoteEmail("ehsansoomro306@gmail.com")}
+      {handleVoteCast ? sendVoteEmail(singleVoterInfo.email) : null}
     </div>
   );
 };

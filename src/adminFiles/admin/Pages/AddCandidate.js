@@ -10,6 +10,7 @@ import {loadBlockchain} from '../../../voterFiles/context/async';
 import {addCandidate} from '../../../voterFiles/context/async';
 import Modal from '../../../voterFiles/context/Modal.js';
 import {getCandidatesInConsi} from '../../../voterFiles/context/async';
+import { ValidateAddress } from '../../../voterFiles/Components/Regex.js';
 
 const useStyles = makeStyles (theme => ({
   content: {
@@ -24,6 +25,9 @@ export default function AddCandidate () {
   const [candidateAddress, setCandidateAddress] = useState (0);
   const [name, setName] = useState ('');
   const [openModal, setOpenModal] = useState ();
+  const [nameStatus, setNameStatus] = useState(true);
+  const [consStatus, setConsStatus] = useState(true);
+  const [addressStatus, setAddressStatus] = useState(true);
   const [{contract, accounts, handleReceipt, ownerAddress, getCandidateInfo}, dispatch] = useStore ();
 
   useEffect (() => {
@@ -72,6 +76,37 @@ export default function AddCandidate () {
     }
   };
 
+  const handleName = e => {
+    const value = e.target.value;
+    setName(value);
+    if(value.length > 5) {
+      setNameStatus(false);
+      return;
+    }
+    setNameStatus(true);
+  }
+
+  const handleAddress = e => {
+    const value = e.target.value;
+    const isValid = ValidateAddress(value);
+    setCandidateAddress(value);
+    if(!isValid) {
+      setAddressStatus(true);
+      return;
+    }
+    setAddressStatus(false);
+  }
+
+  const handleConstituency = e => {
+    const value = e.target.value;
+    getCandidateData(e.target.value)
+    if(value != 0) {
+      setConNum(value);
+      setConsStatus(false);
+      return;
+    }
+    setConsStatus(true);
+  }
   return (
     <div>
       <SideBar />
@@ -109,7 +144,7 @@ export default function AddCandidate () {
                   type="name"
                   placeholder="Name"
                   value={name}
-                  onChange={e => setName (e.target.value)}
+                  onChange={handleName}
                 />
               </Form.Group>
               <Form.Group controlId="CandidateAddress">
@@ -118,14 +153,14 @@ export default function AddCandidate () {
                   type="name"
                   placeholder="Ethereum address"
                   value={candidateAddress}
-                  onChange={e => setCandidateAddress (e.target.value)}
+                  onChange={handleAddress}
                 />
               </Form.Group>
               <Form.Group>
                 <Form.Label>Select Constituency*</Form.Label>
                 <Form.Control
                   as="select"
-                  onChange={(e) => {setConNum (e.target.value); getCandidateData(e.target.value)}}
+                  onChange={handleConstituency}
                 >
                   <option value="0">Choose...</option>
                   <option value="1">Constituency 1</option>
@@ -137,6 +172,7 @@ export default function AddCandidate () {
                 variant="primary"
                 className="btn btn-dark "
                 onClick={addCandidateFunc}
+                disabled = {nameStatus || addressStatus || consStatus}
               >
                 Add candidate
               </Button>

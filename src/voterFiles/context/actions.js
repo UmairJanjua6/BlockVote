@@ -145,6 +145,13 @@ export const handleReceipt = (receipt) => {
     }
 }
 
+export const handleVoteCast = (vote) => {
+    return {
+        type: 'HANDLE_VOTE',
+        payload: vote
+    }
+}
+
 export const verificationSuccess = (verification) => {
     return {
         type: 'EMAIL_SUCCESS',

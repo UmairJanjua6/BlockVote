@@ -109,6 +109,11 @@ export default (state, action) => {
                 ...state,
                 handleReceipt: action.payload,
               }
+              case 'HANDLE_VOTE':
+              return {
+                ...state,
+                handleVoteCast: action.payload,
+              }
               case 'EMAIL_SUCCESS':
                 return {
                   ...state,

@@ -22,6 +22,7 @@ import {
   userBalance,
   idVote,
   handleReceipt,
+  handleVoteCast,
   verificationSuccess,
   ownerAddress,
 } from './actions';
@@ -347,7 +348,7 @@ export const vote = async (
       .send ({from: accounts[0]});
     dispatch(voteCast(receipt));
     if(receipt) {
-      dispatch(handleReceipt(receipt));
+      dispatch(handleVoteCast(receipt));
     }
   } catch (error) {
     console.log ('error vote: ' + error);

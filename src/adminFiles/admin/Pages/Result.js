@@ -27,24 +27,18 @@ export default function DisplayResult(){
   const [consi, setConsi] = useState();
     const classes = useStyles();
     console.log("candidateInfo: ", getCandidateInfo);
+    console.log("balance: ", userBalance);
 
     useEffect (() => {
       const loadWeb3 = async () => {
         await loadBlockchain (dispatch);
-        await setTimeout(() => {
+        setTimeout(() => {
         setLoading(false)
      }, 1);
       }
       loadWeb3();
     }, []);
 
-    const fetchResult = () => {
-      candidateInfo(consi);
-      candidateBalance(consi);
-      if (userBalance && idVote) {
-        calTurnOver();
-      }
-    }
     const candidateInfo = async(consNum) => {
       try {
       await getCandidatesInConsi(consNum, contract, accounts, dispatch);
@@ -63,13 +57,15 @@ export default function DisplayResult(){
 
     const candidateBalance = async() => {
       try {
-        let Batchaddress = [];
-        let BatchConsNum = [consi, consi];
+        let batchAddress = [];
+        let batchConsNum = [];
         if(getCandidateInfo) {
         for(let i = 0; i < getCandidateInfo.length; i++) {
-        Batchaddress[i] = getCandidateInfo[i].candiAddress;
+        batchAddress[i] = getCandidateInfo[i].candiAddress;
+        batchConsNum[i] = consi
         }
-        await getBalance(Batchaddress, BatchConsNum, contract, accounts, dispatch);
+        await getBalance(batchAddress, batchConsNum, contract, accounts, dispatch);
+        calTurnOver();
       }
       } catch (e) {
         console.log("error: ", e);
@@ -100,23 +96,24 @@ export default function DisplayResult(){
       <p id="date">Date: {date}</p>
       <h1 id="title">Election Result of: </h1>
       <h3 id="consiNum">Result of Constituency No: {consi}</h3>
-      <select id="consiOption" onChange={(e) => setConsi(e.target.value)}>
+      <select id="consiOption" onChange={(e) => {setConsi(e.target.value); candidateInfo(e.target.value);}}>
+        <option value ="0">Choose...</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="2">3</option>
       </select>
-      <Button variant="primary" onClick={fetchResult}>Show</Button>
+      <Button variant="primary" onClick={candidateBalance}>Show</Button>
       <Button variant="primary" id="printBtn" onClick={printFunc}>Print</Button>
       
       {idVote ? <div><p id="turnOver">Election Turn over: {turnOver}%</p></div> : ""}
       <ReactBootStrap.Table striped bordered hover id="printTable">
               <thead>
-                <tr>
+                <tr style={{textAlign: "center"}}>
                   <th>NAME</th>
                   <th>Votes Secured</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{textAlign: "center"}}>
               {getCandidateInfo && userBalance ? (getCandidateInfo).map(renderResult) : ""}
               </tbody>
             </ReactBootStrap.Table>
