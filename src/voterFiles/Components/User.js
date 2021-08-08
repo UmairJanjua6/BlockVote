@@ -19,19 +19,18 @@ const User = () => {
       singleVoterInfo,
       electionStatus,
       voteCast,
-      handleVoteCast,
     },
     dispatch,
   ] = useStore ();
-  console.log("single voter info: ", singleVoterInfo);
-  console.log("handleVoteCast: ", handleVoteCast);
   const [modalShow, setModalShow] = useState (false);
   const [showList, setShowList] = useState (false);
   const [text, setText] = useState ('Show');
+
   useEffect (async () => {
     await loadBlockchain (dispatch);
     setModalShow (true);
   }, []);
+
   let constituency;
   if (singleVoterInfo) {
     constituency = singleVoterInfo.voteConstituency;
@@ -50,25 +49,29 @@ const User = () => {
   const castVote = async candidateAddress => {
     try {
       await vote (candidateAddress, constituency, accounts, contract, dispatch);
+      sendVoteEmail (singleVoterInfo.email);
     } catch (error) {
       console.log ('error: ', error);
     }
   };
 
-  const sendVoteEmail = async ( email ) => {
-    const url = process.env.REACT_APP_DEV_NODE_URL + process.env.REACT_APP_ROUTE_PATH + process.env.REACT_APP_VOTE_CONFIRMATION_EMAIL_PATH;
-    const response = await fetch(url, { 
-        method: 'POST', 
-        headers: { 
-            'Content-type': 'application/json'
-        }, 
-        body: JSON.stringify({ email }) 
-    }); 
-      const resData = await response.json(); 
-      if (resData.status === 'success'){
-        alert("Email Sent.");
-    }else if(resData.status === 'fail'){
-        alert("Message failed to send.")
+  const sendVoteEmail = async email => {
+    const url =
+      process.env.REACT_APP_DEV_NODE_URL +
+      process.env.REACT_APP_ROUTE_PATH +
+      process.env.REACT_APP_VOTE_CONFIRMATION_EMAIL_PATH;
+    const response = await fetch (url, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify ({email}),
+    });
+    const resData = await response.json ();
+    if (resData.status === 'success') {
+      console.log ('success');
+    } else if (resData.status === 'fail') {
+      console.log ('fail');
     }
   };
 
@@ -82,11 +85,11 @@ const User = () => {
 
   const getVoterInfo = async () => {
     try {
-      await getVoterDetails(accounts[0], accounts, contract, dispatch);
+      await getVoterDetails (accounts[0], accounts, contract, dispatch);
     } catch (error) {
-      console.log("error: " + error);
+      console.log ('error: ' + error);
     }
-  }
+  };
 
   function MyVerticallyCenteredModal (props) {
     return (
@@ -137,6 +140,7 @@ const User = () => {
   };
   return (
     <div className="container-fluid">
+      {/* {handleReceipt && sendVoteEmail(singleVoterInfo.email)} */}
       <div className="userInstruction">
         <h2>Election 2021</h2>
         <p id="voteStatusP">
@@ -148,7 +152,7 @@ const User = () => {
           variant="primary"
           onClick={() => {
             getCandidateList ();
-            getVoterInfo();
+            getVoterInfo ();
             setShowList (!showList);
             handleText ();
           }}
@@ -183,7 +187,6 @@ const User = () => {
             </div>
           : null}
       </div>
-
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => {
@@ -191,7 +194,6 @@ const User = () => {
           getCandidateList ();
         }}
       />
-      {handleVoteCast ? sendVoteEmail(singleVoterInfo.email) : null}
     </div>
   );
 };

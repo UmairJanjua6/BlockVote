@@ -18,13 +18,12 @@ import {
   idToVote3,
   singleVoterInfo,
   electionStatus,
-  voteCast,
   userBalance,
   idVote,
   handleReceipt,
-  handleVoteCast,
   verificationSuccess,
   ownerAddress,
+  voteCast
 } from './actions';
 
 export const loadBlockchain = async dispatch => {
@@ -59,11 +58,6 @@ export const addVoter = async (
   dispatch
 ) => {
   try {
-    console.log("name:", name);
-    console.log("address:", address);
-    console.log("cnic:", cnic);
-    console.log("email:", email);
-    console.log("constituency:", constituency);
     const receipt = await contract.methods
       .addVoter (address, name, cnic, email, constituency)
       .send ({from: accounts[0]});
@@ -346,10 +340,7 @@ export const vote = async (
     const receipt = await contract.methods
       .vote (_candidateAddress, _voteConstituency, '0x00')
       .send ({from: accounts[0]});
-    dispatch(voteCast(receipt));
-    if(receipt) {
-      dispatch(handleVoteCast(receipt));
-    }
+      dispatch(voteCast (receipt));
   } catch (error) {
     console.log ('error vote: ' + error);
   }

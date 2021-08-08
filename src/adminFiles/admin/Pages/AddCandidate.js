@@ -21,8 +21,8 @@ const useStyles = makeStyles (theme => ({
 export default function AddCandidate () {
   const classes = useStyles ();
   const [loading, setLoading] = useState(true);
-  const [conNum, setConNum] = useState (0);
-  const [candidateAddress, setCandidateAddress] = useState (0);
+  const [conNum, setConNum] = useState ();
+  const [candidateAddress, setCandidateAddress] = useState ();
   const [name, setName] = useState ('');
   const [openModal, setOpenModal] = useState ();
   const [nameStatus, setNameStatus] = useState(true);
