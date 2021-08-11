@@ -26,8 +26,6 @@ export default function DisplayResult(){
   const [loading, setLoading] = useState(true);
   const [consi, setConsi] = useState();
     const classes = useStyles();
-    console.log("candidateInfo: ", getCandidateInfo);
-    console.log("balance: ", userBalance);
 
     useEffect (() => {
       const loadWeb3 = async () => {
@@ -51,9 +49,11 @@ export default function DisplayResult(){
     const printFunc = () => {
       window.print();
     }
-    let date;
-    var today = new Date();
-    date = today.getFullYear() + '-' + today.getMonth() + '-' + today.getDate();
+    const Datetoday = new Date();
+    var todayDate = Datetoday.getDate();
+    var todayMonth = Datetoday.getMonth() + 1;
+    var todayYear = Datetoday.getFullYear();
+    let date = todayDate + '-' + todayMonth + '-' + todayYear;
 
     const candidateBalance = async() => {
       try {

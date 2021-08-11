@@ -12,7 +12,7 @@ const CardContainer = () => {
       <img src={logo} alt="logo"/>
       <Button className="btnUser" onClick= {() => {history.push("/userlogin")}} >Are you a User?</Button>
       <br/>
-      <Button className="btnAdmin" onClick= {() => {history.push("/adminlogin")}}>Are you Administrator?</Button>
+      <Button className="btnAdmin" onClick= {() => {history.push("/admin")}}>Are you Administrator?</Button>
       
     </div>
   )

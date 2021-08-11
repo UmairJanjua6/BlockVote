@@ -6,6 +6,7 @@ import { useHistory} from 'react-router-dom';
 import {verifyEmail} from '../context/async';
 import {useStore} from '../context/GlobalState';
 import {loadBlockchain} from '../context/async';
+import '../../index.css';
 
 const EmailSuccess = (props) => {
 const [active, setActive] = useState(1);
@@ -29,7 +30,7 @@ const approveEmail = async () => {
     }
 }
  return (
-    <div>
+    <div className="email-success">
         <Container maxWidth="xs" style={{marginTop: '100px'}}>
         <MultiStepForm activeStep={active} accentColor="#f0b90b">
             <Step>

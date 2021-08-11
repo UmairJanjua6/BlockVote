@@ -193,7 +193,8 @@ h3 {
     left: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
-    border: 1px solid #12161C;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #12161C;
 }
 
 .user-header h2{
@@ -242,4 +243,11 @@ h3 {
 
 #metamask-link {
     color: #EE811A;
+}
+
+.email-success {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
