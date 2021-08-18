@@ -33,7 +33,7 @@ export default function AddCandidate () {
   useEffect (() => {
     const loadWeb3 = async () => {
       await loadBlockchain (dispatch);
-      await setTimeout(() => {
+      setTimeout(() => {
       setLoading(false)
    }, 1);
     }

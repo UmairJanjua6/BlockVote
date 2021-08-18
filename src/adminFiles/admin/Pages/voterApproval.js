@@ -24,7 +24,7 @@ const VoterApproval = () => {
   useEffect (() => {
     const loadWeb3 = async() => {
       await loadBlockchain (dispatch);
-      await setTimeout(() => {
+      setTimeout(() => {
       setLoading(false)
    }, 1);
     }
@@ -73,8 +73,9 @@ const VoterApproval = () => {
         <td>
           <Button
             variant="success"
+            title= {voter.authorize === true ? "Registered Voter" : voter.voteCast === true ? "Vote casted" : "Approve"}
             className="btn  "
-            disabled= {voter.authorize === true ? true: false}
+            disabled= {voter.authorize === true || voter.voteCast === true ? true: false}
             onClick={() => {
               authorizeVoterBtn (index);
             }}
@@ -85,8 +86,9 @@ const VoterApproval = () => {
         <td>
           <Button
             variant="secondary"
+            title= {voter.authorize === true ? "Registered Voter" : voter.voteCast === true ? "Vote casted" : "Reject"}
             className="btn"
-            disabled= {voter.authorize === true ? true: false}
+            disabled= {voter.authorize === true || voter.voteCast === true ? true: false}
             onClick={() => {
               RejectVoterBtn (index);
             }}

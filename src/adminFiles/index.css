@@ -256,15 +256,10 @@ h3 {
 #electionStatus {
   display: flex;
   flex-direction: row;
-}
-
-#electionStatusText {
-  width: 120px;
-  height: 50px;
-  padding: 10px 0px 0 3px;
-  font-size: 15px;
+  color:#12161C;
   font-weight: bold;
-  background-color: rgb(240, 185, 11);
+  padding-top: 10px;
+  margin-right: 3px;
 }
 
 #red {
@@ -273,18 +268,21 @@ h3 {
   height: 50px;
   font-weight: bold;
   font-size: 15px;
-  padding: 10px 0px 0 15px;
+  text-align: center;
   background-color: #FF3131;
+  border-radius: 5px;
+  padding-top: 12px;
 }
 
 #green {
-  margin-left: 0px;
+  padding-top: 10px;
   width: 90px;
   height: 50px;
   font-weight: bold;
   font-size: 15px;
-  padding: 10px 0px 0 10px;
+  padding: 11px 0px 0 10px;
   background-color: #32CD32;
+  border-radius: 5px;
 }
 
 #printBtn {

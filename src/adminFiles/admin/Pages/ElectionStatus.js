@@ -22,20 +22,21 @@ const useStyles = makeStyles((theme) => ({
 export default function ElectionStatus(){
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
+  const [{ contract, accounts, electionStatus, ownerAddress}, dispatch] = useStore();
 
   useEffect (() => {
     const loadWeb3 = async () => {
       await loadBlockchain (dispatch);
-    await setTimeout(() => {
+      setTimeout(() => {
       setLoading(false)
    }, 1);
-   await electionStatusGet(accounts, contract, dispatch);
     }
     loadWeb3();
   }, []);
   
-  const [{ contract, accounts, electionStatus, ownerAddress}, dispatch] = useStore();
-
+  const loadData = async() => {
+    await electionStatusGet(accounts, contract, dispatch);
+  }
     let status;
     if(electionStatus === "0") {
       status = "NOT STARTED";
@@ -44,8 +45,6 @@ export default function ElectionStatus(){
     } else if (electionStatus === "2") {
       status = "ENDED";
     }
-
-    console.log("if status: ", status);
 
   const startElectionFunc = async() => {
  try {
@@ -81,18 +80,18 @@ return(
       <Box maxWidth="md" style={{paddingLeft:'250px'}}>
       <Typography variant="h3">Election Status</Typography>
         <div id="electionStatus">
-          <div id="electionStatusText">Election Status:</div>
+        <Button id="electionStatus" variant="info" onClick= {loadData}>Election Status</Button>
           <div id={electionStatus === "1" ? "green" : "red"}>{status}</div>
         </div>
        <br></br>
 <Form>
 <Form.Group>
-<Button variant="primary" className="btn btn-dark " onClick={startElectionFunc}>
+<Button variant="primary" disabled= {status === "NOT STARTED" ? false : true} title= {status === "STARTED" ? "Already Started" : status === "ENDED" ? "Election Ended" : "Start Election"} className="btn btn-dark " onClick={startElectionFunc}>
    Start Election
   </Button>
 </Form.Group>
 <Form.Group>
-<Button variant="primary"  className="btn btn-dark " onClick={endElectionFunc}>
+<Button variant="primary"  className="btn btn-dark" disabled={status === "ENDED" || status === "NOT STARTED" ? true : false} title= {status === "STARTED" ? "End Election" : status === "ENDED" ? "Election Ended" : ""} onClick={endElectionFunc}>
    End Election
   </Button>
 </Form.Group>
