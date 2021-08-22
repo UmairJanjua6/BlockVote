@@ -100,7 +100,7 @@ export default function AddCandidate () {
   const handleConstituency = e => {
     const value = e.target.value;
     getCandidateData(e.target.value)
-    if(value != 0) {
+    if(value !== 0) {
       setConNum(value);
       setConsStatus(false);
       return;

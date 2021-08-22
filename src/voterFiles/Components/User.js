@@ -26,9 +26,12 @@ const User = () => {
   const [showList, setShowList] = useState (false);
   const [text, setText] = useState ('Show');
 
-  useEffect (async () => {
-    await loadBlockchain (dispatch);
-    setModalShow (true);
+  useEffect (() => {
+    const loadData = async () => {
+      await loadBlockchain (dispatch);
+      setModalShow (true);
+    }
+    loadData();
   }, []);
 
   let constituency;
@@ -165,9 +168,9 @@ const User = () => {
           ? <div>
               {singleVoterInfo !== undefined
                 ? <div>
-                    {singleVoterInfo.authorize == true
+                    {singleVoterInfo.authorize === true
                       ? <div>
-                          {electionStatus == true
+                          {electionStatus === "1"
                             ? <div>
                                 {getCandidateInfo !== undefined
                                   ? <div className="voter">

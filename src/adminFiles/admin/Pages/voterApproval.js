@@ -39,11 +39,13 @@ const VoterApproval = () => {
     try {
       let voterAddress = voterListArray[index];
       let id;
-      if(getVoterData) {
+        if(getVoterData[index].emailStatus !== true) {
+          alert("Please wait untill user verify his/her email.");
+        } else {
         id = getVoterData[index].voteConstituency;
-      }
       await authorizeVoter (voterAddress, id, contract, accounts, dispatch);
       await getVoterList (dispatch, contract, accounts);
+        }
     } catch (error) {
       console.log ('error: ', error);
     }

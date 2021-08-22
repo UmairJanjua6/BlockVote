@@ -14,16 +14,22 @@ const [address, setAddress] = useState();
 const history = useHistory();
 const [{verificationSuccess, contract, accounts}, dispatch] = useStore();
 
-useEffect(async() => {
-    await loadBlockchain(dispatch);
-    setAddress(props.match.params.address);
+useEffect(() => {
+    const loadData = async() => { 
+        await loadBlockchain(dispatch);
+        setAddress(props.match.params.address);
+    }
+    loadData();
 }, []);
-console.log("success: ", verificationSuccess);
 const approveEmail = async () => {
     try {
-        await verifyEmail(address, contract, accounts, dispatch);
-        if(verificationSuccess !== null) {
-            await setActive(active + 1);
+        if(address === accounts[0]) { 
+            await verifyEmail(address, contract, accounts, dispatch);
+            if(verificationSuccess !== null) {
+                setActive(active + 1);
+            }
+        } else {
+            alert("Kindly initiate transaction from your own account");
         }
     } catch (err) {
         console.log("EmailSuccess: verify email error: ", err);

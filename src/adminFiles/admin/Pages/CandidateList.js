@@ -33,7 +33,7 @@ const CandidateList = () => {
   const renderCard = (card, index) => {
     return (
       <Card style={{width: '18rem'}} key={index} className="box">
-        <Card.Img variant="top" src="holder.js/100px180" src={avatarImg} />
+        <Card.Img variant="top" src={avatarImg} />
         <Card.Body>
           <Card.Title>{card.candiName}</Card.Title>
           <Card.Text>{card.candiAddress}</Card.Text>
@@ -58,7 +58,7 @@ const CandidateList = () => {
           </select>
           <Button variant="dark" onClick={getCandidateData}>Search</Button>
           <div className="grid" display="flex">
-            {getCandidateInfo ? getCandidateInfo.map (renderCard) : ''}
+            {getCandidateInfo ? getCandidateInfo.map (renderCard) : 'No Candidate found'}
           </div>
         </Box>
       </main>

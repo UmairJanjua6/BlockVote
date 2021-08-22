@@ -18,7 +18,6 @@ const VoterRegister = () => {
   const [openModal, setOpenModal] = useState ();
   const [{accounts, contract, handleReceipt, getVoterData, voterListArray}, dispatch] = useStore ();
   const [ loading, setLoading ] = useState(false);
-  const [ successConfirmation, setSuccessConfirmation ] = useState(false);
   const [ failConfirmation, setFailConfirmation ] = useState(false);
   const [ modalBody, setModalBody ] = useState("");
   const [ isCnicError, setCnicError ] = useState(true);
@@ -26,8 +25,11 @@ const VoterRegister = () => {
   const [consValue, setConsValue ] = useState(true);
   const [nameValue, setNameValue ] = useState(true);
 
-  useEffect (async () => {
-    await loadBlockchain (dispatch);
+  useEffect (() => {
+    const loadData = async () => {
+      await loadBlockchain (dispatch);
+    }
+    loadData();
   }, []);
   
   const validateData = async () => {
@@ -112,12 +114,10 @@ const loadVoterList = async() => {
       if (resData.status === 'success'){
         await setLoading(false);
         await setModalBody("Verification Email Sent.");
-        await setSuccessConfirmation (true);
         await setFailConfirmation (false);
     }else if(resData.status === 'fail'){
         await setLoading(false);
         await setModalBody("Verification Email Sending Failed. Please try again");
-        await setSuccessConfirmation (false);
         await setFailConfirmation (true);
     }
   };
@@ -157,7 +157,7 @@ const loadVoterList = async() => {
   
   const handleConstituency = e => {
     const value = e.target.value;
-    if(value != 0) {
+    if(value !== 0) {
       setConstituency(value);
       setConsValue(false);
       return;

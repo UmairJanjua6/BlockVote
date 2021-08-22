@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function DisplayResult(){
-  const [{ contract, accounts, getCandidateInfo, userBalance, idVote, ownerAddress}, dispatch] = useStore ();
+  const [{ contract, accounts, getCandidateInfo, userBalance, idVote, ownerAddress}, dispatch] = useStore();
   const [turnOver, setTurnOver] = useState (0);
   const [loading, setLoading] = useState(true);
   const [consi, setConsi] = useState();
